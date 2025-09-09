@@ -3,19 +3,19 @@ export default function Footer() {
     <footer
       style={{
       
-        color: "#2A60A0",
+        color: "green",
         position: "fixed",
         bottom: "0",
         left: "0",
         width: "100vw",
-        height: "6vh",
+        height: "8vh",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
        
       }}
     >
-      <p style={{ fontSize: "2vh" }}>Designed by @RMK</p>
+      <p style={{ fontSize: "4vh",fontWeight:"500" }}>Designed by @RMKEC</p>
     </footer>
   );
 }
