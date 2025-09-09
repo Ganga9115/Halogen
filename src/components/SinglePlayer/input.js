@@ -43,7 +43,7 @@ function CustomClassDropdown({ value, onChange }) {
     classOptions.find((c) => c.value === value)?.label || "Choose class";
 
   return (
-    <div className="relative w-full" ref={ref}>
+    <div className="relative w-full overflow-y-scroll h-[20vh]" ref={ref}>
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
@@ -100,6 +100,7 @@ export default function Input() {
   return (
     <Background>
       <Logo />
+      <Footer />
     <div className="relative w-screen h-screen">
       {/* Card container */}
       <div
@@ -198,7 +199,7 @@ export default function Input() {
 
           {/* Step 3: Avatar Carousel */}
           {step === 3 && (
-            <div className="text-center flex flex-col items-center">
+            <div className="text-center flex flex-col items-center mb-[10vh]">
               <h2 className="text-xl font-bold text-[#202345] mb-4">
                 Choose your Avatar
               </h2>
@@ -271,7 +272,7 @@ export default function Input() {
         </div>
       </div>
     </div>
-    <Footer />
+    
     <BackButton />
     </Background>
   );

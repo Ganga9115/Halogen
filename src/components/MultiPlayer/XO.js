@@ -5,7 +5,6 @@ import { Typography, Paper, Button, Card, CardContent, Dialog, DialogActions, Di
 import { Fireworks } from '@fireworks-js/react';
 import ConfettiExplosion from 'react-confetti-explosion';
 import bluebg from '../../assets/blueBG.jpg';
-import cheer from '../../assets/cheer.mp3';
 import { useNavigate, useLocation } from 'react-router-dom'; 
 import AppBackground from '../utils/AppBackground'
 import Background from '../utils/FloatingBackground';
@@ -290,7 +289,7 @@ const XO = () => {
       )}
 
       {/* Hidden sound */}
-      <audio ref={audioRef} src={cheer} />
+
 
       {/* Result Dialog */}
 <Dialog
