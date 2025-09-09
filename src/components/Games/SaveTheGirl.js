@@ -6,6 +6,10 @@ import bg from "../../assets/bg.jpg";
 import drownData from "../../data/saveGirl.json";
 import { useParams } from "react-router-dom";
 import TablaCelebration from "../utils/Celeb"; // ✅ your celebration component
+import Background from "../utils/FloatingBackground";
+import BackButton from "../utils/backbutton";
+import Footer from "../utils/Footer";
+import Logo from "../utils/logo";
 
 const SaveTheGirl = () => {
   const { classId, subject } = useParams();
@@ -153,9 +157,10 @@ const handleRetry = () => {
   }
 
   return (
+    <Background>
+      <Logo />
     <div
-      className="flex items-center justify-center w-full h-screen bg-cover bg-center relative"
-      style={{ backgroundImage: `url(${bg})` }}
+      className="flex items-center justify-center w-full h-screen  relative"
     >
       {showWrongPopup && (
   <div
@@ -319,7 +324,7 @@ const handleRetry = () => {
           <div
             style={{
               width: "100%",
-              height: "70%",
+              height: "80%",
               background: "linear-gradient(135deg, #ffffff, #EFE2FA)",
               display: "flex",
               flexDirection: "column",
@@ -486,6 +491,9 @@ const handleRetry = () => {
         {lang === "en" ? "தமிழ்" : "English"}
       </button>
     </div>
+    <Footer />
+    <BackButton />
+    </Background>
   );
 };
 
