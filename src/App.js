@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import XO from './components/MultiPlayer/XO';
+import ChooseSorM from './components/chooseSorM';
+import Input from './components/SinglePlayer/input';
+import { BrowserRouter, Route, Routes  } from 'react-router-dom';
+import SubjectSelection from './components/SinglePlayer/selectSubject';
+import SelectMode from './components/SinglePlayer/selectMode';
+import Game from './components/SinglePlayer/Game';
+import TopicSelection from './components/SinglePlayer/TopicSelection';
+import Match from './components/SinglePlayer/Match';
+import MultiplayerInput from './components/MultiPlayer/MultiPlayerInput';
+import ChooseLanguage from './components/SinglePlayer/ChooseLanguage';
+import Leaderboard from './components/SinglePlayer/leaderBoard';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <BrowserRouter>
+    <Routes >
+      <Route path="/"  element={<ChooseSorM />}/>
+      <Route path='/single' element={<Input />}/>
+      <Route path="/subject" element={<SubjectSelection />} />
+      <Route path="/xo" element={<XO />} />
+      <Route path="/multiplayer-input" element={<MultiplayerInput />} />
+      <Route path="/single/:classId/:displayName/:schoolName" element={<SubjectSelection />} />
+      <Route path="/single/:classId/:displayName/:schoolName/:subject" element={<SelectMode />} />
+      <Route path="/single/:classId/:displayName/:schoolName/:subject/lang" element={<ChooseLanguage />} />
+      <Route path="/single/:classId/:displayName/:schoolName/:subject/game" element={<Game />} />
+      <Route path="/single/:classId/:displayName/:schoolName/:subject/lang/:lang" element={<TopicSelection />} />
+      <Route path="/single/:classId/:displayName/:schoolName/:subject/lang/:lang/:topic/ma" element={<Match />} />
+      <Route path="/leaderboard" element={<Leaderboard />} />
+    </Routes >
+    </BrowserRouter>
+  )
 }
 
 export default App;

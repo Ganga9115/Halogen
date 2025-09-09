@@ -1,0 +1,156 @@
+[
+  {
+    "type": "antonym",
+    "pairs": [
+      ["happy", "sad"],
+      ["big", "small"],
+      ["fast", "slow"],
+      ["near", "far"],
+      ["hot", "cold"],
+      ["young", "old"]
+    ]
+  },
+  {
+    "type": "antonym",
+    "pairs": [
+      ["ancient", "new"],
+      ["shallow", "deep"],
+      ["rough", "smooth"],
+      ["noisy", "quiet"],
+      ["brave", "fearful"],
+      ["dark", "light"]
+    ]
+  },
+  {
+    "type": "antonym",
+    "pairs": [
+      ["optimistic", "pessimistic"],
+      ["scarce", "plentiful"],
+      ["minor", "major"],
+      ["simple", "complex"],
+      ["harsh", "gentle"],
+      ["kind", "cruel"]
+    ]
+  },
+  {
+    "type": "antonym",
+    "pairs": [
+      ["victory", "defeat"],
+      ["accept", "reject"],
+      ["create", "destroy"],
+      ["allow", "forbid"],
+      ["include", "exclude"],
+      ["happy", "unhappy"]
+    ]
+  },
+  {
+    "type": "antonym",
+    "pairs": [
+      ["advance", "retreat"],
+      ["success", "failure"],
+      ["construct", "demolish"],
+      ["public", "private"],
+      ["arrival", "departure"],
+      ["strong", "weak"]
+    ]
+  },
+  {
+    "type": "antonym",
+    "pairs": [
+      ["helpful", "harmful"],
+      ["honest", "dishonest"],
+      ["joy", "sorrow"],
+      ["possible", "impossible"],
+      ["generous", "selfish"],
+      ["major", "minor"]
+    ]
+  },
+  {
+    "type": "antonym",
+    "pairs": [
+      ["abstract", "real"],
+      ["increase", "decrease"],
+      ["optimistic", "hopeless"],
+      ["wealth", "poverty"],
+      ["expand", "shrink"],
+      ["convict", "acquit"]
+    ]
+  },
+  {
+    "type": "synonym",
+    "pairs": [
+      ["quick", "fast"],
+      ["smart", "clever"],
+      ["bright", "shiny"],
+      ["end", "finish"],
+      ["gift", "present"],
+      ["strong", "powerful"]
+    ]
+  },
+  {
+    "type": "synonym",
+    "pairs": [
+      ["tiny", "small"],
+      ["rapid", "fast"],
+      ["happy", "joyful"],
+      ["clever", "smart"],
+      ["finish", "complete"],
+      ["strong", "sturdy"]
+    ]
+  },
+  {
+    "type": "synonym",
+    "pairs": [
+      ["big", "large"],
+      ["happy", "glad"],
+      ["rapid", "quick"],
+      ["difficult", "hard"],
+      ["helpful", "kind"],
+      ["brave", "courageous"]
+    ]
+  },
+  {
+    "type": "synonym",
+    "pairs": [
+      ["angry", "mad"],
+      ["beautiful", "pretty"],
+      ["begin", "start"],
+      ["choose", "select"],
+      ["brave", "valiant"],
+      ["help", "assist"]
+    ]
+  },
+  {
+    "type": "synonym",
+    "pairs": [
+      ["ancient", "old"],
+      ["brilliant", "bright"],
+      ["calm", "peaceful"],
+      ["freedom", "liberty"],
+      ["huge", "big"],
+      ["idea", "thought"]
+    ]
+  },
+  {
+    "type": "synonym",
+    "pairs": [
+      ["help", "assist"],
+      ["brave", "courageous"],
+      ["hard", "difficult"],
+      ["huge", "enormous"],
+      ["famous", "well-known"],
+      ["true", "genuine"]
+    ]
+  },
+  {
+    "type": "synonym",
+    "pairs": [
+      ["ambitious", "eager"],
+      ["brilliant", "excellent"],
+      ["complex", "complicated"],
+      ["check", "assess"],
+      ["honest", "truthful"],
+      ["exact", "precise"]
+    ]
+  }
+]
