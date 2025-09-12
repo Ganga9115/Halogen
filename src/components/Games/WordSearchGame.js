@@ -77,7 +77,7 @@ const TRANSLATIONS = {
   },
 };
 
-const ANSWER_COLORS = ["#EF4444", "#3B82F6", "#22C55E", "#F97316"];
+const ANSWER_COLORS = ["#db44efff", "#3B82F6", "#22C55E", "#F97316","#c52271ff", "#e0c811ff"];
 
 function randInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;

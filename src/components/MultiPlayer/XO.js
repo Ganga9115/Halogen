@@ -360,7 +360,7 @@ const XO = () => {
       {/* Player X */}
       <div style={{ width: '25%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1vh' }}>
-          <Typography variant="h6" style={{ marginRight: '1vw', fontWeight: 'bold',marginTop: "5vh" }}>
+          <Typography variant="h6" style={{ marginRight: '1vw', fontWeight: 'bold',marginTop: "8vh" }}>
             Player X
           </Typography>
         </div>
@@ -429,7 +429,7 @@ const XO = () => {
       {/* Player O */}
       <div style={{ width: '25%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1vh' }}>
-          <Typography variant="h6" style={{ marginRight: '1vw', fontWeight: 'bold',marginTop: "5vh" }}>
+          <Typography variant="h6" style={{ marginRight: '1vw', fontWeight: 'bold',marginTop: "8vh" }}>
             Player O
           </Typography>
         </div>
