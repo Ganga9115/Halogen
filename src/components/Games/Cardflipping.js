@@ -321,7 +321,7 @@ saveResult({ name, school, className, score, game: "CardFlipping" });
           ))}
         </div>
 
-        <button
+        {/* <button
           onClick={initializeGame}
           style={{
             padding: '1vh 2vw',
@@ -337,7 +337,7 @@ saveResult({ name, school, className, score, game: "CardFlipping" });
           }}
         >
           Restart Game
-        </button>
+        </button> */}
 
         <TablaCelebration show={showCelebration} stop={stopCelebration} />
       </div>

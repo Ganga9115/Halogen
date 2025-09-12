@@ -10,6 +10,7 @@ import BackButton from "../utils/backbutton";
 import Footer from "../utils/Footer";
 import Logo from "../utils/logo";
 import TimerComponent from "../utils/TimerComponent"; // ✅ Import reusable timer
+import LanguageToggle from "../utils/LanguageToggle";
 
 const SaveTheGirl = () => {
   const { classId, subject } = useParams();
@@ -22,6 +23,11 @@ const SaveTheGirl = () => {
   const [win, setWin] = useState(false);
   const [score, setScore] = useState(0);
   const [showWrongPopup, setShowWrongPopup] = useState(false);
+
+  const handleLanguage = () => {
+    setLang(lang === "en" ? "ta" : "en")
+  };
+  
 
   // Shuffle helper only for ids
   const getRandomFive = (arr) => {
@@ -493,7 +499,7 @@ const SaveTheGirl = () => {
         )}
 
         {/* 🔘 Toggle Language */}
-        <button
+        {/* <button
           onClick={() => setLang(lang === "en" ? "ta" : "en")}
           className="absolute bottom-5 right-5 px-5 py-3 rounded-[2vh] text-[2.5vh] font-bold text-white"
           style={{
@@ -502,9 +508,10 @@ const SaveTheGirl = () => {
           }}
         >
           {lang === "en" ? "தமிழ்" : "English"}
-        </button>
-      </div>
+        </button>*/}
+      </div> 
       <Footer />
+      <LanguageToggle currentLanguage={lang} onPress={handleLanguage}/>
       <BackButton />
     </Background>
   );
