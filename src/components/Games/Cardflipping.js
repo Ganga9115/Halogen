@@ -7,6 +7,8 @@ import logo from '../../assets/logo123.png';
 import BackButton from '../utils/backbutton';
 import Footer from '../utils/Footer';
 import Logo from '../utils/logo';
+import { saveResult } from "../utils/leaderboardStorage";
+
 
 const Cardflipping = () => {
   const navigate = useNavigate();
@@ -22,6 +24,13 @@ const Cardflipping = () => {
   const [showCelebration, setShowCelebration] = useState(false);
   const [stopCelebration, setStopCelebration] = useState(false);
   const [score, setScore] = useState(0); // Added score state
+  const [hasSavedResult, setHasSavedResult] = useState(false);
+  const profile = JSON.parse(localStorage.getItem("player_profile") || "{}");
+const name = profile.name || "Anonymous";
+const school = profile.school || "Unknown School";
+const className = profile.className || "";
+saveResult({ name, school, className, score, game: "CardFlipping" });
+
 
   const initializeGame = useCallback(() => {
     setStopCelebration(true);
@@ -49,6 +58,8 @@ const Cardflipping = () => {
     setTimer(90);
     setShowCelebration(false);
     setScore(0); // Reset score
+    setHasSavedResult(false); // <-- add this line
+
 
     setShowAllCardsTemporarily(true);
     setTimeout(() => {
@@ -106,13 +117,32 @@ const Cardflipping = () => {
   }, [flippedCards, cards]);
 
   useEffect(() => {
-    if (matchedCards.length === cards.length && cards.length > 0) {
-      setMessage('You have won the game!');
-      setIsGameActive(false);
-      setShowCelebration(true);
-      setScore(50); // Set score to 50 on complete win
+  if (matchedCards.length === cards.length && cards.length > 0) {
+    setMessage('You have won the game!');
+    setIsGameActive(false);
+    setShowCelebration(true);
+
+    const finalScore = 50; // your current win score
+    setScore(finalScore);
+
+    // save only once per win
+    if (!hasSavedResult) {
+      // try to get stored profile first
+      const profile = JSON.parse(localStorage.getItem("player_profile") || "{}");
+      const name = profile.name || window.prompt("Enter your name") || "Anonymous";
+      const school = profile.school || window.prompt("Enter your school") || "Unknown School";
+      const className = profile.className || "";
+
+      try {
+        saveResult({ name, school, className, score: finalScore, game: "CardFlipping" });
+        setHasSavedResult(true);
+      } catch (err) {
+        console.error("Failed saving leaderboard result:", err);
+      }
     }
-  }, [matchedCards, cards]);
+  }
+}, [matchedCards, cards, hasSavedResult]);
+
 
   const handleCardClick = (id) => {
     const card = cards.find(c => c.id === id);

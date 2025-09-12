@@ -89,6 +89,28 @@ export default function Input() {
   const [className, setClassName] = useState("");
   const navigate = useNavigate();
 
+  // --- ADD THIS HANDLER ---
+  const handleFinish = () => {
+    const profile = {
+      name: nickname || "Anonymous",
+      school: schoolName || "Unknown School",
+      className: className || "",
+      avatar: avatar || "",
+      avatarIndex: avatarIndex || 0,
+      savedAt: Date.now()
+    };
+
+    // store profile once for all games to use
+    localStorage.setItem("player_profile", JSON.stringify(profile));
+
+    // then navigate to the game route (same as before)
+    navigate(`/single/${className}/${nickname}/${schoolName}`, {
+      state: { nickname, avatar, schoolName },
+    });
+  };
+  // --- END ADDITION ---
+
+
   const nextStep = () => {
     if (step < 4) setStep(step + 1);
   };
@@ -244,19 +266,19 @@ export default function Input() {
               </h2>
               <CustomClassDropdown value={className} onChange={setClassName} />
               <button
-                onClick={() =>
-                  navigate(`/single/${className}/${nickname}/${schoolName}`, {
-                    state: { nickname, avatar, schoolName },
-                  })
-                }
-                disabled={!className}
-                className="w-full mt-8 py-3 rounded-full bg-gradient-to-r from-[#A18CD1] to-[#FBC2EB] text-white font-semibold text-lg transition disabled:opacity-50"
+              onClick={handleFinish}
+              disabled={!className}
+              className="w-full mt-8 py-3 rounded-full bg-gradient-to-r from-[#A18CD1] to-[#FBC2EB] text-white font-semibold text-lg transition disabled:opacity-50"
               >
                 Finish
-              </button>
+                </button>
+
             </div>
           )}
         </div>
+
+        {/* Finish button */}
+        
 
         {/* Navigation buttons */}
         <div className="flex justify-start h-8">
