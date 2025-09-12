@@ -3,7 +3,7 @@ import cardsJSON from "../../data/cardsData.json";
 import TablaCelebration from '../utils/Celeb';
 import { useNavigate } from 'react-router-dom';
 import Background from '../utils/FloatingBackground';
-import logo from '../../assets/logo.png';
+import logo from '../../assets/logo123.png';
 import BackButton from '../utils/backbutton';
 import Footer from '../utils/Footer';
 import Logo from '../utils/logo';

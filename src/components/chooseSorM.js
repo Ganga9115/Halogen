@@ -6,6 +6,7 @@ import FloatingBackground from "./utils/FloatingBackground";
 import Logo from "./utils/logo"; // logo component
 import LanguageToggle from "./utils/LanguageToggle";
 import Footer from "./utils/Footer";
+import Logo2 from "./utils/logo2";
 
 // 🌐 Language translations
 const translations = {
