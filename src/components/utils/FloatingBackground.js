@@ -57,6 +57,7 @@ const Background = ({ children }) => {
 
       <div style={styles.content}>{children}</div>
     </div>
+  
   );
 };
 

@@ -10,9 +10,11 @@ import Match from './components/SinglePlayer/Match';
 import MultiplayerInput from './components/MultiPlayer/MultiPlayerInput';
 import ChooseLanguage from './components/SinglePlayer/ChooseLanguage';
 import Leaderboard from './components/SinglePlayer/leaderBoard';
+import Background from './components/utils/FloatingBackground';
 
 const App = () => {
   return (
+    <Background>
     <BrowserRouter>
     <Routes >
       <Route path="/"  element={<ChooseSorM />}/>
@@ -29,6 +31,7 @@ const App = () => {
       <Route path="/leaderboard" element={<Leaderboard />} />
     </Routes >
     </BrowserRouter>
+    </Background>
   )
 }
 

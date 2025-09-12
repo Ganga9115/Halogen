@@ -29,7 +29,7 @@ const styles = {
     width: "6vh",
     height: "6vh",
     borderRadius: "50%",
-    backgroundColor: "rgba(255, 255, 255, 0.9)",
+    background:"linear-gradient(135deg, #BACBFE, #C1ddE8)",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -38,7 +38,7 @@ const styles = {
     cursor: "pointer",
   },
   icon: {
-    color: "#8E7FD9",
+    color: "white",
   },
 };
 

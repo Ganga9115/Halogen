@@ -301,7 +301,8 @@ const CardflippingT = () => {
             transitionDuration: '150ms',
             marginBottom: '2vh',
             backgroundColor: '#7164b4',
-            fontSize: '1.2vw'
+            fontSize: '1.2vw',
+            zIndex:10
           }}
         >
           விளையாட்டை மீண்டும் தொடங்கவும்
