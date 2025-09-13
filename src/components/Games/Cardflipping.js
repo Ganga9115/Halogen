@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import cardsJSON from "../../data/cardsData.json";
+import cardsJSON from "../../data/cardsData.json"; // Make sure this path is correct
 import TablaCelebration from '../utils/Celeb';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Background from '../utils/FloatingBackground';
 import logo from '../../assets/logo123.png';
 import BackButton from '../utils/backbutton';
@@ -11,6 +11,7 @@ import { saveResult } from "../utils/leaderboardStorage";
 
 const Cardflipping = () => {
   const navigate = useNavigate();
+  const { className: routeClassName, nickname: routeNickname, schoolName: routeSchoolName } = useParams();
 
   const [cards, setCards] = useState([]);
   const [flippedCards, setFlippedCards] = useState([]);
@@ -19,11 +20,23 @@ const Cardflipping = () => {
   const [isGameActive, setIsGameActive] = useState(true);
   const [gameMode, setGameMode] = useState('antonym');
   const [showAllCardsTemporarily, setShowAllCardsTemporarily] = useState(false);
-  const [timer, setTimer] = useState(90);
+  const [timer, setTimer] = useState(180); // Set initial timer to 3 minutes (180 seconds)
   const [showCelebration, setShowCelebration] = useState(false);
   const [stopCelebration, setStopCelebration] = useState(false);
   const [score, setScore] = useState(0);
   const [hasSavedResult, setHasSavedResult] = useState(false);
+
+  // Helper function to get player profile from localStorage
+  const getPlayerProfile = () => {
+    const profile = JSON.parse(localStorage.getItem("player_profile") || "{}");
+    return {
+      name: routeNickname || profile.name || "Anonymous",
+      school: routeSchoolName || profile.school || "Unknown School",
+      className: routeClassName || profile.className || "",
+      avatar: profile.avatar || "",
+      avatarIndex: profile.avatarIndex || 0,
+    };
+  };
 
   const initializeGame = useCallback(() => {
     setStopCelebration(true);
@@ -31,9 +44,19 @@ const Cardflipping = () => {
 
     if (!cardsJSON || !cardsJSON.length) return;
 
-    const gamePairs = cardsJSON.find(data => data.type === gameMode).pairs;
+    const playerProfile = getPlayerProfile();
+    const currentClassName = playerProfile.className || routeClassName;
 
-    const deck = gamePairs.flatMap(pair => [
+    const gamePairs = cardsJSON.filter(data => data.type === gameMode && data.level === currentClassName);
+
+    if (!gamePairs.length) {
+      console.error(`No pairs found for game mode "${gameMode}" and class "${currentClassName}".`);
+      return;
+    }
+
+    const selectedPairs = gamePairs[0].pairs;
+
+    const deck = selectedPairs.flatMap(pair => [
       { id: Math.random(), word: pair[0], match: pair[1] },
       { id: Math.random(), word: pair[1], match: pair[0] }
     ]);
@@ -48,16 +71,17 @@ const Cardflipping = () => {
     setMatchedCards([]);
     setMessage('');
     setIsGameActive(true);
-    setTimer(90);
+    setTimer(180); // Reset timer to 3 minutes
     setShowCelebration(false);
     setScore(0);
     setHasSavedResult(false);
 
     setShowAllCardsTemporarily(true);
+    // Set the initial reveal duration to 15 seconds as requested
     setTimeout(() => {
       setShowAllCardsTemporarily(false);
-    }, 4000);
-  }, [gameMode]);
+    }, 15000); // 15 seconds
+  }, [gameMode, routeClassName, routeNickname, routeSchoolName]);
 
   useEffect(() => {
     initializeGame();
@@ -86,18 +110,25 @@ const Cardflipping = () => {
 
   useEffect(() => {
     if (flippedCards.length === 2) {
-      const [firstCard, secondCard] = flippedCards;
-      const firstCardData = cards.find(card => card.id === firstCard);
-      const secondCardData = cards.find(card => card.id === secondCard);
+      const [firstCardId, secondCardId] = flippedCards;
+      const firstCardData = cards.find(card => card.id === firstCardId);
+      const secondCardData = cards.find(card => card.id === secondCardId);
 
       if (firstCardData.match === secondCardData.word) {
-        setMatchedCards(prev => [...prev, firstCard, secondCard]);
+        setMatchedCards(prev => [...prev, firstCardId, secondCardId]);
+        setCards(prevCards =>
+          prevCards.map(card =>
+            card.id === firstCardId || card.id === secondCardId
+              ? { ...card, isMatched: true }
+              : card
+          )
+        );
         setFlippedCards([]);
       } else {
         setTimeout(() => {
           setCards(prevCards =>
             prevCards.map(card =>
-              card.id === firstCard || card.id === secondCard
+              card.id === firstCardId || card.id === secondCardId
                 ? { ...card, isFlipped: false }
                 : card
             )
@@ -110,18 +141,17 @@ const Cardflipping = () => {
 
   useEffect(() => {
     if (matchedCards.length === cards.length && cards.length > 0) {
-      const finalScore = 60;
-      // Updated message to include the score
+      const finalScore = 60; // This score calculation might need adjustment
       setMessage(`You have won the game! Your score is ${finalScore}.`);
       setIsGameActive(false);
       setShowCelebration(true);
       setScore(finalScore);
 
       if (!hasSavedResult) {
-        const profile = JSON.parse(localStorage.getItem("player_profile") || "{}");
-        const name = profile.name || window.prompt("Enter your name") || "Anonymous";
-        const school = profile.school || window.prompt("Enter your school") || "Unknown School";
-        const className = profile.className || "";
+        const profile = getPlayerProfile();
+        const name = profile.name;
+        const school = profile.school;
+        const className = profile.className;
 
         try {
           saveResult({ name, school, className, score: finalScore, game: "CardFlipping" });
@@ -134,18 +164,22 @@ const Cardflipping = () => {
   }, [matchedCards, cards, hasSavedResult]);
 
   const handleCardClick = (id) => {
-    const card = cards.find(c => c.id === id);
-    if (!isGameActive || card.isFlipped || flippedCards.length === 2 || showAllCardsTemporarily) return;
+    if (!isGameActive || flippedCards.length === 2 || showAllCardsTemporarily) return;
+
+    const clickedCard = cards.find(card => card.id === id);
+    if (clickedCard.isFlipped || clickedCard.isMatched) return;
 
     setCards(prevCards =>
-      prevCards.map(c => (c.id === id ? { ...c, isFlipped: true } : c))
+      prevCards.map(card =>
+        card.id === id ? { ...card, isFlipped: true } : card
+      )
     );
     setFlippedCards(prev => [...prev, id]);
   };
 
   const gameInstructions = gameMode === 'antonym'
-    ? 'Flip the perfect antonyms together!'
-    : 'Flip the perfect synonyms together!';
+    ? `Flip the perfect antonyms for Class ${getPlayerProfile().className}!`
+    : `Flip the perfect synonyms for Class ${getPlayerProfile().className}!`;
 
   const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
@@ -157,6 +191,10 @@ const Cardflipping = () => {
     navigate('/leaderboard');
   };
 
+  const restartGame = () => {
+    initializeGame();
+  };
+
   return (
     <Background>
       <Logo />
@@ -165,7 +203,9 @@ const Cardflipping = () => {
 
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '5vh', gap: '2vw' }}>
           <button
-            onClick={() => setGameMode('antonym')}
+            onClick={() => {
+              setGameMode('antonym');
+            }}
             style={{
               padding: '1vh 2vw',
               borderRadius: '9999px',
@@ -181,7 +221,9 @@ const Cardflipping = () => {
             Antonyms
           </button>
           <button
-            onClick={() => setGameMode('synonym')}
+            onClick={() => {
+              setGameMode('synonym');
+            }}
             style={{
               padding: '1vh 2vw',
               borderRadius: '9999px',
@@ -202,7 +244,6 @@ const Cardflipping = () => {
         </div>
 
         {message && (
-          // This is the pop-up modal that will appear upon winning
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
             <div className="bg-white p-8 rounded-lg shadow-2xl text-center" style={{ borderRadius: '1.5vw', border: '4px solid #bca5d4' }}>
               <h2 className="text-[2.5vw] font-bold mb-4">
@@ -222,7 +263,7 @@ const Cardflipping = () => {
                   Leaderboard
                 </button>
                 <button
-                  onClick={initializeGame}
+                  onClick={restartGame}
                   className="px-6 py-3 rounded-lg text-white font-bold bg-[#8f9fe4] hover:bg-[#7164b4] transition"
                 >
                   Play Again
@@ -242,7 +283,7 @@ const Cardflipping = () => {
                 borderRadius: '1vw',
                 boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
                 aspectRatio: '3 / 2',
-                cursor: 'pointer',
+                cursor: isGameActive && !showAllCardsTemporarily ? 'pointer' : 'default',
                 transformStyle: 'preserve-3d',
                 transform: (card.isFlipped || card.isMatched || showAllCardsTemporarily) ? 'rotateY(180deg)' : 'none',
                 transition: 'transform 700ms',

@@ -18,10 +18,10 @@ const CardflippingT = () => {
   const [isGameActive, setIsGameActive] = useState(true);
   const [gameMode, setGameMode] = useState('மொழியியல்');
   const [showAllCardsTemporarily, setShowAllCardsTemporarily] = useState(false);
-  const [timer, setTimer] = useState(90);
+  const [timer, setTimer] = useState(180); // Timer is now 3 minutes (180 seconds)
   const [showCelebration, setShowCelebration] = useState(false);
   const [stopCelebration, setStopCelebration] = useState(false);
-  const [score, setScore] = useState(0); // Added score state
+  const [score, setScore] = useState(0);
 
   const initializeGame = useCallback(() => {
     setStopCelebration(true);
@@ -46,14 +46,15 @@ const CardflippingT = () => {
     setMatchedCards([]);
     setMessage('');
     setIsGameActive(true);
-    setTimer(90);
+    setTimer(180); // Reset timer to 3 minutes
     setShowCelebration(false);
-    setScore(0); // Reset score on new game
+    setScore(0);
 
     setShowAllCardsTemporarily(true);
+    // Set the initial reveal duration to 15 seconds as requested
     setTimeout(() => {
       setShowAllCardsTemporarily(false);
-    }, 4000);
+    }, 15000); // 15 seconds
   }, [gameMode]);
 
   useEffect(() => {
@@ -70,7 +71,7 @@ const CardflippingT = () => {
             clearInterval(countdown);
             setIsGameActive(false);
             setMessage("நேரம் முடிந்துவிட்டது! விளையாட்டு முடிந்தது.");
-            setScore(0); // No score if time runs out
+            setScore(0);
             return 0;
           }
           return prevTime - 1;
@@ -83,18 +84,25 @@ const CardflippingT = () => {
 
   useEffect(() => {
     if (flippedCards.length === 2) {
-      const [firstCard, secondCard] = flippedCards;
-      const firstCardData = cards.find(card => card.id === firstCard);
-      const secondCardData = cards.find(card => card.id === secondCard);
+      const [firstCardId, secondCardId] = flippedCards;
+      const firstCardData = cards.find(card => card.id === firstCardId);
+      const secondCardData = cards.find(card => card.id === secondCardId);
 
       if (firstCardData.match === secondCardData.word) {
-        setMatchedCards(prev => [...prev, firstCard, secondCard]);
+        setMatchedCards(prev => [...prev, firstCardId, secondCardId]);
+        setCards(prevCards =>
+          prevCards.map(card =>
+            card.id === firstCardId || card.id === secondCardId
+              ? { ...card, isMatched: true }
+              : card
+          )
+        );
         setFlippedCards([]);
       } else {
         setTimeout(() => {
           setCards(prevCards =>
             prevCards.map(card =>
-              card.id === firstCard || card.id === secondCard
+              card.id === firstCardId || card.id === secondCardId
                 ? { ...card, isFlipped: false }
                 : card
             )
@@ -110,7 +118,7 @@ const CardflippingT = () => {
       setMessage('விளையாட்டு வெற்றி!');
       setIsGameActive(false);
       setShowCelebration(true);
-      setScore(50); // Set score to 50 on complete win
+      setScore(50);
     }
   }, [matchedCards, cards]);
 
@@ -150,7 +158,12 @@ const CardflippingT = () => {
 
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '5vh', gap: '2vw' }}>
           <button
-            onClick={() => setGameMode('மொழியியல்')}
+            onClick={() => {
+              setGameMode('மொழியியல்');
+              // This is commented out to prevent a full re-initialization here,
+              // as the useEffect hook handles the change in gameMode.
+              // initializeGame();
+            }}
             style={{
               padding: '1vh 2vw',
               borderRadius: '9999px',
@@ -166,7 +179,10 @@ const CardflippingT = () => {
             மொழியியல்
           </button>
           <button
-            onClick={() => setGameMode('கவிதை_கவிஞர்')}
+            onClick={() => {
+              setGameMode('கவிதை_கவிஞர்');
+              // initializeGame();
+            }}
             style={{
               padding: '1vh 2vw',
               borderRadius: '9999px',
@@ -288,25 +304,6 @@ const CardflippingT = () => {
             </div>
           ))}
         </div>
-
-        <button
-          onClick={initializeGame}
-          style={{
-            padding: '1vh 2vw',
-            color: '#ffffff',
-            fontWeight: 'bold',
-            borderRadius: '9999px',
-            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-            transitionProperty: 'background-color',
-            transitionDuration: '150ms',
-            marginBottom: '2vh',
-            backgroundColor: '#7164b4',
-            fontSize: '1.2vw',
-            zIndex:10
-          }}
-        >
-          விளையாட்டை மீண்டும் தொடங்கவும்
-        </button>
 
         <TablaCelebration show={showCelebration} stop={stopCelebration} />
       </div>

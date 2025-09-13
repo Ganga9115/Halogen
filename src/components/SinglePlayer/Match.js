@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import matchData from "../../data/match.json";
 import Footer from "../utils/Footer";
@@ -6,11 +6,13 @@ import Background from "../utils/FloatingBackground";
 import Logo from "../utils/logo";
 import Confetti from "react-confetti";
 import BottomNav from "../utils/BottomNav";
+import { saveResult } from "../utils/leaderboardStorage";
 
 const Match = () => {
   const { classId, subject, topic } = useParams();
   const navigate = useNavigate();
-
+const colorPalette = ['#E0A4AF', '#F2D0A9', '#A6C9C2', '#BEB6D9'];
+  const [colorIndex, setColorIndex] = useState(0); // New state for color tracking
   const [questions, setQuestions] = useState([]);
   const [currentQ, setCurrentQ] = useState(0);
   const [shuffledDefs, setShuffledDefs] = useState([]);
@@ -25,12 +27,16 @@ const Match = () => {
   const timerRef = useRef(null);
   const [showConfetti, setShowConfetti] = useState(false);
   const [showTimeOutModal, setShowTimeOutModal] = useState(false);
+  const [hasSavedResult, setHasSavedResult] = useState(false);
+  
+  // New state to track the history of paired terms for undo functionality
+  const [pairedTermHistory, setPairedTermHistory] = useState([]);
 
   const shuffleArray = (arr) => [...arr].sort(() => Math.random() - 0.5);
   const pickRandom = (arr, n) =>
     shuffleArray(arr).slice(0, Math.min(n, arr.length));
 
-  useEffect(() => {
+  const initializeGame = useCallback(() => {
     if (!classId || !subject || !topic) return;
 
     const filtered = matchData.filter(
@@ -46,12 +52,12 @@ const Match = () => {
       filtered.filter((q) => q.difficulty === "medium"),
       2
     );
-    const hard = pickRandom(filtered.filter((q) => q.difficulty === "hard"), 1);
+    const hard = pickRandom(filtered.filter((q) => q.difficulty === "hard"), 2);
     let selected = [...easy, ...medium, ...hard];
 
-    if (selected.length < 5) {
+    if (selected.length < 6) {
       const remaining = filtered.filter((q) => !selected.includes(q));
-      const fill = pickRandom(remaining, 5 - selected.length);
+      const fill = pickRandom(remaining, 6 - selected.length);
       selected = [...selected, ...fill];
     }
     setQuestions(shuffleArray(selected));
@@ -59,7 +65,17 @@ const Match = () => {
     setCorrectCount(0);
     setCurrentQ(0);
     setHasChecked(false);
+    setTimeLeft(180);
+    setTimerRunning(true);
+    setShowConfetti(false);
+    setShowTimeOutModal(false);
+    setHasSavedResult(false);
+    setPairedTermHistory([]); // Reset history on new game
   }, [classId, subject, topic]);
+
+  useEffect(() => {
+    initializeGame();
+  }, [initializeGame]);
 
   useEffect(() => {
     if (questions.length > 0) {
@@ -75,28 +91,80 @@ const Match = () => {
         setTimeLeft((prev) => prev - 1);
       }, 1000);
     } else if (timeLeft === 0) {
-      setHasChecked(true);
+      setTimerRunning(false);
       checkAnswers(true);
       setShowTimeOutModal(true);
     }
     return () => clearInterval(timerRef.current);
   }, [timerRunning, timeLeft]);
 
+  useEffect(() => {
+    if (showConfetti && !hasSavedResult) {
+      const finalScore = score;
+      const profile = JSON.parse(localStorage.getItem("player_profile") || "{}");
+      const name = profile.name || window.prompt("Enter your name") || "Anonymous";
+      const school = profile.school || window.prompt("Enter your school") || "Unknown School";
+      const className = profile.className || "";
+
+      try {
+        saveResult({ name, school, className, score: finalScore, game: "Match" });
+        setHasSavedResult(true);
+      } catch (err) {
+        console.error("Failed saving leaderboard result:", err);
+      }
+    }
+  }, [showConfetti, hasSavedResult, score]);
+
   const handleTermSelect = (term) => {
     if (userPairs[term] || hasChecked) return;
     setSelectedTerm(term);
   };
 
-  const handleDefinitionSelect = (definition) => {
+const handleDefinitionSelect = (definition) => {
     if (!selectedTerm || Object.values(userPairs).includes(definition) || hasChecked) return;
-    const newColor = `#${Math.floor(Math.random() * 0x1000000).toString(16).padStart(6, '0')}`;
+
+    // Get the next color from the palette
+    const newColor = colorPalette[colorIndex];
+
+    // Create the new pair and update the states
     const newPair = { [selectedTerm]: definition };
     setUserPairs((prev) => ({ ...prev, ...newPair }));
     setPairColors((prev) => ({ ...prev, [selectedTerm]: newColor }));
+
+    // Store the paired term for the undo functionality
+    setPairedTermHistory((prev) => [...prev, selectedTerm]);
+
+    // Clear the selected term
+    setSelectedTerm(null);
+
+    // Cycle to the next color in the palette
+    setColorIndex((prev) => (prev + 1) % colorPalette.length);
+};
+
+  const handleUndo = () => {
+    if (hasChecked || pairedTermHistory.length === 0) return;
+
+    // Get the most recent term from history
+    const lastPairedTerm = pairedTermHistory[pairedTermHistory.length - 1];
+
+    // Remove the pair from state
+    setUserPairs((prev) => {
+      const newPairs = { ...prev };
+      delete newPairs[lastPairedTerm];
+      return newPairs;
+    });
+    setPairColors((prev) => {
+      const newColors = { ...prev };
+      delete newColors[lastPairedTerm];
+      return newColors;
+    });
+
+    // Remove the last item from the history array
+    setPairedTermHistory((prev) => prev.slice(0, -1));
     setSelectedTerm(null);
   };
 
-  const checkAnswers = (fromTimer = false) => {
+  const checkAnswers = () => {
     setTimerRunning(false);
     setHasChecked(true);
     let correctPairsCount = 0;
@@ -130,6 +198,7 @@ const Match = () => {
       setUserPairs({});
       setPairColors({});
       setSelectedTerm(null);
+      setPairedTermHistory([]); // Reset history for the next question
       setTimerRunning(true);
       setHasChecked(false);
     } else {
@@ -139,21 +208,11 @@ const Match = () => {
   };
 
   const handlePlayAgain = () => {
-    setCurrentQ(0);
-    setCorrectCount(0);
-    setUserPairs({});
-    setPairColors({});
-    setSelectedTerm(null);
-    setTimeLeft(180);
-    setTimerRunning(true);
-    setHasChecked(false);
-    setScore(0);
-    setShowConfetti(false);
-    setShowTimeOutModal(false);
+    initializeGame();
   };
 
-  const handleGoToDashboard = () => {
-    navigate("/leaderBoard");
+  const handleGoToLeaderboard = () => {
+    navigate("/leaderboard");
   };
 
   const formatTime = (seconds) => {
@@ -180,7 +239,7 @@ const Match = () => {
   const currentQuestion = questions[currentQ];
   const terms = currentQuestion.matches.map((m) => m.term);
   const allPaired = Object.keys(userPairs).length === terms.length;
-  const isGameOver = currentQ === questions.length - 1 && hasChecked && !timerRunning && timeLeft === 0;
+  const isGameOver = showConfetti || showTimeOutModal;
 
   return (
     <Background>
@@ -194,10 +253,10 @@ const Match = () => {
         />
       )}
       <div className="flex items-center justify-center w-full max-h-screen p-[5%] relative">
-        {(isGameOver || (currentQ === questions.length - 1 && hasChecked)) || showTimeOutModal ? (
+        {isGameOver ? (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white p-8 rounded-lg shadow-2xl text-center">
-              <h2 className="text-3xl font-bold mb-4">
+            <div className="bg-white p-8 rounded-lg shadow-2xl text-center" style={{ borderRadius: '1.5vw', border: '4px solid #bca5d4' }}>
+              <h2 className="text-[2.5vw] font-bold mb-4">
                 {showTimeOutModal ? "Oops! Clock ran out!" : "🎉 Congratulations! 🎉"}
               </h2>
               <p className="text-xl mb-6">
@@ -210,10 +269,10 @@ const Match = () => {
               </p>
               <div className="flex justify-center gap-4">
                 <button
-                  onClick={handleGoToDashboard}
+                  onClick={handleGoToLeaderboard}
                   className="px-6 py-3 rounded-lg text-white font-bold bg-[#7164b4] hover:bg-[#8f9fe4] transition"
                 >
-                  Go to LeaderBoard
+                  Go to Leaderboard
                 </button>
                 <button
                   onClick={handlePlayAgain}
@@ -228,14 +287,14 @@ const Match = () => {
           <div className="bg-gradient-to-br from-[#BACBFE] to-[#C1DDE8] shadow-xl rounded-[2vh] p-[3%] w-full max-w-[80%]">
             <h1 className="text-[4vh] font-extrabold mb-[1%] text-center">{currentQuestion.question}</h1>
             
-            <div className="flex flex-col md:flex-row md:justify-between items-center mb-[2%] relative">
-              <p className="text-[2vh] text-gray-600 text-center md:absolute md:left-1/2 md:transform md:-translate-x-1/2">
+            <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-[2%]">
+              <p className="text-[2vh] text-gray-600 text-center md:text-left">
                 Difficulty:{" "}
                 <span className="font-bold capitalize">{currentQuestion.difficulty}</span> | Q{" "}
                 {currentQ + 1}/{questions.length}
               </p>
               
-              <div className={`flex items-center gap-2 p-2 rounded-full text-white font-bold transition-colors md:ml-auto mt-2 md:mt-0 ${getTimerColorClass()}`}>
+              <div className={`flex items-center gap-2 p-2 rounded-full text-white font-bold transition-colors mt-2 md:mt-0 ${getTimerColorClass()}`}>
                 <span role="img" aria-label="clock">⏰</span>
                 <span className="text-lg">{formatTime(timeLeft)}</span>
               </div>
@@ -258,7 +317,7 @@ const Match = () => {
                       cursor:
                         pairColors[term] || hasChecked ? "not-allowed" : "pointer",
                     }}
-                    disabled={!!pairColors[term] && !hasChecked || hasChecked}
+                    disabled={!!pairColors[term] || hasChecked}
                   >
                     {term}
                   </button>
@@ -303,8 +362,19 @@ const Match = () => {
                 Check Answers
               </button>
               <button
+                onClick={handleUndo}
+                disabled={pairedTermHistory.length === 0 || hasChecked}
+                className={`px-[5%] py-[2%] rounded-[2vh] text-white font-bold text-[2.5vh] transition ${
+                  pairedTermHistory.length === 0 || hasChecked
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-blue-500 hover:scale-105"
+                }`}
+              >
+                Undo
+              </button>
+              <button
                 onClick={handleNext}
-                className="px-[5%] py-[2%] rounded-[2vh] text-white font-bold text-[2.5vh] bg-[#8f9fe4] hover:scale-105 transition"
+                className={`px-[5%] py-[2%] rounded-[2vh] text-white font-bold text-[2.5vh] bg-[#8f9fe4] hover:scale-105 transition`}
               >
                 {currentQ === questions.length - 1 ? "Finish" : "Next ➡️"}
               </button>
