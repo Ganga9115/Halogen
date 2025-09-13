@@ -3,9 +3,9 @@ import { useParams, useNavigate } from "react-router-dom";
 import matchData from "../../data/match.json";
 import Footer from "../utils/Footer";
 import Background from "../utils/FloatingBackground";
-import BackButton from "../utils/backbutton";
 import Logo from "../utils/logo";
 import Confetti from "react-confetti";
+import BottomNav from "../utils/BottomNav";
 
 const Match = () => {
   const { classId, subject, topic } = useParams();
@@ -153,7 +153,7 @@ const Match = () => {
   };
 
   const handleGoToDashboard = () => {
-    navigate("/leaderboard");
+    navigate("/leaderBoard");
   };
 
   const formatTime = (seconds) => {
@@ -313,7 +313,7 @@ const Match = () => {
         )}
         <Footer />
       </div>
-      <BackButton />
+      <BottomNav />
     </Background>
   );
 };

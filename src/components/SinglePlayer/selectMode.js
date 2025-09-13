@@ -7,8 +7,8 @@ import match from "../../assets/match.png";
 import FloatingBackground from "../utils/FloatingBackground"; // ✅ background
 import Logo from "../utils/logo"; // ✅ logo
 import LanguageToggle from "../utils/LanguageToggle";
-import BackButton from "../utils/backbutton";
 import Footer from "../utils/Footer";
+import BottomNav from "../utils/BottomNav";
 
 // 🌐 Translations
 const translations = {
@@ -163,8 +163,8 @@ const SelectMode = () => {
         />
       </div>
       <Footer />
-      <BackButton />
       <LanguageToggle currentLanguage={lang} onPress={handleLanguage} />
+      <BottomNav />
     </FloatingBackground>
   );
 };

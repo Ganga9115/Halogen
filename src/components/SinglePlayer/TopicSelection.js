@@ -5,8 +5,8 @@ import topicsTamData from "../../data/topicstam.json";
 import bg from "../../assets/bg.jpg";
 import Background from "../utils/FloatingBackground";
 import Logo from "../utils/logo";
-import BackButton from "../utils/backbutton";
 import Footer from "../utils/Footer";
+import BottomNav from "../utils/BottomNav";
 
 const TopicSelection = () => {
   const { classId, displayName, schoolName, subject, lang } = useParams();
@@ -83,7 +83,7 @@ const TopicSelection = () => {
       </div>
     </div>
     <Footer />
-    <BackButton />
+    <BottomNav />
     </Background>
   );
 };

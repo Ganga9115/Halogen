@@ -1,9 +1,9 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Background from "../utils/FloatingBackground";
-import BackButton from "../utils/backbutton";
 import Footer from "../utils/Footer";
 import Logo from "../utils/logo";
+import BottomNav from "../utils/BottomNav";
 
 const ChooseLanguage = () => {
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ const ChooseLanguage = () => {
             maxWidth: "80%",
             borderRadius: "3%",
             boxShadow: "0 1.25rem 3rem rgba(0, 0, 0, 0.2)",
-            padding: "12%",
+            padding: "8%",
             textAlign: "center",
           }}
         >
@@ -97,7 +97,7 @@ const ChooseLanguage = () => {
         </div>
       </div>
       <Footer />
-      <BackButton />
+      <BottomNav />
     </Background>
   );
 };
