@@ -9,6 +9,8 @@ import Background from "../utils/FloatingBackground";
 import BackButton from "../utils/backbutton";
 import Footer from "../utils/Footer";
 import Logo from "../utils/logo";
+import TimerComponent from "../utils/TimerComponent";
+import LanguageToggle from "../utils/LanguageToggle";
 
 const SaveGirl2 = () => {
   const { classId, subject } = useParams();
@@ -29,14 +31,18 @@ const SaveGirl2 = () => {
       const j = Math.floor(Math.random() * (i + 1));
       [ids[i], ids[j]] = [ids[j], ids[i]];
     }
-    return ids.slice(0, 5);
+    return ids.slice(0, 6);
+  };
+
+  const handleLanguage = () => {
+    setLang(lang === "en" ? "ta" : "en")
   };
 
   const getRandomFiveQuestions = (arr) => {
     return arr
       .map((q) => q)
-      .sort(() => 0.5 - Math.random())
-      .slice(0, 5);
+      .sort(() => 0.6 - Math.random())
+      .slice(0, 6);
   };
 
   // Load questions on classId or subject change (except lang)
@@ -162,7 +168,7 @@ const SaveGirl2 = () => {
 
   const waterLevel = ((60 - timeLeft) / 60) * 100;
   const levelProgress = ((currentQ + 1) / (questions.length || 1)) * 100;
-  const timerColor = timeLeft > 30 ? "#BCA5D4" : timeLeft > 15 ? "#EFE2FA" : "red";
+  // const timerColor = timeLeft > 30 ? "#BCA5D4" : timeLeft > 15 ? "#EFE2FA" : "red";
 
   if (!questions.length) {
     return (
@@ -304,7 +310,7 @@ const SaveGirl2 = () => {
             }}
           >
             {/* Timer */}
-            <div
+            {/* <div
               style={{
                 width: "100%",
                 display: "flex",
@@ -330,7 +336,8 @@ const SaveGirl2 = () => {
               >
                 ⏳ {timeLeft}s
               </div>
-            </div>
+            </div> */}
+            <TimerComponent initialTime={60} onTimeUp={() => setGameOver(true)} />
             {/* Question */}
             {questions[currentQ] && questions[currentQ][lang] ? (
               <>
@@ -501,7 +508,7 @@ const SaveGirl2 = () => {
       )}
 
       {/* 🔘 Toggle Language */}
-      <button
+      {/* <button
         onClick={() => setLang(lang === "en" ? "ta" : "en")}
         className="absolute bottom-5 right-5 px-5 py-3 rounded-[2vh] text-[2.5vh] font-bold text-white"
         style={{
@@ -510,7 +517,8 @@ const SaveGirl2 = () => {
         }}
       >
         {lang === "en" ? "தமிழ்" : "English"}
-      </button>
+      </button> */}
+      <LanguageToggle currentLanguage={lang} onPress={handleLanguage}/>
        <BackButton />
     <Footer />
     </div>

@@ -10,7 +10,7 @@ const GRID_SIZE = 8;
 const POINTS_PER_CORRECT = 10;
 const REQUIRED_TO_UNLOCK = 10;
 const QUESTIONS_PER_LEVEL = 3;
-const TIMER_DURATION = 5;
+const TIMER_DURATION = 180;
 
 const ALPHABET_EN = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const ALPHABET_TA = "அஆஇஈஉஊஎஏஐஒஓஔகஙசஞடணதநபமயரலவழளறனஜஷஸஹ";
@@ -736,7 +736,7 @@ function handleNext() {
 
   // Update the restart function
   function restartAll(goToDashboard = false) {
-    setIsLoading(true);
+    // setIsLoading(true);
     setLevelIndex(0);
     setQIndex(0);
     setScore(0);
@@ -760,13 +760,7 @@ function handleNext() {
     }
   }
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-[#BCA5D4]">
-        <div className="text-white text-2xl">Loading...</div>
-      </div>
-    );
-  }
+  
 
 return (
   <Background>
@@ -970,7 +964,7 @@ return (
         </div>
       )}
 
-      // Also update the level completion modal button handler:
+      
 {showLevelCompleteModal && (
   <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
     <div className="bg-[#DEEBF7] rounded-2xl p-6 w-[92%] max-w-lg text-center shadow-2xl">
