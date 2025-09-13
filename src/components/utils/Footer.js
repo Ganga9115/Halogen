@@ -8,14 +8,14 @@ export default function Footer() {
         bottom: "0",
         left: "0",
         width: "100vw",
-        height: "8vh",
+        height: "5vh",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
        
       }}
     >
-      <p style={{ fontSize: "4vh",fontWeight:"500" }}>Designed by @RMKEC</p>
+      <p style={{ fontSize: "3vh",fontWeight:"500" }}>Designed & Developed by @R.M.K Engineering College, Department of Information Technology</p>
     </footer>
   );
 }

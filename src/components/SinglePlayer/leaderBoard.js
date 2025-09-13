@@ -1,8 +1,8 @@
 // src/components/SinglePlayer/leaderBoard.js
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import BackButton from "../utils/backbutton";
 import Footer from "../utils/Footer";
+import BottomNav from "../utils/BottomNav";
 import { getTopStudents, getTopSchools, exportData, clearLeaderboard } from "../utils/leaderboardStorage";
 
 function ProgressBar({ value, max = 100 }) {
@@ -142,7 +142,7 @@ export default function Leaderboard() {
       </div>
 
       <Footer />
-      <BackButton />
+      <BottomNav />
     </div>
   );
 }

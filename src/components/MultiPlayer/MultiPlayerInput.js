@@ -3,7 +3,7 @@ import adjectives from "../../data/alliterations.json";
 import { useNavigate } from "react-router-dom";
 import Background from "../utils/FloatingBackground";
 import Logo from '../utils/logo';
-import BackButton from "../utils/backbutton";
+import BottomNav from "../utils/BottomNav";
 
 // Player form component
 function PlayerForm({ playerNumber, playerData, onUpdate, onNext, isLastPlayer }) {
@@ -172,7 +172,7 @@ export default function MultiplayerInput() {
           </div>
         </div>
       </div>
-      <BackButton />
+      <BottomNav />
     </Background>
   );
 }

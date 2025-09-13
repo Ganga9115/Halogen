@@ -8,9 +8,9 @@ import bluebg from '../../assets/blueBG.jpg';
 import { useNavigate, useLocation } from 'react-router-dom'; 
 import AppBackground from '../utils/AppBackground'
 import Background from '../utils/FloatingBackground';
-import BackButton from '../utils/backbutton';
 import Footer from '../utils/Footer';
 import Logo from '../utils/logo';
+import BottomNav from '../utils/BottomNav';
 const XO = () => {
   const location = useLocation();
   // Get player data from navigation state or use defaults
@@ -465,7 +465,7 @@ const XO = () => {
       </div>
     </div>
     <Footer />
-    <BackButton />
+    <BottomNav />
     </Background>
   );
 };

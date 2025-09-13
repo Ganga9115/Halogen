@@ -9,9 +9,9 @@ import avatar3 from '../../assets/Avatar/avatar3.png';
 import avatar4 from '../../assets/Avatar/avatar4.png';
 import avatar5 from '../../assets/Avatar/avatar5.png';
 import avatar6 from '../../assets/Avatar/avatar6.png';
-import BackButton from "../utils/backbutton";
 import Footer from "../utils/Footer";
 import Logo from "../utils/logo";
+import BottomNav from "../utils/BottomNav";
 
 const avatarImages = [avatar1, avatar2, avatar3, avatar4, avatar5, avatar6];
 
@@ -295,7 +295,9 @@ export default function Input() {
       </div>
     </div>
     
-    <BackButton />
+    
+    <Footer />
+    <BottomNav />  
     </Background>
   );
 }
