@@ -109,7 +109,9 @@ export default function Input() {
     });
   };
   // --- END ADDITION ---
-
+useEffect(() => {
+  setAvatar(avatarImages[avatarIndex]);
+}, [avatarIndex, avatarImages]);
 
   const nextStep = () => {
     if (step < 4) setStep(step + 1);
@@ -221,7 +223,7 @@ export default function Input() {
 
           {/* Step 3: Avatar Carousel */}
           {step === 3 && (
-            <div className="text-center flex flex-col items-center mb-[10vh]">
+            <div className="text-center flex flex-col items-center mb-[5vh]">
               <h2 className="text-xl font-bold text-[#202345] mb-4">
                 Choose your Avatar
               </h2>
@@ -234,12 +236,12 @@ export default function Input() {
                   &#8592;
                 </button>
                 <img
-                  src={avatarImages[avatarIndex]}
-                  alt={`Avatar ${avatarIndex + 1}`}
-                  className={`w-24 h-24 rounded-full border-4 transition ${avatar !== avatarImages[avatarIndex] ? 'border-[#C6CBF2]' : 'border-[#A18CD1]'}`}
-                  onClick={() => setAvatar(avatarImages[avatarIndex])}
-                  style={{ cursor: 'pointer' }}
-                />
+  src={avatarImages[avatarIndex]}
+  alt={`Avatar ${avatarIndex + 1}`}
+  className={`w-24 h-24 rounded-full border-4 transition ${avatar !== avatarImages[avatarIndex] ? 'border-[#C6CBF2]' : 'border-[#A18CD1]'}`}
+  style={{ cursor: 'pointer' }}
+/>
+
                 <button
                   onClick={() => setAvatarIndex(i => (i === avatarImages.length - 1 ? 0 : i + 1))}
                   className="p-2 text-2xl focus:outline-none"

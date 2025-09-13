@@ -11,6 +11,7 @@ import Logo from "../utils/logo";
 import TimerComponent from "../utils/TimerComponent";
 import LanguageToggle from "../utils/LanguageToggle";
 import { saveResult } from "../utils/leaderboardStorage"; // ✅ Add saveResult
+import BottomNav from "../utils/BottomNav";
 
 const SaveGirl2 = () => {
   const navigate = useNavigate(); // ✅ Initialize useNavigate

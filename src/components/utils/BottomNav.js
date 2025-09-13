@@ -3,11 +3,11 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Home, Gamepad2, Trophy, Languages } from "lucide-react";
 
-export default function BottomNav() {
-  const navigate = useNavigate();
+export default function BottomNav({ onPress }) {
+  const navigate = useNavigate(); 
 
   return (
-    <div className="absolute bottom-[30%] left-[3%] transform -translate-x-1/2 z-20 flex flex-col items-center gap-4 px-3 py-1.5 bg-white/30 backdrop-blur-lg rounded-full shadow-lg">
+    <div className="absolute bottom-[30%] left-[0%] z-20 flex flex-col items-center gap-4 px-3 py-4 bg-white/30 backdrop-blur-lg rounded-full shadow-lg">
       
       {/* Back */}
       <div className="relative group cursor-pointer">
@@ -17,7 +17,7 @@ export default function BottomNav() {
         >
           <ArrowLeft size={14} className="text-purple-700" />
           <motion.div
-            className="absolute w-9 h-9 rounded-full border border-purple-200 opacity-50"
+            className="absolute w-9 h-9 rounded-full border border-purple-200 opacity-50 pointer-events-none"
             animate={{ scale: [1, 1.15, 1] }}
             transition={{ repeat: Infinity, duration: 2 }}
           />
@@ -35,7 +35,7 @@ export default function BottomNav() {
         >
           <Home size={14} className="text-blue-700" />
           <motion.div
-            className="absolute w-9 h-9 rounded-full border border-blue-200 opacity-50"
+            className="absolute w-9 h-9 rounded-full border border-blue-200 opacity-50 pointer-events-none"
             animate={{ scale: [1, 1.15, 1] }}
             transition={{ repeat: Infinity, duration: 2 }}
           />
@@ -48,12 +48,12 @@ export default function BottomNav() {
       {/* Game */}
       <div className="relative group cursor-pointer">
         <div
-          onClick={() => navigate("/SinglePlayer/selectSubject")}
+          onClick={() => navigate("/subject")}
           className="w-8 h-8 rounded-full border border-pink-300 flex items-center justify-center bg-gradient-to-tr from-pink-200 to-pink-300 shadow-md hover:scale-110 transition-transform"
         >
           <Gamepad2 size={14} className="text-pink-700" />
           <motion.div
-            className="absolute w-9 h-9 rounded-full border border-pink-200 opacity-50"
+            className="absolute w-9 h-9 rounded-full border border-pink-200 opacity-50 pointer-events-none"
             animate={{ scale: [1, 1.15, 1] }}
             transition={{ repeat: Infinity, duration: 2 }}
           />
@@ -71,7 +71,7 @@ export default function BottomNav() {
         >
           <Trophy size={14} className="text-yellow-700" />
           <motion.div
-            className="absolute w-9 h-9 rounded-full border border-yellow-200 opacity-50"
+            className="absolute w-9 h-9 rounded-full border border-yellow-200 opacity-50 pointer-events-none"
             animate={{ scale: [1, 1.15, 1] }}
             transition={{ repeat: Infinity, duration: 2 }}
           />
@@ -82,14 +82,14 @@ export default function BottomNav() {
       </div>
 
       {/* Language Toggle */}
-      <div className="relative group cursor-pointer">
+      <div className="relative group cursor-pointer z-auto">
         <div
-          onClick={() => navigate("/language-toggle")}
+          onClick={onPress}
           className="w-8 h-8 rounded-full border border-green-300 flex items-center justify-center bg-gradient-to-tr from-green-200 to-green-300 shadow-md hover:scale-110 transition-transform"
         >
           <Languages size={14} className="text-green-700" />
           <motion.div
-            className="absolute w-9 h-9 rounded-full border border-green-200 opacity-50"
+            className="absolute w-9 h-9 rounded-full border border-green-200 opacity-50 pointer-events-none"
             animate={{ scale: [1, 1.15, 1] }}
             transition={{ repeat: Infinity, duration: 2 }}
           />

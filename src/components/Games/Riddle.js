@@ -1,12 +1,14 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import LanguageToggle from "../utils/LanguageToggle";
+
 import riddles from "../../data/riddle.json";
 import TablaCelebration from '../utils/Celeb';
 import Background from '../utils/FloatingBackground';
 import Logo from '../utils/logo';
 import BackButton from '../utils/backbutton';
 import Footer from '../utils/Footer';
+import BottomNav from '../utils/BottomNav';
 import { saveResult } from "../utils/leaderboardStorage";
 
 // Helper for translations
@@ -496,9 +498,9 @@ useEffect(() => {
           </div>
         </div>
       )}
-      <Footer />
-      <BackButton />
-      <LanguageToggle currentLanguage={currentLanguage} onPress={handleLanguageToggle} />
+      <Footer/>
+      
+      <BottomNav onPress={handleLanguageToggle} />
     </Background>
   );
 };

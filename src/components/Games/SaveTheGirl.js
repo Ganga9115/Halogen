@@ -10,6 +10,7 @@ import Footer from "../utils/Footer";
 import Logo from "../utils/logo";
 import TimerComponent from "../utils/TimerComponent";
 import LanguageToggle from "../utils/LanguageToggle";
+import BottomNav from "../utils/BottomNav";
 import { saveResult } from "../utils/leaderboardStorage"; // Add saveResult
 
 const SaveTheGirl = () => {
@@ -542,8 +543,9 @@ const SaveTheGirl = () => {
 
       </div>
       <Footer />
-      <LanguageToggle currentLanguage={lang} onPress={handleLanguage} />
-      <BackButton />
+      {/* <LanguageToggle currentLanguage={lang} onPress={handleLanguage}/> */}
+      <BottomNav onPress={handleLanguage} />
+
     </Background>
   );
 };
