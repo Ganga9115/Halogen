@@ -7,7 +7,7 @@ export default function BottomNav() {
   const navigate = useNavigate();
 
   return (
-    <div className="absolute bottom-7 left-1/2 transform -translate-x-1/2 z-20 flex items-center gap-4 px-3 py-1.5 bg-white/30 backdrop-blur-lg rounded-full shadow-lg">
+    <div className="absolute bottom-[30%] left-[3%] transform -translate-x-1/2 z-20 flex flex-col items-center gap-4 px-3 py-1.5 bg-white/30 backdrop-blur-lg rounded-full shadow-lg">
       
       {/* Back */}
       <div className="relative group cursor-pointer">
@@ -30,7 +30,7 @@ export default function BottomNav() {
       {/* Home */}
       <div className="relative group cursor-pointer">
         <div
-          onClick={() => navigate("/chooseSorM")}
+          onClick={() => navigate("/")}
           className="w-8 h-8 rounded-full border border-blue-300 flex items-center justify-center bg-gradient-to-tr from-blue-200 to-blue-300 shadow-md hover:scale-110 transition-transform"
         >
           <Home size={14} className="text-blue-700" />
@@ -66,7 +66,7 @@ export default function BottomNav() {
       {/* Leaderboard */}
       <div className="relative group cursor-pointer">
         <div
-          onClick={() => navigate("/SinglePlayer/leaderBoard")}
+          onClick={() => navigate("/leaderBoard")}
           className="w-8 h-8 rounded-full border border-yellow-300 flex items-center justify-center bg-gradient-to-tr from-yellow-200 to-yellow-300 shadow-md hover:scale-110 transition-transform"
         >
           <Trophy size={14} className="text-yellow-700" />
