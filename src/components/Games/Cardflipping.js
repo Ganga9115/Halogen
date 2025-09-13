@@ -9,7 +9,6 @@ import Footer from '../utils/Footer';
 import Logo from '../utils/logo';
 import { saveResult } from "../utils/leaderboardStorage";
 
-
 const Cardflipping = () => {
   const navigate = useNavigate();
 
@@ -23,14 +22,8 @@ const Cardflipping = () => {
   const [timer, setTimer] = useState(90);
   const [showCelebration, setShowCelebration] = useState(false);
   const [stopCelebration, setStopCelebration] = useState(false);
-  const [score, setScore] = useState(0); // Added score state
+  const [score, setScore] = useState(0);
   const [hasSavedResult, setHasSavedResult] = useState(false);
-  const profile = JSON.parse(localStorage.getItem("player_profile") || "{}");
-const name = profile.name || "Anonymous";
-const school = profile.school || "Unknown School";
-const className = profile.className || "";
-saveResult({ name, school, className, score, game: "CardFlipping" });
-
 
   const initializeGame = useCallback(() => {
     setStopCelebration(true);
@@ -57,9 +50,8 @@ saveResult({ name, school, className, score, game: "CardFlipping" });
     setIsGameActive(true);
     setTimer(90);
     setShowCelebration(false);
-    setScore(0); // Reset score
-    setHasSavedResult(false); // <-- add this line
-
+    setScore(0);
+    setHasSavedResult(false);
 
     setShowAllCardsTemporarily(true);
     setTimeout(() => {
@@ -81,7 +73,7 @@ saveResult({ name, school, className, score, game: "CardFlipping" });
             clearInterval(countdown);
             setIsGameActive(false);
             setMessage("Time's up! Game over.");
-            setScore(0); // No score if time runs out
+            setScore(0);
             return 0;
           }
           return prevTime - 1;
@@ -117,32 +109,29 @@ saveResult({ name, school, className, score, game: "CardFlipping" });
   }, [flippedCards, cards]);
 
   useEffect(() => {
-  if (matchedCards.length === cards.length && cards.length > 0) {
-    setMessage('You have won the game!');
-    setIsGameActive(false);
-    setShowCelebration(true);
+    if (matchedCards.length === cards.length && cards.length > 0) {
+      const finalScore = 60;
+      // Updated message to include the score
+      setMessage(`You have won the game! Your score is ${finalScore}.`);
+      setIsGameActive(false);
+      setShowCelebration(true);
+      setScore(finalScore);
 
-    const finalScore = 50; // your current win score
-    setScore(finalScore);
+      if (!hasSavedResult) {
+        const profile = JSON.parse(localStorage.getItem("player_profile") || "{}");
+        const name = profile.name || window.prompt("Enter your name") || "Anonymous";
+        const school = profile.school || window.prompt("Enter your school") || "Unknown School";
+        const className = profile.className || "";
 
-    // save only once per win
-    if (!hasSavedResult) {
-      // try to get stored profile first
-      const profile = JSON.parse(localStorage.getItem("player_profile") || "{}");
-      const name = profile.name || window.prompt("Enter your name") || "Anonymous";
-      const school = profile.school || window.prompt("Enter your school") || "Unknown School";
-      const className = profile.className || "";
-
-      try {
-        saveResult({ name, school, className, score: finalScore, game: "CardFlipping" });
-        setHasSavedResult(true);
-      } catch (err) {
-        console.error("Failed saving leaderboard result:", err);
+        try {
+          saveResult({ name, school, className, score: finalScore, game: "CardFlipping" });
+          setHasSavedResult(true);
+        } catch (err) {
+          console.error("Failed saving leaderboard result:", err);
+        }
       }
     }
-  }
-}, [matchedCards, cards, hasSavedResult]);
-
+  }, [matchedCards, cards, hasSavedResult]);
 
   const handleCardClick = (id) => {
     const card = cards.find(c => c.id === id);
@@ -164,10 +153,6 @@ saveResult({ name, school, className, score, game: "CardFlipping" });
     return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
   };
 
-  const restartGame = () => {
-    initializeGame();
-  };
-
   const goToLeaderBoard = () => {
     navigate('/leaderboard');
   };
@@ -178,7 +163,6 @@ saveResult({ name, school, className, score, game: "CardFlipping" });
       <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start', padding: '2vw', fontFamily: 'sans-serif', color: '#4b5563' }}>
         <p style={{ fontSize: '2vw', textAlign: 'center', marginBottom: '3vh', marginTop: '3vh' }}>{gameInstructions}</p>
 
-        {/* The button and time elements are now in the same flex container */}
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '5vh', gap: '2vw' }}>
           <button
             onClick={() => setGameMode('antonym')}
@@ -218,40 +202,28 @@ saveResult({ name, school, className, score, game: "CardFlipping" });
         </div>
 
         {message && (
-          <div style={{ position: 'fixed', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(0, 0, 0, 0.3)', backdropFilter: 'blur(4px)', zIndex: 50 }}>
-            <div style={{ backgroundColor: '#ffffff', padding: '5vh 5vw', borderRadius: '1.5vw', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)', border: '4px solid #bca5d4', textAlign: 'center', fontSize: '2.5vw', fontWeight: 'bold', transitionProperty: 'all', transitionDuration: '300ms', transform: 'scale(1.05)', position: 'relative' }}>
-              {message}
-              <div style={{ marginTop: '3vh', display: 'flex', justifyContent: 'center', gap: '2vw' }}>
+          // This is the pop-up modal that will appear upon winning
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white p-8 rounded-lg shadow-2xl text-center" style={{ borderRadius: '1.5vw', border: '4px solid #bca5d4' }}>
+              <h2 className="text-[2.5vw] font-bold mb-4">
+                {message.startsWith("You have won") ? "🎉 Congratulations! 🎉" : "Game Over!"}
+              </h2>
+              <p className="text-xl mb-6">
+                {message}
+              </p>
+              <p className="text-xl mb-6 font-bold text-indigo-600">
+                Your Score: {score} points
+              </p>
+              <div className="flex justify-center gap-4">
                 <button
                   onClick={goToLeaderBoard}
-                  style={{
-                    padding: '1.5vh 3vw',
-                    color: '#ffffff',
-                    fontWeight: 'bold',
-                    borderRadius: '9999px',
-                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-                    transitionProperty: 'background-color',
-                    transitionDuration: '150ms',
-                    backgroundColor: '#7164b4',
-                    fontSize: '1.8vw'
-                  }}
+                  className="px-6 py-3 rounded-lg text-white font-bold bg-[#7164b4] hover:bg-[#8f9fe4] transition"
                 >
                   Leaderboard
                 </button>
                 <button
-                  onClick={restartGame}
-                  autoFocus
-                  style={{
-                    padding: '1.5vh 3vw',
-                    color: '#ffffff',
-                    fontWeight: 'bold',
-                    borderRadius: '9999px',
-                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-                    transitionProperty: 'background-color',
-                    transitionDuration: '150ms',
-                    backgroundColor: '#bca5d4',
-                    fontSize: '1.8vw'
-                  }}
+                  onClick={initializeGame}
+                  className="px-6 py-3 rounded-lg text-white font-bold bg-[#8f9fe4] hover:bg-[#7164b4] transition"
                 >
                   Play Again
                 </button>
@@ -278,7 +250,6 @@ saveResult({ name, school, className, score, game: "CardFlipping" });
               }}
               onClick={() => handleCardClick(card.id)}
             >
-              {/* Card back with logo */}
               <div style={{
                 position: 'absolute',
                 inset: 0,
@@ -296,7 +267,6 @@ saveResult({ name, school, className, score, game: "CardFlipping" });
                 <img src={logo} alt="Application Logo" style={{ width: '60%', height: 'auto', opacity: 0.8 }} />
                 <i className="fas fa-question"></i>
               </div>
-              {/* Card front with word */}
               <div
                 style={{
                   position: 'absolute',
@@ -320,24 +290,6 @@ saveResult({ name, school, className, score, game: "CardFlipping" });
             </div>
           ))}
         </div>
-
-        {/* <button
-          onClick={initializeGame}
-          style={{
-            padding: '1vh 2vw',
-            color: '#ffffff',
-            fontWeight: 'bold',
-            borderRadius: '9999px',
-            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-            transitionProperty: 'background-color',
-            transitionDuration: '150ms',
-            marginBottom: '2vh',
-            backgroundColor: '#7164b4',
-            fontSize: '1.5vw'
-          }}
-        >
-          Restart Game
-        </button> */}
 
         <TablaCelebration show={showCelebration} stop={stopCelebration} />
       </div>

@@ -289,7 +289,7 @@ const CardflippingT = () => {
           ))}
         </div>
 
-        {/* <button
+        <button
           onClick={initializeGame}
           style={{
             padding: '1vh 2vw',
@@ -306,7 +306,7 @@ const CardflippingT = () => {
           }}
         >
           விளையாட்டை மீண்டும் தொடங்கவும்
-        </button> */}
+        </button>
 
         <TablaCelebration show={showCelebration} stop={stopCelebration} />
       </div>
