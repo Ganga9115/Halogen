@@ -216,12 +216,14 @@ export default function WordSearchGame() {
   const [initialLevels, setInitialLevels] = useState([]);
   const prevLanguageRef = useRef(language);
 
+  
   // Get questions based on selected grade and level
   const getQuestionsForLevel = (levelIndex, lang = language) => {
     const targetClass = parseInt(classId);
     const questionsGrade = `grade${targetClass}`;
     
-    const levelKeys = ["easy", "medium", "hard"];
+    // Only include easy and medium levels (remove hard)
+    const levelKeys = ["easy", "medium"];
     const levelKey = levelKeys[levelIndex];
 
     // Check if the requested grade exists in the data
@@ -278,7 +280,6 @@ export default function WordSearchGame() {
     }
     return selectedQuestions;
   };
-
   // Function to update questions when language changes
   const updateQuestionsForLanguage = (lang) => {
     const updatedLevels = initialLevels.map(level => {
@@ -294,13 +295,13 @@ export default function WordSearchGame() {
     return updatedLevels;
   };
 
-  useEffect(() => {
+ useEffect(() => {
     // Only load questions initially or when classId changes
     if (initialLevels.length === 0) {
+      // Only get 2 levels now (easy and medium)
       const newLevels = [
         getQuestionsForLevel(0, language),
-        getQuestionsForLevel(1, language),
-        getQuestionsForLevel(2, language)
+        getQuestionsForLevel(1, language)
       ];
       setInitialLevels(newLevels);
     } else if (prevLanguageRef.current !== language) {
@@ -321,7 +322,7 @@ export default function WordSearchGame() {
 
   const [levelIndex, setLevelIndex] = useState(0);
   const [qIndex, setQIndex] = useState(0);
-  const [unlocked, setUnlocked] = useState([true, false, false]);
+  const [unlocked, setUnlocked] = useState([true, false]);
   const [grid, setGrid] = useState([]);
   const [allLevelPaths, setAllLevelPaths] = useState([]);
   const [selectedPositions, setSelectedPositions] = useState([]);
@@ -492,49 +493,67 @@ export default function WordSearchGame() {
     setSelectedPositions([[r, c]]); // Immediately select the starting cell
   };
 
-  const handleMouseEnter = (r, c) => {
-    if (!isDragging || status !== "playing") return;
+const handleMouseEnter = (r, c) => {
+  if (!isDragging || status !== "playing") return;
 
-    const lastPos = currentPathRef.current[currentPathRef.current.length - 1];
-    if (posEq(lastPos, [r, c])) return; // Don't re-add the same cell
+  const lastPos = currentPathRef.current[currentPathRef.current.length - 1];
+  if (posEq(lastPos, [r, c])) return; // Don't re-add the same cell
 
-    // Check if the new cell is adjacent to the last selected cell in a straight line
-    const [lastR, lastC] = lastPos;
-    const dr = Math.abs(r - lastR);
-    const dc = Math.abs(c - lastC);
+  // Check if the new cell is adjacent to the last selected cell in a straight line
+  const [lastR, lastC] = lastPos;
+  const dr = Math.abs(r - lastR);
+  const dc = Math.abs(c - lastC);
 
-    // Only allow straight or diagonal lines (dr <=1 and dc <=1, but not both 0)
-    if ((dr <= 1 && dc <= 1) && !(dr === 0 && dc === 0)) {
-        // Check if it maintains a consistent direction if path length > 1
-        if (currentPathRef.current.length > 1) {
-            const secondLastPos = currentPathRef.current[currentPathRef.current.length - 2];
-            const prevDr = lastR - secondLastPos[0];
-            const prevDc = lastC - secondLastPos[1];
-            const currentDr = r - lastR;
-            const currentDc = c - lastC;
-
-            // Ensure direction is consistent or opposite if reversing
-            if (prevDr !== 0 && currentDr !== 0 && Math.sign(prevDr) !== Math.sign(currentDr)) {
-                return; // Not a consistent straight line
-            }
-            if (prevDc !== 0 && currentDc !== 0 && Math.sign(prevDc) !== Math.sign(currentDc)) {
-                return; // Not a consistent straight line
-            }
-            // For diagonal, ensure both dr and dc match sign
-            if (prevDr !== 0 && prevDc !== 0 && (Math.sign(prevDr) !== Math.sign(currentDr) || Math.sign(prevDc) !== Math.sign(currentDc))) {
-                return;
-            }
-            // Allow reversing direction
-            if (posEq([r, c], secondLastPos)) {
-                currentPathRef.current.pop(); // Remove last cell if moving back
-                setSelectedPositions(currentPathRef.current);
-                return;
-            }
+  // Only allow straight or diagonal lines (dr <=1 and dc <=1, but not both 0)
+  if ((dr <= 1 && dc <= 1) && !(dr === 0 && dc === 0)) {
+    // Check if it maintains a consistent direction if path length > 1
+    if (currentPathRef.current.length > 1) {
+      const secondLastPos = currentPathRef.current[currentPathRef.current.length - 2];
+      
+      // Check if we're moving back to a previous position in the path (not just the immediate previous)
+      const isMovingBack = currentPathRef.current.some(pos => posEq(pos, [r, c]));
+      
+      if (isMovingBack) {
+        // Find the index of the position we're moving back to
+        const backIndex = currentPathRef.current.findIndex(pos => posEq(pos, [r, c]));
+        
+        // If we're moving back to a position in the path (not the immediate previous)
+        if (backIndex >= 0 && backIndex < currentPathRef.current.length - 1) {
+          // Remove all positions after the one we're moving back to
+          const newPath = currentPathRef.current.slice(0, backIndex + 1);
+          currentPathRef.current = newPath;
+          setSelectedPositions(newPath);
+          return;
         }
-        currentPathRef.current = [...currentPathRef.current, [r, c]];
+      }
+      
+      const prevDr = lastR - secondLastPos[0];
+      const prevDc = lastC - secondLastPos[1];
+      const currentDr = r - lastR;
+      const currentDc = c - lastC;
+
+      // Ensure direction is consistent or opposite if reversing
+      if (prevDr !== 0 && currentDr !== 0 && Math.sign(prevDr) !== Math.sign(currentDr)) {
+        return; // Not a consistent straight line
+      }
+      if (prevDc !== 0 && currentDc !== 0 && Math.sign(prevDc) !== Math.sign(currentDc)) {
+        return; // Not a consistent straight line
+      }
+      // For diagonal, ensure both dr and dc match sign
+      if (prevDr !== 0 && prevDc !== 0 && (Math.sign(prevDr) !== Math.sign(currentDr) || Math.sign(prevDc) !== Math.sign(currentDc))) {
+        return;
+      }
+      // Allow reversing direction to the immediate previous cell
+      if (posEq([r, c], secondLastPos)) {
+        currentPathRef.current.pop(); // Remove last cell if moving back
         setSelectedPositions(currentPathRef.current);
+        return;
+      }
     }
-  };
+    currentPathRef.current = [...currentPathRef.current, [r, c]];
+    setSelectedPositions(currentPathRef.current);
+  }
+};
 
   const handleMouseUp = () => {
     if (!isDragging) return;
@@ -610,35 +629,47 @@ export default function WordSearchGame() {
     }
   }
 
-  function handleNext() {
-    const nextQ = qIndex + 1;
-    setSelectedPositions([]);
-    currentPathRef.current = []; // Clear current drag path
-    setHintsUsed(0);
-    setStatus("playing");
-    if (nextQ < levelQuestions.length) {
-      setQIndex(nextQ);
+function handleNext() {
+  const nextQ = qIndex + 1;
+  setSelectedPositions([]);
+  currentPathRef.current = []; // Clear current drag path
+  setHintsUsed(0);
+  setStatus("playing");
+  
+  if (nextQ < levelQuestions.length) {
+    // Go to next question in current level
+    setQIndex(nextQ);
+  } else {
+    // Level completed
+    const canUnlock = score >= REQUIRED_TO_UNLOCK;
+    
+    if (canUnlock && levelIndex + 1 < LEVELS.length) {
+      // Unlock next level
+      const newUnlocked = [...unlocked];
+      newUnlocked[levelIndex + 1] = true;
+      setUnlocked(newUnlocked);
+      
+      // Move to next level
+      setLevelIndex(levelIndex + 1);
+      setQIndex(0);
+      
+      // Show level completion modal
+      setShowLevelCompleteModal(true);
+      playLevelCompleteSound();
+    } else if (levelIndex + 1 >= LEVELS.length) {
+      // All levels completed
+      setShowFinalCompletionModal(true);
+      setStatus("finished");
+      playVictorySound();
+      setConfettiRunning(true);
+      setTimeout(() => setConfettiRunning(false), 5000);
     } else {
-      const canUnlock = score >= REQUIRED_TO_UNLOCK;
-      if (canUnlock && levelIndex + 1 < LEVELS.length) {
-        setQIndex(0); // Reset question index for the new level
-        setLevelIndex((l) => l + 1);
-        setUnlocked((u) => {
-          const n = [...u];
-          n[levelIndex + 1] = true;
-          return n;
-        });
-      } else if (levelIndex + 1 >= LEVELS.length && canUnlock) {
-        setShowFinalCompletionModal(true);
-        setStatus("finished");
-        playVictorySound();
-        setConfettiRunning(true);
-        setTimeout(() => setConfettiRunning(false), 5000);
-      } else {
-        setShowLevelCompleteModal(true);
-      }
+      // Not enough points to unlock next level
+      setShowLevelCompleteModal(true);
     }
   }
+}
+
 
   function chooseLevel(i) {
     if (!unlocked[i]) return;
@@ -697,7 +728,6 @@ export default function WordSearchGame() {
       const newLevels = [
         getQuestionsForLevel(0, language),
         getQuestionsForLevel(1, language),
-        getQuestionsForLevel(2, language)
       ];
       setInitialLevels(newLevels);
       setIsLoading(false);
@@ -706,11 +736,11 @@ export default function WordSearchGame() {
 
   // Update the restart function
   function restartAll(goToDashboard = false) {
-    setIsLoading(true);
+    // setIsLoading(true);
     setLevelIndex(0);
     setQIndex(0);
     setScore(0);
-    setUnlocked([true, false, false]);
+    setUnlocked([true, false]);
     setShowFinalModal(false);
     setShowTimeoutModal(false);
     setShowFinalCompletionModal(false);
@@ -730,41 +760,36 @@ export default function WordSearchGame() {
     }
   }
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-[#BCA5D4]">
-        <div className="text-white text-2xl">Loading...</div>
-      </div>
-    );
-  }
+  
 
 return (
   <Background>
     <Logo />
-    <div className="min-h-screen w-full flex flex-col items-center relative text-slate-900">
+   <div className="min-h-screen w-full flex flex-col items-center relative text-slate-900">
 
-      {/* Header & Level selector */}
-      <div className="w-[90%] max-w-[80vw] flex flex-col sm:flex-row items-center justify-between mb-[3vh] gap-[1vh]">
-        <div className="text-black text-[3vh] text-center font-bold w-[35vw]">
-          {T.title} — {T.level} {levelIndex + 1}
+        {/* Header & Level selector */}
+        <div className="w-[90%] max-w-[80vw] flex flex-col sm:flex-row items-center justify-between mb-[3vh] gap-[1vh]">
+          <div className="text-black text-[3vh] text-center font-bold w-[35vw]">
+            {T.title} — {T.level} {levelIndex + 1}
+          </div>
+          <div className="flex gap-[1vw] flex-wrap justify-center mt-[2vh]">
+            {/* Only show 2 level buttons */}
+            {LEVELS.slice(0, 2).map((_, i) => (
+              <button
+                key={i}
+                onClick={() => chooseLevel(i)}
+                disabled={!unlocked[i]}
+                className={`px-[1.5vw] py-[1.5vh] rounded-[1vh] font-bold ${
+                  unlocked[i]
+                    ? "bg-[#7FB3E0] text-black text-[2vh]"
+                    : "bg-[#7FB3E0] text-black/40 text-[2vh] cursor-not-allowed"
+                }`}
+              >
+                {T.level} {i + 1}
+              </button>
+            ))}
+          </div>
         </div>
-        <div className="flex gap-[1vw] flex-wrap justify-center mt-[2vh]">
-          {LEVELS.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => chooseLevel(i)}
-              disabled={!unlocked[i]}
-              className={`px-[1.5vw] py-[1.5vh] rounded-[1vh] font-bold ${
-                unlocked[i]
-                  ? "bg-[#7FB3E0] text-black text-[2vh]"
-                  : "bg-[#7FB3E0] text-black/40 text-[2vh] cursor-not-allowed"
-              }`}
-            >
-              {T.level} {i + 1}
-            </button>
-          ))}
-        </div>
-      </div>
 
       {/* Split Screen */}
       <div className="flex flex-row w-full max-w-[90vw] h-[75vh] gap-[2vw]">
@@ -939,29 +964,31 @@ return (
         </div>
       )}
 
-      {showLevelCompleteModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
-          <div className="bg-[#DEEBF7] rounded-2xl p-6 w-[92%] max-w-lg text-center shadow-2xl">
-            <h2 className="text-3xl text-[#2A60A0] font-bold mb-2">{T.levelComplete}</h2>
-            <p className="mb-4 text-[#2A60A0]">{T.currentScore} <span className="font-mono">{score}</span></p>
-            <p className="mb-4 text-sm text-[#2A60A0]">{score >= REQUIRED_TO_UNLOCK ? "Next level unlocked!" : T.notEnough}</p>
-            <div className="flex gap-3 justify-center">
-              <button onClick={() => { 
-                setShowLevelCompleteModal(false); 
-                if (score >= REQUIRED_TO_UNLOCK && levelIndex + 1 < LEVELS.length) { 
-                  handleNext(); 
-                } else if (score >= REQUIRED_TO_UNLOCK && levelIndex + 1 >= LEVELS.length) { 
-                  setShowFinalCompletionModal(true); 
-                  playVictorySound(); 
-                  setConfettiRunning(true); 
-                  setTimeout(() => setConfettiRunning(false), 5000); 
-                } 
-              }} className="px-5 py-2 bg-[#2A60A0] rounded-lg font-bold">{T.next}</button>
-              <button onClick={() => setShowLevelCompleteModal(false)} className="px-5 py-2 bg-[#2A60A0] rounded-lg">{T.close}</button>
-            </div>
-          </div>
-        </div>
-      )}
+      
+{showLevelCompleteModal && (
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+    <div className="bg-[#DEEBF7] rounded-2xl p-6 w-[92%] max-w-lg text-center shadow-2xl">
+      <h2 className="text-3xl text-[#2A60A0] font-bold mb-2">{T.levelComplete}</h2>
+      <p className="mb-4 text-[#2A60A0]">{T.currentScore} <span className="font-mono">{score}</span></p>
+      <p className="mb-4 text-sm text-[#2A60A0]">
+        {score >= REQUIRED_TO_UNLOCK && levelIndex + 1 < LEVELS.length 
+          ? "Next level unlocked!" 
+          : T.notEnough}
+      </p>
+      <div className="flex gap-3 justify-center">
+        <button 
+          onClick={() => { 
+            setShowLevelCompleteModal(false); 
+            // The level transition is already handled in handleNext
+          }} 
+          className="px-5 py-2 bg-[#2A60A0] text-white rounded-lg font-bold"
+        >
+          {T.ok}
+        </button>
+      </div>
+    </div>
+  </div>
+)}
 
       {showFinalCompletionModal && (
         <div className="fixed inset-0 z-60 flex items-center justify-center bg-black/70">

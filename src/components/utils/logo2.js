@@ -1,7 +1,7 @@
 import React from "react";
-import LogoImage from "../../assets/logo.png";
+import LogoImage from "../../assets/logo123.png";
 
-const Logo = () => {
+const Logo2 = () => {
   return (
     <div style={styles.logoContainer}>
       <img src={LogoImage} alt="Logo" style={styles.logoImage} />
@@ -13,7 +13,7 @@ const styles = {
   logoContainer: {
     position: "fixed", // stays on top-left even when scrolling
     top: "15px",
-    left: "15px",
+    right: "15px",
     zIndex: 1000,
   },
   logoImage: {
@@ -23,4 +23,4 @@ const styles = {
   },
 };
 
-export default Logo;
+export default Logo2;

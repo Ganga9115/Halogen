@@ -43,7 +43,7 @@ function CustomClassDropdown({ value, onChange }) {
     classOptions.find((c) => c.value === value)?.label || "Choose class";
 
   return (
-    <div className="relative w-full overflow-y-scroll h-[20vh]" ref={ref}>
+    <div className="relative w-full" ref={ref}>
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
@@ -57,7 +57,7 @@ function CustomClassDropdown({ value, onChange }) {
         </span>
       </button>
       {open && (
-        <ul className="absolute z-10 w-full mt-2 bg-white border border-[#C6CBF2] rounded-2xl shadow-lg overflow-hidden">
+        <ul className="absolute z-10 w-full mt-2 bg-white border border-[#C6CBF2] rounded-2xl shadow-lg h-[40vh] overflow-y-scroll">
           {classOptions.map((cls) => (
             <li
               key={cls.value}

@@ -47,10 +47,7 @@ const SubjectSelection = () => {
   };
 
   return (
-    <div
-      className="relative min-h-screen flex flex-col justify-between"
-      style={{ backgroundColor: "#EFE2FA" }}
-    >
+    <div className="min-h-screen flex items-center justify-center relative">
       {/* Background Layer */}
       <FloatingBackground>
         <Logo />
