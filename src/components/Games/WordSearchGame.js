@@ -6,6 +6,7 @@ import Background from "../utils/FloatingBackground";
 import Logo from "../utils/logo";
 import BackButton from "../utils/backbutton";
 import Footer from "../utils/Footer";
+import BottomNav from "../utils/BottomNav";
 const GRID_SIZE = 8;
 const POINTS_PER_CORRECT = 10;
 const REQUIRED_TO_UNLOCK = 10;
@@ -1022,8 +1023,9 @@ return (
       <Confetti running={confettiRunning} />
     </div>
     <Footer />
-    <BackButton />
-    <LanguageToggle currentLanguage={language} onPress={handleLanguage}/>
+    {/* <BackButton />
+    <LanguageToggle currentLanguage={language} onPress={handleLanguage}/> */}
+    <BottomNav onPress={handleLanguage} />
   </Background>
 );
 

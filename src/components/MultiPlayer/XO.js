@@ -1,39 +1,39 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Board from './Board';
 import Questions from './Questions';
-import { Typography, Paper, Button, Card, CardContent, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import TimerComponent from '../utils/TimerComponent'; 
+import { Typography, Paper, Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import { Fireworks } from '@fireworks-js/react';
 import ConfettiExplosion from 'react-confetti-explosion';
-import bluebg from '../../assets/blueBG.jpg';
 import { useNavigate, useLocation } from 'react-router-dom'; 
-import AppBackground from '../utils/AppBackground'
 import Background from '../utils/FloatingBackground';
 import Footer from '../utils/Footer';
 import Logo from '../utils/logo';
 import BottomNav from '../utils/BottomNav';
+
 const XO = () => {
   const location = useLocation();
-  // Get player data from navigation state or use defaults
-  const [player1, setPlayer1] = useState({ 
+
+  // Players
+  const [player1] = useState({ 
     name: location.state?.player1?.name || "Player X", 
     avatar: location.state?.player1?.avatar || "❌" 
   });
-  const [player2, setPlayer2] = useState({ 
+  const [player2] = useState({ 
     name: location.state?.player2?.name || "Player O", 
     avatar: location.state?.player2?.avatar || "⭕" 
   });
 
+  // Game state
   const [board, setBoard] = useState([
     [null, null, null],
     [null, null, null],
     [null, null, null]
   ]);
-
   const [turn, setTurn] = useState(null);
   const [currentPlayer, setCurrentPlayer] = useState(null);
   const [queue, setQueue] = useState([]);
   const [message, setMessage] = useState('Answer a question to start!');
-  const [timer, setTimer] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   const [winner, setWinner] = useState(null);
   const [isDraw, setIsDraw] = useState(false); 
@@ -47,19 +47,12 @@ const XO = () => {
   // language toggle only for XO texts
   const [tamil, setTamil] = useState(false);
 
-  const timerRef = useRef(null);
   const queueRef = useRef(queue);
   const navigate = useNavigate();
 
   useEffect(() => {
     queueRef.current = queue;
   }, [queue]);
-
-  useEffect(() => {
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-    };
-  }, []);
 
   const checkWinner = (b) => {
     for (let i = 0; i < 3; i++) if (b[i][0] && b[i][0] === b[i][1] && b[i][1] === b[i][2]) return b[i][0];
@@ -70,15 +63,7 @@ const XO = () => {
   };
 
   const checkDraw = (b) => {
-    // Check if all cells are filled and there's no winner
     return b.flat().every(cell => cell !== null) && !checkWinner(b);
-  };
-
-  const stopInterval = () => {
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-      timerRef.current = null;
-    }
   };
 
   const restartGame = () => {
@@ -91,54 +76,47 @@ const XO = () => {
     setCurrentPlayer(null);
     setQueue([]);
     setMessage(tamil ? 'கேள்விக்கு பதிலளித்து ஆரம்பிக்கவும்!' : 'Answer a question to start!');
-    setTimer(0);
     setGameOver(false);
     setWinner(null);
     setIsDraw(false);
     setShowResultDialog(false);
     setShowFireworks(false);
     setShowConfetti(false);
-    stopInterval();
   };
 
   const goToDashboard = () => {
     navigate('/'); 
   };
 
+  const handleTimeUp = () => {
+    if (turn) {
+      const playerName = turn === 'X' ? player1.name : player2.name;
+      setMessage(tamil ? `⏱ ${playerName} நேரம் முடிந்தது.` : `⏱ ${playerName} time expired.`);
+
+      setTurn(null);
+      setCurrentPlayer(null);
+
+      const q = queueRef.current;
+      if (!gameOver && q.length > 0) {
+        const [next, ...rest] = q;
+        setQueue(rest);
+        startTurn(next);
+      }
+    }
+  };
+
   const startTurn = (player) => {
     if (gameOver) return;
-    stopInterval();
 
     setTurn(player);
     setCurrentPlayer(player);
-    setTimer(5);
-    
-    // Use player names in the message
+
     const playerName = player === 'X' ? player1.name : player2.name;
-    setMessage(tamil ? `✅ ${playerName}, உங்கள் அடையாளத்தை வையுங்கள்!` : `✅ ${playerName}, place your mark!`);
-
-    timerRef.current = setInterval(() => {
-      setTimer((prev) => {
-        if (prev <= 1) {
-          stopInterval();
-          setTurn(null);
-          setCurrentPlayer(null);
-          setTimer(0);
-          
-          const playerName = player === 'X' ? player1.name : player2.name;
-          setMessage(tamil ? `⏱ ${playerName} நேரம் முடிந்தது.` : `⏱ ${playerName} time expired.`);
-
-          const q = queueRef.current;
-          if (!gameOver && q.length > 0) {
-            const [next, ...rest] = q;
-            setQueue(rest);
-            startTurn(next);
-          }
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
+    setMessage(
+      tamil 
+        ? `✅ ${playerName}, உங்கள் அடையாளத்தை வையுங்கள்!` 
+        : `✅ ${playerName}, place your mark!`
+    );
   };
 
   const handleCellClick = (row, col) => {
@@ -160,20 +138,14 @@ const XO = () => {
     const w = checkWinner(newBoard);
     if (w) {
       setWinner(w);
-      
-      // Get winner's name
       const winnerName = w === 'X' ? player1.name : player2.name;
       setMessage(tamil ? `🎉 ${winnerName} வெற்றி பெற்றார்!` : `🎉 ${winnerName} wins!`);
-      
-      stopInterval();
       setTurn(null);
       setCurrentPlayer(null);
       setQueue([]);
-      setTimer(0);
       setGameOver(true);
       setShowResultDialog(true);
 
-      // trigger celebrations
       if (audioRef.current) {
         audioRef.current.currentTime = 0;
         audioRef.current.play();
@@ -188,24 +160,19 @@ const XO = () => {
       return;
     }
 
-    // Check for draw
     if (checkDraw(newBoard)) {
       setIsDraw(true);
       setMessage(tamil ? '🤝 போட்டி சமனாக முடிந்தது!' : '🤝 Match ended in a draw!');
-      stopInterval();
       setTurn(null);
       setCurrentPlayer(null);
       setQueue([]);
-      setTimer(0);
       setGameOver(true);
       setShowResultDialog(true);
       return;
     }
 
-    stopInterval();
     setTurn(null);
     setCurrentPlayer(null);
-    setTimer(0);
 
     const q = queueRef.current;
     if (q.length > 0) {
@@ -230,242 +197,209 @@ const XO = () => {
     }
   };
 
-  // Function to get player name based on player symbol
   const getPlayerName = (playerSymbol) => {
     return playerSymbol === 'X' ? player1.name : player2.name;
   };
 
   return (
-    <Background >
+    <Background>
       <Logo />
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'flex-start',
-        width: '100%',
-        height: '100vh',
-        //backgroundColor: '#F0F4F8',
-        //backgroundImage: `url(${bluebg})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        paddingTop: '2vh',
-        position: 'relative'
-      }}
-    >
-      {/* Fireworks background */}
-      {showFireworks && (
-        <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
-          <Fireworks
-            options={{
-              rocketsPoint: { min: 50, max: 50 },
-              hue: { min: 0, max: 360 },
-              delay: { min: 30, max: 60 },
-              speed: 5,
-              acceleration: 1.05,
-              friction: 0.95,
-              gravity: 1.5,
-              particles: 100,
-              trace: 3,
-              explosion: 6
-            }}
-            style={{
-              position: 'fixed',
-              width: '100%',
-              height: '100%',
-              top: 0,
-              left: 0
-            }}
-          />
-        </div>
-      )}
-
-      {/* Confetti */}
-      {showConfetti && (
-        <div style={{ position: 'absolute', zIndex: 10 }}>
-          <ConfettiExplosion force={0.7} duration={4500} particleCount={150} width={1200} />
-        </div>
-      )}
-
-      {/* Hidden sound */}
-
-
-      {/* Result Dialog */}
-<Dialog
-  open={showResultDialog}
-  onClose={() => setShowResultDialog(false)}
-  PaperProps={{
-    style: {
-      background: "#DEEBF7",       // dialog background
-      color: "#2A60A0",            // default text color
-      borderRadius: "1.5vh",
-      padding: "2vh",
-    },
-  }}
->
-  <DialogTitle style={{ color: "#2A60A0", fontWeight: "bold" }}>
-    {winner
-      ? (tamil
-          ? `🎉 வாழ்த்துக்கள்! ${getPlayerName(winner)} வெற்றி பெற்றார்!`
-          : `🎉 Congratulations! ${getPlayerName(winner)} Wins!`)
-      : tamil
-      ? "🤝 போட்டி சமனாக முடிந்தது!"
-      : "🤝 Match ended in a draw!"}
-  </DialogTitle>
-
-  <DialogContent>
-    <Typography style={{ color: "#2A60A0" }}>
-      {tamil
-        ? "மீண்டும் விளையாட விரும்புகிறீர்களா அல்லது டாஷ்போர்டுக்கு செல்ல விரும்புகிறீர்களா?"
-        : "Would you like to play again or go to dashboard?"}
-    </Typography>
-  </DialogContent>
-
-  <DialogActions   style={{
-    display: "flex",
-    justifyContent: "center",
-    gap: "2vw", 
-  }}>
-    <Button
-      onClick={goToDashboard}
-      style={{
-        backgroundColor: "#2A60A0",
-        color: "white",
-        fontWeight: "bold",
-        borderRadius: "1vh",
-        padding: "0.5vh 2vh",
-      }}
-    >
-      {tamil ? "டாஷ்போர்டுக்கு செல்" : "Go to Dashboard"}
-    </Button>
-
-    <Button
-      onClick={restartGame}
-      autoFocus
-      style={{
-        backgroundColor: "#2A60A0",
-        color: "white",
-        fontWeight: "bold",
-        borderRadius: "1vh",
-        padding: "0.5vh 2vh",
-      }}
-    >
-      {tamil ? "மீண்டும் விளையாடு" : "Play Again"}
-    </Button>
-  </DialogActions>
-</Dialog>
-
-
-      {/* Player X */}
-      <div style={{ width: '25%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1vh' }}>
-          <Typography variant="h6" style={{ marginRight: '1vw', fontWeight: 'bold',marginTop: "8vh" }}>
-            Player X
-          </Typography>
-        </div>
-        <Questions 
-          player="X" 
-          playerName={player1.name} 
-          onCorrectAnswer={handleCorrectAnswer} 
-          activeTurn={turn} 
-        />
-        {turn === 'X' && (
-          <Paper
-            style={{
-              marginTop: '2vh',
-              padding: '1vh 2vw',
-              borderRadius: '1vh',
-              backgroundColor: '#fff',
-              boxShadow: '0 0.5vh 1vh rgba(0,0,0,0.15)'
-            }}
-          >
-            <Typography
-              variant="h6"
-              style={{
-                fontWeight: 'bold',
-                fontSize: '2.2vh',
-                color: '#1E88E5',
-                textAlign: 'center'
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'flex-start',
+          width: '100%',
+          height: '100vh',
+          paddingTop: '2vh',
+          position: 'relative'
+        }}
+      >
+        {/* Fireworks */}
+        {showFireworks && (
+          <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+            <Fireworks
+              options={{
+                rocketsPoint: { min: 50, max: 50 },
+                hue: { min: 0, max: 360 },
+                delay: { min: 30, max: 60 },
+                speed: 5,
+                acceleration: 1.05,
+                friction: 0.95,
+                gravity: 1.5,
+                particles: 100,
+                trace: 3,
+                explosion: 6
               }}
-            >
-              {tamil ? 'நேரம்' : 'Timer'}: {timer}s
-            </Typography>
-          </Paper>
+              style={{
+                position: 'fixed',
+                width: '100%',
+                height: '100%',
+                top: 0,
+                left: 0
+              }}
+            />
+          </div>
         )}
-      </div>
 
-      {/* Board */}
-      <div style={{ width: '50%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <Paper
-          style={{
-              background: "linear-gradient(135deg, #BACBFE, #C1DDE8)",
-            width: '70%',
-            marginTop: '12vh',
-            padding: '3%',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            boxShadow: '0 1vh 3vh rgba(0,0,0,0.2)',
-            borderRadius: '2vh'
+        {/* Confetti */}
+        {showConfetti && (
+          <div style={{ position: 'absolute', zIndex: 10 }}>
+            <ConfettiExplosion force={0.7} duration={4500} particleCount={150} width={1200} />
+          </div>
+        )}
+
+        {/* Result Dialog */}
+        <Dialog
+          open={showResultDialog}
+          onClose={() => setShowResultDialog(false)}
+          PaperProps={{
+            style: {
+              background: "#DEEBF7",
+              color: "#2A60A0",
+              borderRadius: "1.5vh",
+              padding: "2vh",
+            },
           }}
         >
-          <Board board={board} onCellClick={handleCellClick} turn={turn} />
-          <Typography
-            variant="h6"
-            style={{
-              marginTop: '3vh',
-              textAlign: 'center',
-              fontWeight: 'bold',
-              fontSize: '2.4vh',
-              color: '#333'
-            }}
-          >
-            {message}
-          </Typography>
-        </Paper>
-      </div>
+          <DialogTitle style={{ color: "#2A60A0", fontWeight: "bold" }}>
+            {winner
+              ? (tamil
+                  ? `🎉 வாழ்த்துக்கள்! ${getPlayerName(winner)} வெற்றி பெற்றார்!`
+                  : `🎉 Congratulations! ${getPlayerName(winner)} Wins!`)
+              : tamil
+              ? "🤝 போட்டி சமனாக முடிந்தது!"
+              : "🤝 Match ended in a draw!"}
+          </DialogTitle>
 
-      {/* Player O */}
-      <div style={{ width: '25%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1vh' }}>
-          <Typography variant="h6" style={{ marginRight: '1vw', fontWeight: 'bold',marginTop: "8vh" }}>
-            Player O
-          </Typography>
-        </div>
-        <Questions 
-          player="O" 
-          playerName={player2.name} 
-          onCorrectAnswer={handleCorrectAnswer} 
-          activeTurn={turn} 
-        />
-        {turn === 'O' && (
-          <Paper
+          <DialogContent>
+            <Typography style={{ color: "#2A60A0" }}>
+              {tamil
+                ? "மீண்டும் விளையாட விரும்புகிறீர்களா அல்லது டாஷ்போர்டுக்கு செல்ல விரும்புகிறீர்களா?"
+                : "Would you like to play again or go to dashboard?"}
+            </Typography>
+          </DialogContent>
+
+          <DialogActions
             style={{
-              marginTop: '2vh',
-              padding: '1vh 2vw',
-              borderRadius: '1vh',
-              backgroundColor: '#fff',
-              boxShadow: '0 0.5vh 1vh rgba(0,0,0,0.15)'
+              display: "flex",
+              justifyContent: "center",
+              gap: "2vw",
             }}
           >
-            <Typography
-              variant="h6"
+            <Button
+              onClick={goToDashboard}
               style={{
-                fontWeight: 'bold',
-                fontSize: '2.2vh',
-                color: '#D32F2F',
-                textAlign: 'center'
+                backgroundColor: "#2A60A0",
+                color: "white",
+                fontWeight: "bold",
+                borderRadius: "1vh",
+                padding: "0.5vh 2vh",
               }}
             >
-              {tamil ? 'நேரம்' : 'Timer'}: {timer}s
-            </Typography>
-          </Paper>
-        )}
+              {tamil ? "டாஷ்போர்டுக்கு செல்" : "Go to Dashboard"}
+            </Button>
+
+            <Button
+              onClick={restartGame}
+              autoFocus
+              style={{
+                backgroundColor: "#2A60A0",
+                color: "white",
+                fontWeight: "bold",
+                borderRadius: "1vh",
+                padding: "0.5vh 2vh",
+              }}
+            >
+              {tamil ? "மீண்டும் விளையாடு" : "Play Again"}
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        {/* Player X */}
+        <div style={{ width: '25%', display: 'flex', flexDirection: 'column', alignItems: 'center',marginTop: "5vh" }}>
+          <div style={{backgroundColor:"#2A60A0" , padding:"2% 7%" , color:"white",borderRadius:"2vh"}}>
+          <Typography variant="h6" style={{  fontWeight: 'bold' }}>
+            Player X
+          </Typography>
+          </div>
+
+          
+          {turn === 'X' && (
+            <div style={{width:"100%",height:"100%",marginTop:"5vh"}}>
+            <TimerComponent key={`timer-x-${turn}`} initialTime={10} onTimeUp={handleTimeUp} />
+            </div>
+          )}
+          
+
+          <Questions 
+            player="X" 
+            playerName={player1.name} 
+            onCorrectAnswer={handleCorrectAnswer} 
+            activeTurn={turn} 
+          />
+        </div>
+
+       {/* Board */}
+<div style={{ width: '50%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+  <Paper
+    style={{
+      background: "linear-gradient(135deg, #BACBFE, #C1DDE8)",
+      width: '70%',
+      marginTop: '12vh',
+      padding: '3%',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      boxShadow: '0 1vh 3vh rgba(0,0,0,0.2)',
+      borderRadius: '2vh'
+    }}
+  >
+    {/* 🟢 Message at the TOP now */}
+    <Typography
+      variant="h6"
+      style={{
+        marginBottom: '2vh',
+        textAlign: 'center',
+        fontWeight: '800',
+        fontSize: '3vh',
+        color: '#2A60A0'
+      }}
+    >
+      {message}
+    </Typography>
+
+    {/* Board Below */}
+    <Board board={board} onCellClick={handleCellClick} turn={turn} />
+  </Paper>
+</div>
+
+
+        {/* Player O */}
+        <div style={{ width: '25%', display: 'flex', flexDirection: 'column', alignItems: 'center',marginTop:"5vh" }}>
+          <div style={{backgroundColor:"#2A60A0" , padding:"2% 7%" , color:"white",borderRadius:"2vh"}}>
+          <Typography variant="h6" style={{  fontWeight: 'bold' }}>
+            Player O
+          </Typography>
+          </div>
+
+          {turn === 'O' && (
+            <div style={{width:"100%",height:"100%",marginTop:"5vh"}}>
+            <TimerComponent key={`timer-x-${turn}`} initialTime={10} onTimeUp={handleTimeUp} />
+            </div>
+          )}
+
+          <Questions 
+            player="O" 
+            playerName={player2.name} 
+            onCorrectAnswer={handleCorrectAnswer} 
+            activeTurn={turn} 
+          />
+        </div>
       </div>
-    </div>
-    <Footer />
-    <BottomNav />
+      <Footer />
+      <BottomNav />
     </Background>
   );
 };

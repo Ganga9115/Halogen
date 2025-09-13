@@ -17,7 +17,7 @@ const styles = {
     zIndex: 1000,
   },
   logoImage: {
-    width: "12%",    // fixed size, responsive enough
+    width: "9%",    // fixed size, responsive enough
     height: "auto",
     objectFit: "contain",
   },

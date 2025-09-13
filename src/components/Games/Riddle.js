@@ -1,11 +1,12 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
-import LanguageToggle from "../utils/LanguageToggle";
+
 import riddles from "../../data/riddle.json";
 import TablaCelebration from '../utils/Celeb';
 import Background from '../utils/FloatingBackground';
 import Logo from '../utils/logo'
 import BackButton from '../utils/backbutton';
 import Footer from '../utils/Footer';
+import BottomNav from '../utils/BottomNav';
 // Helper for translations (remains the same)
 const translations = {
   en: {
@@ -456,8 +457,8 @@ const Riddle = ({ isDarkMode = false }) => {
         </div>
       )}
       <Footer/>
-      <BackButton />
-      <LanguageToggle currentLanguage={currentLanguage} onPress={handleLanguageToggle} />
+      
+      <BottomNav onPress={handleLanguageToggle} />
     </Background>
   );
 };

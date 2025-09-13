@@ -11,6 +11,7 @@ import Footer from "../utils/Footer";
 import Logo from "../utils/logo";
 import TimerComponent from "../utils/TimerComponent"; // ✅ Import reusable timer
 import LanguageToggle from "../utils/LanguageToggle";
+import BottomNav from "../utils/BottomNav";
 
 const SaveTheGirl = () => {
   const { classId, subject } = useParams();
@@ -511,8 +512,9 @@ const SaveTheGirl = () => {
         </button>*/}
       </div> 
       <Footer />
-      <LanguageToggle currentLanguage={lang} onPress={handleLanguage}/>
-      <BackButton />
+      {/* <LanguageToggle currentLanguage={lang} onPress={handleLanguage}/> */}
+      <BottomNav onPress={handleLanguage} />
+
     </Background>
   );
 };
