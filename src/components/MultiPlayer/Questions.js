@@ -128,13 +128,11 @@ const Questions = ({ player = "X", playerName = "", onCorrectAnswer = () => {}, 
     <Paper
       style={{
         width: "95%",
-        maxWidth: "80vw",
         padding: "3vh 3vw",
-        marginTop: "10vh",
+        marginTop: "6vh",
         borderRadius: "2vh",
         background: "linear-gradient(135deg, #BACBFE, #C1DDE8)",
         textAlign: "center",
-        background: "linear-gradient(135deg, #BACBFE, #C1DDE8)",
         backdropFilter: "blur(2vh)", 
         borderRadius: "3vh",        
         boxShadow: "0 5vh 10vh -2vh rgba(0, 0, 0, 0.25)", 
@@ -149,7 +147,7 @@ const Questions = ({ player = "X", playerName = "", onCorrectAnswer = () => {}, 
       </Typography>
 
       <Typography
-        style={{ fontWeight: "bold", marginBottom: "3vh", fontSize: "2vh" }}
+        style={{ fontWeight: "700", marginBottom: "3vh", fontSize: "2.5vh" }}
       >
         {disp.q}
       </Typography>
@@ -162,8 +160,10 @@ const Questions = ({ player = "X", playerName = "", onCorrectAnswer = () => {}, 
           style={{
             background : "#2A60A0",
             marginBottom: "2vh",
-            fontSize: "1.8vh",
+            fontSize: "2vh",
             padding: "1.5vh 0",
+            fontWeight:"800",
+            borderRadius:"2vh"
           }}
           disabled={isTurn || answered}
           onClick={() => handleAnswer(opt)}
@@ -178,8 +178,10 @@ const Questions = ({ player = "X", playerName = "", onCorrectAnswer = () => {}, 
         onClick={() => setLanguage((prev) => (prev === "en" ? "ta" : "en"))}
         style={{
           marginTop: "2.5vh",
-          fontSize: "1.8vh",
+          fontSize: "2vh",
           padding: "1.5vh 3vw",
+          borderRadius:"2vh",
+          fontWeight:"800"
         }}
       >
         {language === "en" ? "தமிழ்" : "English"}

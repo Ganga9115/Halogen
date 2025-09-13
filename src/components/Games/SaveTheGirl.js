@@ -1,18 +1,20 @@
-// SaveTheGirl.js
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import women from "../../assets/womann.png";
 import drownData from "../../data/saveGirl.json";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom"; // Add useNavigate
 import TablaCelebration from "../utils/Celeb";
 import Background from "../utils/FloatingBackground";
 import BackButton from "../utils/backbutton";
 import Footer from "../utils/Footer";
 import Logo from "../utils/logo";
-import TimerComponent from "../utils/TimerComponent"; // ✅ Import reusable timer
+import TimerComponent from "../utils/TimerComponent";
 import LanguageToggle from "../utils/LanguageToggle";
+import BottomNav from "../utils/BottomNav";
+import { saveResult } from "../utils/leaderboardStorage"; // Add saveResult
 
 const SaveTheGirl = () => {
+  const navigate = useNavigate(); // Initialize useNavigate
   const { classId, subject } = useParams();
   const [lang, setLang] = useState("en");
   const [questions, setQuestions] = useState([]);
@@ -23,23 +25,23 @@ const SaveTheGirl = () => {
   const [win, setWin] = useState(false);
   const [score, setScore] = useState(0);
   const [showWrongPopup, setShowWrongPopup] = useState(false);
+  const [hasSavedResult, setHasSavedResult] = useState(false); // New state
 
   const handleLanguage = () => {
-    setLang(lang === "en" ? "ta" : "en")
+    setLang(lang === "en" ? "ta" : "en");
   };
-  
 
   // Shuffle helper only for ids
-  const getRandomFive = (arr) => {
+  const getRandomFive = useCallback((arr) => {
     const ids = arr.map((q) => q.id);
     for (let i = ids.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [ids[i], ids[j]] = [ids[j], ids[i]];
     }
     return ids.slice(0, 6);
-  };
+  }, []);
 
-  useEffect(() => {
+  const initializeGame = useCallback(() => {
     if (drownData && classId) {
       let selectedQuestions = [];
       const gradeKey = `class${classId}`;
@@ -51,17 +53,11 @@ const SaveTheGirl = () => {
             (item) => item.subject === "math"
           );
           if (mathQuestions.length) {
-            if (selectedIds.length === 0) {
-              const ids = getRandomFive(mathQuestions);
-              setSelectedIds(ids);
-              selectedQuestions = ids
-                .map((id) => mathQuestions.find((q) => q.id === id))
-                .filter((q) => q && q[lang]);
-            } else {
-              selectedQuestions = selectedIds
-                .map((id) => mathQuestions.find((q) => q.id === id))
-                .filter((q) => q && q[lang]);
-            }
+            const ids = getRandomFive(mathQuestions);
+            setSelectedIds(ids);
+            selectedQuestions = ids
+              .map((id) => mathQuestions.find((q) => q.id === id))
+              .filter((q) => q && q[lang]);
           }
         }
       } else if (parseInt(classId) >= 11 && parseInt(classId) <= 12) {
@@ -83,8 +79,13 @@ const SaveTheGirl = () => {
       setGameOver(false);
       setWin(false);
       setScore(0);
+      setHasSavedResult(false); // Reset this state
     }
-  }, [classId, subject]);
+  }, [classId, subject, lang, getRandomFive]);
+
+  useEffect(() => {
+    initializeGame();
+  }, [initializeGame]);
 
   // Language toggle effect
   useEffect(() => {
@@ -120,7 +121,27 @@ const SaveTheGirl = () => {
         }
       }
     }
-  }, [lang]);
+  }, [lang, classId, subject, getRandomFive, selectedIds]);
+
+  // New useEffect to handle game over and score saving
+  useEffect(() => {
+    if (gameOver && !hasSavedResult) {
+      const finalScore = win ? 60 : 0;
+      setScore(finalScore);
+
+      const profile = JSON.parse(localStorage.getItem("player_profile") || "{}");
+      const name = profile.name || window.prompt("Enter your name") || "Anonymous";
+      const school = profile.school || window.prompt("Enter your school") || "Unknown School";
+      const className = profile.className || "";
+
+      try {
+        saveResult({ name, school, className, score: finalScore, game: "SaveTheGirl" });
+        setHasSavedResult(true);
+      } catch (err) {
+        console.error("Failed saving leaderboard result:", err);
+      }
+    }
+  }, [gameOver, hasSavedResult, win, setScore]);
 
   // Answer submit handler
   const handleSubmit = () => {
@@ -149,6 +170,20 @@ const SaveTheGirl = () => {
     setAnswer("");
   };
 
+  const handlePlayAgain = () => {
+    setCurrentQ(0);
+    setAnswer("");
+    setGameOver(false);
+    setWin(false);
+    setScore(0);
+    setHasSavedResult(false);
+    initializeGame();
+  };
+
+  const handleViewLeaderboard = () => {
+    navigate('/leaderboard');
+  };
+
   const waterLevel = ((currentQ + 1) / (questions.length || 1)) * 100;
 
   if (!questions.length) {
@@ -166,7 +201,7 @@ const SaveTheGirl = () => {
   return (
     <Background>
       <Logo />
-      <div className="flex items-center justify-center w-full h-screen  relative">
+      <div className="flex items-center justify-center w-full h-screen relative">
         {showWrongPopup && (
           <div
             style={{
@@ -281,9 +316,7 @@ const SaveTheGirl = () => {
                     <motion.div
                       initial={{ width: "0%" }}
                       animate={{
-                        width: `${((currentQ + 1) /
-                          (questions.length || 1)) *
-                          100}%`,
+                        width: `${((currentQ + 1) / (questions.length || 1)) * 100}%`,
                       }}
                       transition={{ duration: 0.5 }}
                       style={{
@@ -456,20 +489,25 @@ const SaveTheGirl = () => {
                     ? "You Saved Her!"
                     : "நீங்கள் காப்பாற்றினீர்கள்!"}
                 </h1>
-                <button
-                  className="bg-gradient-to-r from-[#BCA5D4] to-[#EFE2FA] text-white px-[6%] py-[2%] rounded-[2vh] mt-[5%] text-[2.5vh] font-bold relative z-50"
-                  onClick={() => {
-                    setCurrentQ(0);
-                    setAnswer("");
-                    setGameOver(false);
-                    setWin(false);
-                    setScore(0);
-                  }}
-                >
-                  🔄 {lang === "en"
-                    ? "Play Again"
-                    : "மீண்டும் விளையாடவும்"}
-                </button>
+                <p className="text-xl mb-6 relative z-50">
+                  {lang === "en"
+                    ? `Congratulations! Your score is ${score}.`
+                    : `வாழ்த்துகள்! உங்கள் மதிப்பெண் ${score}.`}
+                </p>
+                <div className="flex justify-center gap-4 mt-[5%] relative z-50">
+                  <button
+                    className="bg-gradient-to-r from-[#BCA5D4] to-[#EFE2FA] text-white px-[6%] py-[2%] rounded-[2vh] text-[2.5vh] font-bold"
+                    onClick={handlePlayAgain}
+                  >
+                    🔄 {lang === "en" ? "Play Again" : "மீண்டும் விளையாடவும்"}
+                  </button>
+                  <button
+                    className="bg-gradient-to-r from-[#BCA5D4] to-[#EFE2FA] text-white px-[6%] py-[2%] rounded-[2vh] text-[2.5vh] font-bold"
+                    onClick={handleViewLeaderboard}
+                  >
+                    🏆 {lang === "en" ? "Leaderboard" : "மதிப்பெண் பட்டியல்"}
+                  </button>
+                </div>
               </>
             ) : (
               <>
@@ -479,40 +517,35 @@ const SaveTheGirl = () => {
                     ? "The Character Drowned!"
                     : "பாத்திரம் மூழ்கியது!"}
                 </h1>
-                <button
-                  className="bg-gradient-to-r from-[#BCA5D4] to-[#EFE2FA] text-white px-[6%] py-[2%] rounded-[2vh] mt-[5%] text-[2.5vh] font-bold"
-                  onClick={() => {
-                    setCurrentQ(0);
-                    setAnswer("");
-                    setGameOver(false);
-                    setWin(false);
-                    setScore(0);
-                  }}
-                >
-                  🔄 {lang === "en"
-                    ? "Play Again"
-                    : "மீண்டும் விளையாடவும்"}
-                </button>
+                <p className="text-xl mb-6 relative z-50">
+                  {lang === "en"
+                    ? `Game over. Your score is ${score}.`
+                    : `விளையாட்டு முடிந்தது. உங்கள் மதிப்பெண் ${score}.`}
+                </p>
+                <div className="flex justify-center gap-4 mt-[5%] relative z-50">
+                  <button
+                    className="bg-gradient-to-r from-[#BCA5D4] to-[#EFE2FA] text-white px-[6%] py-[2%] rounded-[2vh] text-[2.5vh] font-bold"
+                    onClick={handlePlayAgain}
+                  >
+                    🔄 {lang === "en" ? "Play Again" : "மீண்டும் விளையாடவும்"}
+                  </button>
+                  <button
+                    className="bg-gradient-to-r from-[#BCA5D4] to-[#EFE2FA] text-white px-[6%] py-[2%] rounded-[2vh] text-[2.5vh] font-bold"
+                    onClick={handleViewLeaderboard}
+                  >
+                    🏆 {lang === "en" ? "Leaderboard" : "மதிப்பெண் பட்டியல்"}
+                  </button>
+                </div>
               </>
             )}
           </div>
         )}
 
-        {/* 🔘 Toggle Language */}
-        {/* <button
-          onClick={() => setLang(lang === "en" ? "ta" : "en")}
-          className="absolute bottom-5 right-5 px-5 py-3 rounded-[2vh] text-[2.5vh] font-bold text-white"
-          style={{
-            background: "linear-gradient(90deg,#BCA5D4,#EFE2FA)",
-            boxShadow: "0px 4px 10px rgba(0,0,0,0.3)",
-          }}
-        >
-          {lang === "en" ? "தமிழ்" : "English"}
-        </button>*/}
-      </div> 
+      </div>
       <Footer />
-      <LanguageToggle currentLanguage={lang} onPress={handleLanguage}/>
-      <BackButton />
+      {/* <LanguageToggle currentLanguage={lang} onPress={handleLanguage}/> */}
+      <BottomNav onPress={handleLanguage} />
+
     </Background>
   );
 };

@@ -4,6 +4,11 @@ const TimerComponent = ({ initialTime, onTimeUp }) => {
   const [timeLeft, setTimeLeft] = useState(initialTime);
   const [timerColor, setTimerColor] = useState("#90EE90");
 
+  // Reset timer whenever initialTime changes
+  useEffect(() => {
+    setTimeLeft(initialTime);
+  }, [initialTime]);
+
   // Countdown logic
   useEffect(() => {
     if (timeLeft <= 0) {
@@ -35,7 +40,6 @@ const TimerComponent = ({ initialTime, onTimeUp }) => {
         width: "100%",
         display: "flex",
         justifyContent: "center",
-        marginBottom: "5%",
       }}
     >
       <div

@@ -160,8 +160,8 @@ const ChooseSorM = () => {
       </div>
       <Footer />
       {/* 🌐 Language Toggle */}
-      <LanguageToggle currentLanguage={lang} onPress={handleLanguageToggle} />
-      <BottomNav />
+      
+      <BottomNav onPress={handleLanguageToggle}/>
     </FloatingBackground>
   );
 };

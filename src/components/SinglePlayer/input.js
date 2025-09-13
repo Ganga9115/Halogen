@@ -89,23 +89,29 @@ export default function Input() {
   const [className, setClassName] = useState("");
   const navigate = useNavigate();
 
+  // --- ADD THIS HANDLER ---
   const handleFinish = () => {
     const profile = {
       name: nickname || "Anonymous",
       school: schoolName || "Unknown School",
-      className: className || "", // Store className
+      className: className || "",
       avatar: avatar || "",
       avatarIndex: avatarIndex || 0,
       savedAt: Date.now()
     };
 
+    // store profile once for all games to use
     localStorage.setItem("player_profile", JSON.stringify(profile));
 
-    // Pass className as a route parameter
+    // then navigate to the game route (same as before)
     navigate(`/single/${className}/${nickname}/${schoolName}`, {
-      state: { nickname, avatar, schoolName, className }, // Pass className in state as well
+      state: { nickname, avatar, schoolName },
     });
   };
+  // --- END ADDITION ---
+useEffect(() => {
+  setAvatar(avatarImages[avatarIndex]);
+}, [avatarIndex, avatarImages]);
 
   const nextStep = () => {
     if (step < 4) setStep(step + 1);
@@ -119,152 +125,164 @@ export default function Input() {
     <Background>
       <Logo />
       <Footer />
-      <div className="relative w-screen h-screen">
-        <div
-          className="absolute backdrop-blur-lg bg-gradient-to-br from-[#e3e2f7]/80 to-[#cbcdda]/80 p-8 rounded-3xl shadow-2xl flex flex-col justify-between"
-          style={{
-            width: "44%",
-            height: "50%",
-            top: "25%",
-            left: "28%"
-          }}
-        >
-          <div className="flex justify-center gap-4 mb-6">
-            {[1, 2, 3, 4].map((s) => (
+    <div className="relative w-screen h-screen">
+      {/* Card container */}
+      <div
+        className="absolute backdrop-blur-lg bg-gradient-to-br from-[#e3e2f7]/80 to-[#cbcdda]/80 p-8 rounded-3xl shadow-2xl flex flex-col justify-between"
+        style={{
+          width: "44%",
+          height: "50%",
+          top: "25%",
+          left: "28%"
+        }}
+      >
+        {/* Step indicators */}
+        <div className="flex justify-center gap-4 mb-6">
+          {[1, 2, 3, 4].map((s) => (
+            <div
+              key={s}
+              className={`h-2 w-12 rounded-full ${
+                step === s ? "bg-[#9083D2]" : "bg-[#d1c9fa]"
+              }`}
+            />
+          ))}
+        </div>
+
+        {/* Step content */}
+        <div className="flex-grow flex flex-col justify-center">
+          {/* Step 1: Nickname */}
+          {step === 1 && (
+            <div className="text-center flex flex-col items-center">
+              <h2 className="text-2xl font-bold mb-6" style={{ color: "#351D6B" }}>
+                What's your nickname?
+              </h2>
               <div
-                key={s}
-                className={`h-2 w-12 rounded-full ${
-                  step === s ? "bg-[#9083D2]" : "bg-[#d1c9fa]"
-                }`}
-              />
-            ))}
-          </div>
-
-          <div className="flex-grow flex flex-col justify-center">
-            {step === 1 && (
-              <div className="text-center flex flex-col items-center">
-                <h2 className="text-2xl font-bold mb-6" style={{ color: "#351D6B" }}>
-                  What's your nickname?
-                </h2>
-                <div
-                  className="w-full flex items-center rounded-full border"
-                  style={{ borderColor: "#351D6B", borderWidth: 1 }}
-                >
-                  <input
-                    type="text"
-                    maxLength={10}
-                    pattern="^\S{1,10}$"
-                    value={nickname}
-                    onChange={(e) => {
-                      const raw = e.target.value.replace(/\s/g, "");
-                      if (raw.length > 0) {
-                        const cleanName =
-                          raw.charAt(0).toUpperCase() + raw.slice(1).toLowerCase();
-                        setNickname(cleanName);
-                      } else {
-                        setNickname("");
-                      }
-                    }}
-                    placeholder="Enter your nick name"
-                    className="flex-grow py-3 px-5 rounded-l-full border-none text-[#351D6B] text-base outline-none"
-                  />
-                  <button
-                    onClick={nextStep}
-                    disabled={!nickname}
-                    className="rounded-r-full px-6 py-3 font-semibold text-lg transition disabled:opacity-50"
-                    style={{
-                      color: "#351D6B",
-                      background:
-                        "linear-gradient(90deg, #A18CD1 0%, #FBC2EB 100%)",
-                      border: "none"
-                    }}
-                  >
-                    Next
-                  </button>
-                </div>
-                <div className="text-xs text-[#878B9A] mt-2 text-center">
-                  Maximum of 10 characters. Space not allowed.
-                </div>
-              </div>
-            )}
-
-            {step === 2 && (
-              <div className="text-center flex flex-col items-center">
-                <h2 className="text-xl font-bold text-[#202345] mb-4">
-                  Enter your School Name
-                </h2>
+                className="w-full flex items-center rounded-full border"
+                style={{ borderColor: "#351D6B", borderWidth: 1 }}
+              >
                 <input
                   type="text"
-                  value={schoolName}
-                  onChange={(e) => setSchoolName(e.target.value)}
-                  placeholder="Type your school name"
-                  className="w-full py-3 px-5 rounded-full border border-[#351D6B] text-[#351D6B] text-base outline-none"
+                  maxLength={10}
+                  pattern="^\\S{1,10}$"
+                  value={nickname}
+                  onChange={(e) => {
+                    const raw = e.target.value.replace(/\s/g, "");
+                    if (raw.length > 0) {
+                      const cleanName =
+                        raw.charAt(0).toUpperCase() + raw.slice(1).toLowerCase();
+                      setNickname(cleanName);
+                    } else {
+                      setNickname("");
+                    }
+                  }}
+                  placeholder="Enter your nick name"
+                  className="flex-grow py-3 px-5 rounded-l-full border-none text-[#351D6B] text-base outline-none"
                 />
                 <button
                   onClick={nextStep}
-                  disabled={!schoolName}
-                  className="w-full mt-8 py-3 rounded-full bg-gradient-to-r from-[#A18CD1] to-[#FBC2EB] text-white font-semibold text-lg transition disabled:opacity-50"
+                  disabled={!nickname}
+                  className="rounded-r-full px-6 py-3 font-semibold text-lg transition disabled:opacity-50"
+                  style={{
+                    color: "#351D6B",
+                    background:
+                      "linear-gradient(90deg, #A18CD1 0%, #FBC2EB 100%)",
+                    border: "none"
+                  }}
                 >
                   Next
                 </button>
               </div>
-            )}
+              <div className="text-xs text-[#878B9A] mt-2 text-center">
+                Maximum of 10 characters. Space not allowed.
+              </div>
+            </div>
+          )}
 
-            {step === 3 && (
-              <div className="text-center flex flex-col items-center mb-[10vh]">
-                <h2 className="text-xl font-bold text-[#202345] mb-4">
-                  Choose your Avatar
-                </h2>
-                <div className="flex items-center justify-center gap-4">
-                  <button
-                    onClick={() => setAvatarIndex(i => (i === 0 ? avatarImages.length - 1 : i - 1))}
-                    className="p-2 text-2xl focus:outline-none"
-                    aria-label="Previous Avatar"
-                  >
-                    &#8592;
-                  </button>
-                  <img
-                    src={avatarImages[avatarIndex]}
-                    alt={`Avatar ${avatarIndex + 1}`}
-                    className={`w-24 h-24 rounded-full border-4 transition ${avatar !== avatarImages[avatarIndex] ? 'border-[#C6CBF2]' : 'border-[#A18CD1]'}`}
-                    onClick={() => setAvatar(avatarImages[avatarIndex])}
-                    style={{ cursor: 'pointer' }}
-                  />
-                  <button
-                    onClick={() => setAvatarIndex(i => (i === avatarImages.length - 1 ? 0 : i + 1))}
-                    className="p-2 text-2xl focus:outline-none"
-                    aria-label="Next Avatar"
-                  >
-                    &#8594;
-                  </button>
-                </div>
+          {/* Step 2: School Name */}
+          {step === 2 && (
+            <div className="text-center flex flex-col items-center">
+              <h2 className="text-xl font-bold text-[#202345] mb-4">
+                Enter your School Name
+              </h2>
+              <input
+                type="text"
+                value={schoolName}
+                onChange={(e) => setSchoolName(e.target.value)}
+                placeholder="Type your school name"
+                className="w-full py-3 px-5 rounded-full border border-[#351D6B] text-[#351D6B] text-base outline-none"
+              />
+              <button
+                onClick={nextStep}
+                disabled={!schoolName}
+                className="w-full mt-8 py-3 rounded-full bg-gradient-to-r from-[#A18CD1] to-[#FBC2EB] text-white font-semibold text-lg transition disabled:opacity-50"
+              >
+                Next
+              </button>
+            </div>
+          )}
+
+          {/* Step 3: Avatar Carousel */}
+          {step === 3 && (
+            <div className="text-center flex flex-col items-center mb-[5vh]">
+              <h2 className="text-xl font-bold text-[#202345] mb-4">
+                Choose your Avatar
+              </h2>
+              <div className="flex items-center justify-center gap-4">
                 <button
-                  onClick={nextStep}
-                  disabled={!avatar}
-                  className="w-full mt-8 py-3 rounded-full bg-gradient-to-r from-[#A18CD1] to-[#FBC2EB] text-white font-semibold text-lg transition disabled:opacity-50"
+                  onClick={() => setAvatarIndex(i => (i === 0 ? avatarImages.length - 1 : i - 1))}
+                  className="p-2 text-2xl focus:outline-none"
+                  aria-label="Previous Avatar"
                 >
-                  Next
+                  &#8592;
+                </button>
+                <img
+  src={avatarImages[avatarIndex]}
+  alt={`Avatar ${avatarIndex + 1}`}
+  className={`w-24 h-24 rounded-full border-4 transition ${avatar !== avatarImages[avatarIndex] ? 'border-[#C6CBF2]' : 'border-[#A18CD1]'}`}
+  style={{ cursor: 'pointer' }}
+/>
+
+                <button
+                  onClick={() => setAvatarIndex(i => (i === avatarImages.length - 1 ? 0 : i + 1))}
+                  className="p-2 text-2xl focus:outline-none"
+                  aria-label="Next Avatar"
+                >
+                  &#8594;
                 </button>
               </div>
-            )}
+              <button
+                onClick={nextStep}
+                disabled={!avatar}
+                className="w-full mt-8 py-3 rounded-full bg-gradient-to-r from-[#A18CD1] to-[#FBC2EB] text-white font-semibold text-lg transition disabled:opacity-50"
+              >
+                Next
+              </button>
+            </div>
+          )}
 
-            {step === 4 && (
-              <div className="text-center flex flex-col items-center">
-                <h2 className="text-xl font-bold text-[#202345] mb-4">
-                  Select your Class
-                </h2>
-                <CustomClassDropdown value={className} onChange={setClassName} />
-                <button
-                  onClick={handleFinish}
-                  disabled={!className}
-                  className="w-full mt-8 py-3 rounded-full bg-gradient-to-r from-[#A18CD1] to-[#FBC2EB] text-white font-semibold text-lg transition disabled:opacity-50"
-                >
-                  Finish
+          {/* Step 4: Select Class */}
+          {step === 4 && (
+            <div className="text-center flex flex-col items-center">
+              <h2 className="text-xl font-bold text-[#202345] mb-4">
+                Select your Class
+              </h2>
+              <CustomClassDropdown value={className} onChange={setClassName} />
+              <button
+              onClick={handleFinish}
+              disabled={!className}
+              className="w-full mt-8 py-3 rounded-full bg-gradient-to-r from-[#A18CD1] to-[#FBC2EB] text-white font-semibold text-lg transition disabled:opacity-50"
+              >
+                Finish
                 </button>
-              </div>
-            )}
-          </div>
+
+            </div>
+          )}
         </div>
+
+        {/* Finish button */}
+        
+
+        {/* Navigation buttons */}
         <div className="flex justify-start h-8">
           {step > 1 && (
             <button
@@ -277,8 +295,11 @@ export default function Input() {
           )}
         </div>
       </div>
-      <Footer />
-      <BottomNav />
+    </div>
+    
+    
+    <Footer />
+    <BottomNav />  
     </Background>
   );
 }

@@ -93,14 +93,10 @@ const SubjectSelection = () => {
         </div>
 
         <Footer />
-        <LanguageToggle currentLanguage={language} onPress={handleLanguage} />
+        {/* <LanguageToggle currentLanguage={language} onPress={handleLanguage} /> */}
 
         {/* Bottom Navigation */}
-        <BottomNav
-          onLeaderboardClick={() => console.log("Leaderboard")}
-          onProfileClick={() => console.log("Profile")}
-          onGameClick={() => console.log("Game")}
-        />
+        <BottomNav onPress={handleLanguage}/>
       </FloatingBackground>
     </div>
   );

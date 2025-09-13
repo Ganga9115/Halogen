@@ -28,8 +28,6 @@ const colorPalette = ['#E0A4AF', '#F2D0A9', '#A6C9C2', '#BEB6D9'];
   const [showConfetti, setShowConfetti] = useState(false);
   const [showTimeOutModal, setShowTimeOutModal] = useState(false);
   const [hasSavedResult, setHasSavedResult] = useState(false);
-  
-  // New state to track the history of paired terms for undo functionality
   const [pairedTermHistory, setPairedTermHistory] = useState([]);
 
   const shuffleArray = (arr) => [...arr].sort(() => Math.random() - 0.5);
