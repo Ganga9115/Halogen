@@ -36,7 +36,7 @@ const SaveTheGirl = () => {
       const j = Math.floor(Math.random() * (i + 1));
       [ids[i], ids[j]] = [ids[j], ids[i]];
     }
-    return ids.slice(0, 5);
+    return ids.slice(0, 6);
   };
 
   useEffect(() => {

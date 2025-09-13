@@ -31,7 +31,7 @@ const SaveGirl2 = () => {
       const j = Math.floor(Math.random() * (i + 1));
       [ids[i], ids[j]] = [ids[j], ids[i]];
     }
-    return ids.slice(0, 5);
+    return ids.slice(0, 6);
   };
 
   const handleLanguage = () => {
@@ -41,8 +41,8 @@ const SaveGirl2 = () => {
   const getRandomFiveQuestions = (arr) => {
     return arr
       .map((q) => q)
-      .sort(() => 0.5 - Math.random())
-      .slice(0, 5);
+      .sort(() => 0.6 - Math.random())
+      .slice(0, 6);
   };
 
   // Load questions on classId or subject change (except lang)
