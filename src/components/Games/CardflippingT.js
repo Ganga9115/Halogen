@@ -7,6 +7,7 @@ import logo from '../../assets/logo123.png';
 import BackButton from '../utils/backbutton';
 import Footer from '../utils/Footer';
 import Logo from '../utils/logo';
+import { saveResult } from "../utils/leaderboardStorage"; // 1. Import saveResult
 
 const CardflippingT = () => {
   const navigate = useNavigate();
@@ -21,7 +22,8 @@ const CardflippingT = () => {
   const [timer, setTimer] = useState(90);
   const [showCelebration, setShowCelebration] = useState(false);
   const [stopCelebration, setStopCelebration] = useState(false);
-  const [score, setScore] = useState(0); // Added score state
+  const [score, setScore] = useState(0);
+  const [hasSavedResult, setHasSavedResult] = useState(false); // 2. Add hasSavedResult state
 
   const initializeGame = useCallback(() => {
     setStopCelebration(true);
@@ -48,7 +50,8 @@ const CardflippingT = () => {
     setIsGameActive(true);
     setTimer(90);
     setShowCelebration(false);
-    setScore(0); // Reset score on new game
+    setScore(0);
+    setHasSavedResult(false); // Reset on new game
 
     setShowAllCardsTemporarily(true);
     setTimeout(() => {
@@ -70,7 +73,7 @@ const CardflippingT = () => {
             clearInterval(countdown);
             setIsGameActive(false);
             setMessage("நேரம் முடிந்துவிட்டது! விளையாட்டு முடிந்தது.");
-            setScore(0); // No score if time runs out
+            setScore(0);
             return 0;
           }
           return prevTime - 1;
@@ -107,12 +110,28 @@ const CardflippingT = () => {
 
   useEffect(() => {
     if (matchedCards.length === cards.length && cards.length > 0) {
-      setMessage('விளையாட்டு வெற்றி!');
+      const finalScore = 50; // Use a variable for the final score
+      setMessage(`விளையாட்டு வெற்றி! உங்கள் மதிப்பெண்: ${finalScore}.`);
       setIsGameActive(false);
       setShowCelebration(true);
-      setScore(50); // Set score to 50 on complete win
+      setScore(finalScore);
+
+      // 3. Implement the logic to save the result
+      if (!hasSavedResult) {
+        const profile = JSON.parse(localStorage.getItem("player_profile") || "{}");
+        const name = profile.name || window.prompt("Enter your name") || "Anonymous";
+        const school = profile.school || window.prompt("Enter your school") || "Unknown School";
+        const className = profile.className || "";
+
+        try {
+          saveResult({ name, school, className, score: finalScore, game: "CardFlippingT" });
+          setHasSavedResult(true);
+        } catch (err) {
+          console.error("Failed saving leaderboard result:", err);
+        }
+      }
     }
-  }, [matchedCards, cards]);
+  }, [matchedCards, cards, hasSavedResult]);
 
   const handleCardClick = (id) => {
     const card = cards.find(c => c.id === id);
@@ -134,12 +153,12 @@ const CardflippingT = () => {
     return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
   };
 
-  const restartGame = () => {
-    initializeGame();
+  const goToLeaderBoard = () => {
+    navigate('/leaderboard');
   };
 
-  const goToDashboard = () => {
-    navigate('/');
+  const restartGame = () => {
+    initializeGame();
   };
 
   return (
@@ -187,40 +206,30 @@ const CardflippingT = () => {
         </div>
 
         {message && (
-          <div style={{ position: 'fixed', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(0, 0, 0, 0.3)', backdropFilter: 'blur(4px)', zIndex: 50 }}>
-            <div style={{ backgroundColor: '#ffffff', padding: '5vh 5vw', borderRadius: '1.5vw', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)', border: '4px solid #bca5d4', textAlign: 'center', fontSize: '2vw', fontWeight: 'bold', transitionProperty: 'all', transitionDuration: '300ms', transform: 'scale(1.05)', position: 'relative' }}>
-              {message}
-              <div style={{ marginTop: '3vh', display: 'flex', justifyContent: 'center', gap: '2vw' }}>
+          // This is the pop-up modal that will appear upon winning
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white p-8 rounded-lg shadow-2xl text-center" style={{ borderRadius: '1.5vw', border: '4px solid #bca5d4' }}>
+              <h2 className="text-[2.5vw] font-bold mb-4">
+                {message.startsWith("விளையாட்டு வெற்றி!") ? "🎉 வாழ்த்துக்கள்! 🎉" : "விளையாட்டு முடிந்தது!"}
+              </h2>
+              <p className="text-xl mb-6">
+                {message}
+              </p>
+              {score > 0 && (
+                <p className="text-xl mb-6 font-bold text-indigo-600">
+                  உங்கள் மதிப்பெண்: {score}
+                </p>
+              )}
+              <div className="flex justify-center gap-4">
                 <button
-                  onClick={goToDashboard}
-                  style={{
-                    padding: '1.5vh 3vw',
-                    color: '#ffffff',
-                    fontWeight: 'bold',
-                    borderRadius: '9999px',
-                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-                    transitionProperty: 'background-color',
-                    transitionDuration: '150ms',
-                    backgroundColor: '#7164b4',
-                    fontSize: '1.5vw'
-                  }}
+                  onClick={goToLeaderBoard}
+                  className="px-6 py-3 rounded-lg text-white font-bold bg-[#7164b4] hover:bg-[#8f9fe4] transition"
                 >
-                  டாஷ்போர்டுக்கு செல்
+                  புள்ளிப்பட்டியல்
                 </button>
                 <button
                   onClick={restartGame}
-                  autoFocus
-                  style={{
-                    padding: '1.5vh 3vw',
-                    color: '#ffffff',
-                    fontWeight: 'bold',
-                    borderRadius: '9999px',
-                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-                    transitionProperty: 'background-color',
-                    transitionDuration: '150ms',
-                    backgroundColor: '#bca5d4',
-                    fontSize: '1.5vw'
-                  }}
+                  className="px-6 py-3 rounded-lg text-white font-bold bg-[#8f9fe4] hover:bg-[#7164b4] transition"
                 >
                   மீண்டும் விளையாடு
                 </button>
@@ -247,7 +256,6 @@ const CardflippingT = () => {
               }}
               onClick={() => handleCardClick(card.id)}
             >
-              {/* Card back with logo */}
               <div style={{
                 position: 'absolute',
                 inset: 0,
@@ -264,7 +272,6 @@ const CardflippingT = () => {
               }}>
                 <img src={logo} alt="Application Logo" style={{ width: '60%', height: 'auto', opacity: 0.8 }} />
               </div>
-              {/* Card front with word */}
               <div
                 style={{
                   position: 'absolute',
@@ -288,25 +295,6 @@ const CardflippingT = () => {
             </div>
           ))}
         </div>
-
-        <button
-          onClick={initializeGame}
-          style={{
-            padding: '1vh 2vw',
-            color: '#ffffff',
-            fontWeight: 'bold',
-            borderRadius: '9999px',
-            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-            transitionProperty: 'background-color',
-            transitionDuration: '150ms',
-            marginBottom: '2vh',
-            backgroundColor: '#7164b4',
-            fontSize: '1.2vw',
-            zIndex:10
-          }}
-        >
-          விளையாட்டை மீண்டும் தொடங்கவும்
-        </button>
 
         <TablaCelebration show={showCelebration} stop={stopCelebration} />
       </div>
