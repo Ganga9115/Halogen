@@ -10,6 +10,7 @@ import Match from './components/SinglePlayer/Match';
 import MultiplayerInput from './components/MultiPlayer/MultiPlayerInput';
 import ChooseLanguage from './components/SinglePlayer/ChooseLanguage';
 import Leaderboard from './components/SinglePlayer/leaderBoard';
+import Start from './components/Start';
 import AppBackground from './components/utils/AppBackground';
 
 const App = () => {
@@ -17,7 +18,8 @@ const App = () => {
     <AppBackground>
     <BrowserRouter>
     <Routes >
-      <Route path="/"  element={<ChooseSorM />}/>
+      <Route path="/" element={<Start />} />
+      <Route path="/choose"  element={<ChooseSorM />}/>
       <Route path='/single' element={<Input />}/>
       <Route path="/subject" element={<SubjectSelection />} />
       <Route path="/xo" element={<XO />} />
