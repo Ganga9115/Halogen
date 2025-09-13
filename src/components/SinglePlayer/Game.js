@@ -1,25 +1,30 @@
-import React from 'react'
-import { useParams } from 'react-router-dom'
-import CardflippingT from '../Games/CardflippingT';
-import Cardflipping from '../Games/Cardflipping';
-import SaveTheGirl from '../Games/SaveTheGirl';
-import Riddle from '../Games/Riddle';
-import WordSearchGame from '../Games/WordSearchGame';
-import SaveGirl2 from '../Games/SaveGirl2';
+import React from "react";
+import { useParams } from "react-router-dom";
+import CardflippingT from "../Games/CardflippingT";
+import Cardflipping from "../Games/Cardflipping";
+import SaveTheGirl from "../Games/SaveTheGirl";
+import Riddle from "../Games/Riddle";
+import WordSearchGame from "../Games/WordSearchGame";
+import SaveGirl2 from "../Games/SaveGirl2";
+import BottomNav from "../utils/BottomNav"; // ✅ import
 
 const Game = () => {
-  const {classId,subject}=useParams();
+  const { classId, subject } = useParams();
+
   return (
-    <div>
-      {subject==="tamil" && <CardflippingT />}
-      {subject==="english" && <Cardflipping />}
-      {subject==="math" && <SaveTheGirl />}
-      {subject==="science" && <Riddle />}
-      {subject==="social studies" && <WordSearchGame /> }
-      {classId>10 && <SaveGirl2 />}
+    <div className="relative min-h-screen pb-16">
+      {/* 🎮 Game rendering */}
+      {subject === "tamil" && <CardflippingT />}
+      {subject === "english" && <Cardflipping />}
+      {subject === "math" && <SaveTheGirl />}
+      {subject === "science" && <Riddle />}
+      {subject === "social studies" && <WordSearchGame />}
+      {classId > 10 && <SaveGirl2 />}
 
+      {/* 📌 Bottom Navigation */}
+      <BottomNav />
     </div>
-  )
-}
+  );
+};
 
-export default Game
+export default Game;

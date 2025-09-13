@@ -10,13 +10,12 @@ import Match from './components/SinglePlayer/Match';
 import MultiplayerInput from './components/MultiPlayer/MultiPlayerInput';
 import ChooseLanguage from './components/SinglePlayer/ChooseLanguage';
 import Leaderboard from './components/SinglePlayer/leaderBoard';
-import Background from './components/utils/FloatingBackground';
 import Start from './components/Start';
-
+import AppBackground from './components/utils/AppBackground';
 
 const App = () => {
   return (
-    <Background>
+    <AppBackground>
     <BrowserRouter>
     <Routes >
       <Route path="/" element={<Start />} />
@@ -34,7 +33,7 @@ const App = () => {
       <Route path="/leaderboard" element={<Leaderboard />} />
     </Routes >
     </BrowserRouter>
-    </Background>
+    </AppBackground>
   )
 }
 

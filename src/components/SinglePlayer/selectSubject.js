@@ -3,7 +3,6 @@ import { motion } from "motion/react";
 import { useNavigate, useParams } from "react-router-dom";
 import FloatingBackground from "../utils/FloatingBackground";
 import LanguageToggle from "../utils/LanguageToggle";
-
 import scienceGif from "../../assets/science.gif";
 import mathGif from "../../assets/math.gif";
 import socialGif from "../../assets/social.gif";
@@ -14,8 +13,8 @@ import chemistryGif from "../../assets/chemistry.gif";
 import biologyGif from "../../assets/biology.gif";
 import csGif from "../../assets/cs.gif";
 import Logo from "../utils/logo";
-import BackButton from "../utils/backbutton";
 import Footer from "../utils/Footer";
+import BottomNav from "../utils/BottomNav";
 
 const subjectsForGrades6to10 = [
   { en: "Science", ta: "அறிவியல்", gif: scienceGif, color: "bg-[#BCA5D4]" },
@@ -38,11 +37,9 @@ const SubjectSelection = () => {
   const navigate = useNavigate();
   const { classId, displayName, schoolName } = useParams();
 
-  // Determine if the class is higher grade (11 or 12)
   const classNumber = parseInt(classId, 10);
   const isHigherGrade = classNumber >= 11 && classNumber <= 12;
 
-  // Select appropriate subject array
   const subjectsToDisplay = isHigherGrade ? subjectsForHigherGrades : subjectsForGrades6to10;
 
   const handleLanguage = () => {
@@ -50,15 +47,13 @@ const SubjectSelection = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center relative" style={{ backgroundColor: "#EFE2FA" }}>
+    <div className="min-h-screen flex items-center justify-center relative">
       {/* Background Layer */}
       <FloatingBackground>
         <Logo />
-        {/* Foreground Content */}
-        <div className="relative z-10 flex flex-col items-center justify-center w-full px-[2vw]">
-          {/* Language Toggle Button */}
-          {/* (Assuming LanguageToggle renders toggle and calls handleLanguage) */}
 
+        {/* Foreground Content */}
+        <div className="relative z-10 flex flex-col items-center justify-center w-full px-[2vw] flex-grow">
           {/* Heading */}
           <h1 className="text-[7vh] font-extrabold text-center text-black mb-[1vh] sm:mb-[1vh] drop-shadow-sm">
             {language === "en" ? "Choose Your Subject" : "உங்கள் பாடத்தைத் தேர்வு செய்யுங்கள்"}
@@ -82,19 +77,30 @@ const SubjectSelection = () => {
                   })
                 }
               >
-                <div
-                  className={`bg-gradient-to-br from-[#BACBFE] to-[#C1ddE8] absolute inset-0 rounded-[2vh] shadow-xl flex flex-col items-center justify-center p-[2vh]`}
-                >
-                  <img src={item.gif} alt={item.en} className="w-[8vw] h-[10vh] mb-[2vh] object-contain" />
-                  <h2 className="text-[2.5vh] font-bold text-white text-center drop-shadow-lg">{item[language]}</h2>
+                <div className="bg-gradient-to-br from-[#BACBFE] to-[#C1ddE8] absolute inset-0 rounded-[2vh] shadow-xl flex flex-col items-center justify-center p-[2vh]">
+                  <img
+                    src={item.gif}
+                    alt={item.en}
+                    className="w-[8vw] h-[10vh] mb-[2vh] object-contain"
+                  />
+                  <h2 className="text-[2.5vh] font-bold text-white text-center drop-shadow-lg">
+                    {item[language]}
+                  </h2>
                 </div>
               </motion.div>
             ))}
           </div>
         </div>
+
         <Footer />
-        <BackButton />
         <LanguageToggle currentLanguage={language} onPress={handleLanguage} />
+
+        {/* Bottom Navigation */}
+        <BottomNav
+          onLeaderboardClick={() => console.log("Leaderboard")}
+          onProfileClick={() => console.log("Profile")}
+          onGameClick={() => console.log("Game")}
+        />
       </FloatingBackground>
     </div>
   );

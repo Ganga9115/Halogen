@@ -1,8 +1,8 @@
 // src/components/SinglePlayer/leaderBoard.js
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import BackButton from "../utils/backbutton";
 import Footer from "../utils/Footer";
+import BottomNav from "../utils/BottomNav";
 import { getTopStudents, getTopSchools, exportData, clearLeaderboard } from "../utils/leaderboardStorage";
 
 function ProgressBar({ value, max = 100 }) {
@@ -44,13 +44,11 @@ export default function Leaderboard() {
   const maxSchoolPoints = Math.max(...schoolLeaders.map((s) => Number(s.points || 0)), 1000);
 
   return (
-    <div className="min-h-screen p-8 bg-gradient-to-br from-sky-100 via-sky-50 to-white relative overflow-hidden">
-      <div className="max-w-3xl mx-auto relative z-10">
-        <motion.div
-          initial={{ opacity: 0, x: 30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
-          className="p-6 rounded-3xl bg-white/80 border border-slate-100 shadow-2xl"
+    
+    <div className="min-h-screen p-8 relative overflow-hidden w-[100vw] h-[100vh] flex items-center justify-center ">
+      <div className="max-w-3xl mx-auto relative z-10 w-[100vw] h-[80vh] flex items-center justify-center" >
+        <div
+          className="p-6 rounded-3xl bg-white/80 border border-slate-100 shadow-2xl w-[100%]"
         >
           <div className="flex items-start justify-between">
             <div>
@@ -138,11 +136,11 @@ export default function Leaderboard() {
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
 
       <Footer />
-      <BackButton />
+      <BottomNav />
     </div>
   );
 }

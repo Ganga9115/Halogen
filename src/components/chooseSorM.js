@@ -7,6 +7,7 @@ import Logo from "./utils/logo"; // logo component
 import LanguageToggle from "./utils/LanguageToggle";
 import Footer from "./utils/Footer";
 import Logo2 from "./utils/logo2";
+import BottomNav from "./utils/BottomNav";
 
 // 🌐 Language translations
 const translations = {
@@ -160,6 +161,7 @@ const ChooseSorM = () => {
       <Footer />
       {/* 🌐 Language Toggle */}
       <LanguageToggle currentLanguage={lang} onPress={handleLanguageToggle} />
+      <BottomNav />
     </FloatingBackground>
   );
 };

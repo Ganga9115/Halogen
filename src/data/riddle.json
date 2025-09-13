@@ -1,340 +1,676 @@
 [
     {
-        "class": "6",
-        "difficulty": 1,
-        "answer": "Sun",
-        "hints": [
-            "I am a star in the center of our solar system.",
-            "I give light and heat to the Earth.",
-            "Plants need me to make food."
-        ],
-        "ta_answer": "சூரியன்",
-        "ta_hints": [
-            "நான் நமது சூரிய குடும்பத்தின் மையத்தில் உள்ள ஒரு நட்சத்திரம்.",
-            "நான் பூமிக்கு ஒளியும் வெப்பமும் தருகிறேன்.",
-            "தாவரங்களுக்கு உணவு தயாரிக்க நான் தேவை."
-        ],
-        "options": [
-            "Moon",
-            "Mars",
-            "Sun",
-            "Jupiter"
-        ],
-        "ta_options": [
-            "சந்திரன்",
-            "செவ்வாய்",
-            "சூரியன்",
-            "வியாழன்"
-        ]
-    },
+"class": "6",
+"difficulty": 1,
+"answer": "Sun",
+"hints": [
+"I am a star in the center of our solar system.",
+"I give light and heat to the Earth.",
+"Plants need me to make food."
+],
+"ta_answer": "சூரியன்",
+"ta_hints": [
+"நான் நமது சூரிய குடும்பத்தின் மையத்தில் உள்ள ஒரு நட்சத்திரம்.",
+"நான் பூமிக்கு ஒளியும் வெப்பமும் தருகிறேன்.",
+"தாவரங்களுக்கு உணவு தயாரிக்க நான் தேவை."
+],
+"options": [
+"Moon",
+"Mars",
+"Sun",
+"Jupiter"
+],
+"ta_options": [
+"சந்திரன்",
+"செவ்வாய்",
+"சூரியன்",
+"வியாழன்"
+]
+},
+{
+"class": "6",
+"difficulty": 2,
+"answer": "Roots",
+"hints": [
+"I am a part of a plant.",
+"I grow underground.",
+"I absorb water and nutrients."
+],
+"ta_answer": "வேர்கள்",
+"ta_hints": [
+"நான் ஒரு தாவரத்தின் ஒரு பகுதி.",
+"நான் பூமிக்கு அடியில் வளர்வேன்.",
+"நான் நீர் மற்றும் ஊட்டச்சத்துக்களை உறிஞ்சுவேன்."
+],
+"options": [
+"Leaves",
+"Flowers",
+"Stem",
+"Roots"
+],
+"ta_options": [
+"இலைகள்",
+"பூக்கள்",
+"தண்டு",
+"வேர்கள்"
+]
+},
+{
+"class": "6",
+"difficulty": 3,
+"answer": "Cloud",
+"hints": [
+"I am made of tiny water droplets or ice crystals.",
+"I float in the sky.",
+"I can bring rain."
+],
+"ta_answer": "மேகம்",
+"ta_hints": [
+"நான் சிறிய நீர் துளிகள் அல்லது பனி படிகங்களால் ஆனவன்.",
+"நான் வானத்தில் மிதப்பேன்.",
+"நான் மழையை கொண்டு வருவேன்."
+],
+"options": [
+"Wind",
+"Cloud",
+"Rainbow",
+"Star"
+],
+"ta_options": [
+"காற்று",
+"மேகம்",
+"வானவில்",
+"நட்சத்திரம்"
+]
+},
+{
+"class": "6",
+"difficulty": 4,
+"answer": "Evaporation",
+"hints": [
+"I am part of the water cycle.",
+"I happen when liquid water turns into a gas.",
+"The sun's heat helps me happen."
+],
+"ta_answer": "ஆவியாதல்",
+"ta_hints": [
+"நான் நீர் சுழற்சியின் ஒரு பகுதி.",
+"திரவ நீர் வாயுவாக மாறும் போது நான் நிகழ்கிறேன்.",
+"சூரியனின் வெப்பம் எனக்கு உதவுகிறது."
+],
+"options": [
+"Condensation",
+"Precipitation",
+"Evaporation",
+"Transpiration"
+],
+"ta_options": [
+"ஒடுக்கம்",
+"மழைப்பொழிவு",
+"ஆவியாதல்",
+"நீராவிப்போக்கு"
+]
+},
+{
+"class": "6",
+"difficulty": 5,
+"answer": "Mars",
+"hints": [
+"I am the fourth planet from the Sun.",
+"My surface is reddish-brown.",
+"I am named after the Roman god of war."
+],
+"ta_answer": "செவ்வாய்",
+"ta_hints": [
+"நான் சூரியனிலிருந்து நான்காவது கிரகம்.",
+"என் மேற்பரப்பு சிவப்பு-பழுப்பு நிறத்தில் இருக்கும்.",
+"நான் ரோமானிய போர் கடவுளின் பெயரால் அழைக்கப்படுகிறேன்."
+],
+"options": [
+"Jupiter",
+"Saturn",
+"Mars",
+"Venus"
+],
+"ta_options": [
+"வியாழன்",
+"சனி",
+"செவ்வாய்",
+"வெள்ளி"
+]
+},
+{
+"class": "6",
+"difficulty": 6,
+"answer": "Lungs",
+"hints": [
+"I am a pair of organs in your chest.",
+"I am the main part of your respiratory system.",
+"I take in oxygen when you breathe in."
+],
+"ta_answer": "நுரையீரல்",
+"ta_hints": [
+"நான் உங்கள் மார்பில் உள்ள ஒரு ஜோடி உறுப்பு.",
+"நான் உங்கள் சுவாச மண்டலத்தின் முக்கிய பகுதி.",
+"நீங்கள் உள்ளிழுக்கும் போது நான் ஆக்சிஜனை எடுத்துக்கொள்கிறேன்."
+],
+"options": [
+"Heart",
+"Brain",
+"Lungs",
+"Kidneys"
+],
+"ta_options": [
+"இதயம்",
+"மூளை",
+"நுரையீரல்",
+"சிறுநீரகம்"
+]
+},
     {
-        "class": "6",
-        "difficulty": 2,
-        "answer": "Roots",
-        "hints": [
-            "I am a part of a plant.",
-            "I grow underground.",
-            "I absorb water and nutrients."
-        ],
-        "ta_answer": "வேர்கள்",
-        "ta_hints": [
-            "நான் ஒரு தாவரத்தின் ஒரு பகுதி.",
-            "நான் பூமிக்கு அடியில் வளர்வேன்.",
-            "நான் நீர் மற்றும் ஊட்டச்சத்துக்களை உறிஞ்சுவேன்."
-        ],
-        "options": [
-            "Leaves",
-            "Flowers",
-            "Stem",
-            "Roots"
-        ],
-        "ta_options": [
-            "இலைகள்",
-            "பூக்கள்",
-            "தண்டு",
-            "வேர்கள்"
-        ]
-    },
+"class": "7",
+"difficulty": 1,
+"answer": "Magnet",
+"hints": [
+"I have a north and a south pole.",
+"I attract some metals, but not all.",
+"I can be used to pick up paper clips."
+],
+"ta_answer": "காந்தம்",
+"ta_hints": [
+"எனக்கு வட மற்றும் தென் துருவங்கள் உண்டு.",
+"நான் சில உலோகங்களை ஈர்ப்பேன், அனைத்தையும் அல்ல.",
+"காகிதக் கிளிப்புகளை எடுக்க நான் பயன்படுத்தப்படலாம்."
+],
+"options": [
+"Balloon",
+"Magnet",
+"Battery",
+"Rubber band"
+],
+"ta_options": [
+"பலூன்",
+"காந்தம்",
+"பேட்டரி",
+"ரப்பர் பேண்ட்"
+]
+},
+{
+"class": "7",
+"difficulty": 2,
+"answer": "Skeleton",
+"hints": [
+"I am inside your body.",
+"I am made of bones.",
+"I give you shape and support."
+],
+"ta_answer": "எலும்புக்கூடு",
+"ta_hints": [
+"நான் உங்கள் உடலுக்குள் இருப்பவன்.",
+"நான் எலும்புகளால் ஆனவன்.",
+"நான் உங்களுக்கு வடிவத்தையும் ஆதரவையும் கொடுப்பேன்."
+],
+"options": [
+"Muscles",
+"Skin",
+"Skeleton",
+"Hair"
+],
+"ta_options": [
+"தசைகள்",
+"தோல்",
+"எலும்புக்கூடு",
+"முடி"
+]
+},
+{
+"class": "7",
+"difficulty": 3,
+"answer": "Fossil",
+"hints": [
+"I am the preserved remains of a long-dead organism.",
+"I am often found in rocks.",
+"I can tell you about life from the past."
+],
+"ta_answer": "புதைபடிவம்",
+"ta_hints": [
+"நான் நீண்ட காலமாக இறந்த உயிரினத்தின் பாதுகாக்கப்பட்ட எச்சங்கள்.",
+"நான் பெரும்பாலும் பாறைகளில் காணப்படுவேன்.",
+"நான் கடந்த கால வாழ்க்கையைப் பற்றி உங்களுக்கு சொல்ல முடியும்."
+],
+"options": [
+"Gem",
+"Fossil",
+"Crystal",
+"Stone"
+],
+"ta_options": [
+"ரத்தினம்",
+"புதைபடிவம்",
+"படிகம்",
+"கல்"
+]
+},
+{
+"class": "7",
+"difficulty": 4,
+"answer": "Photosynthesis",
+"hints": [
+"I am how plants make their food.",
+"I use sunlight, water, and carbon dioxide.",
+"I release oxygen."
+],
+"ta_answer": "ஒளிச்சேர்க்கை",
+"ta_hints": [
+"தாவரங்கள் தங்கள் உணவை உருவாக்கும் முறை நான்.",
+"நான் சூரிய ஒளி, நீர் மற்றும் கார்பன் டை ஆக்சைடு ஆகியவற்றை பயன்படுத்துகிறேன்.",
+"நான் ஆக்ஸிஜனை வெளியிடுகிறேன்."
+],
+"options": [
+"Respiration",
+"Transpiration",
+"Germination",
+"Photosynthesis"
+],
+"ta_options": [
+"சுவாசம்",
+"நீராவிப்போக்கு",
+"முளைப்பு",
+"ஒளிச்சேர்க்கை"
+]
+},
+{
+"class": "7",
+"difficulty": 5,
+"answer": "Volcano",
+"hints": [
+"I am a mountain that can erupt.",
+"I release hot lava and ash.",
+"I can be active, dormant, or extinct."
+],
+"ta_answer": "எரிமலை",
+"ta_hints": [
+"நான் வெடிக்கக்கூடிய ஒரு மலை.",
+"நான் சூடான எரிமலைக்குழம்பு மற்றும் சாம்பலை வெளியிடுகிறேன்.",
+"நான் செயலில், உறக்கத்தில் அல்லது அழிந்துபோன நிலையில் இருக்கலாம்."
+],
+"options": [
+"Mountain",
+"Glacier",
+"Volcano",
+"Canyon"
+],
+"ta_options": [
+"மலை",
+"பனிப்பாறை",
+"எரிமலை",
+"பள்ளத்தாக்கு"
+]
+},
+{
+"class": "7",
+"difficulty": 6,
+"answer": "Lever",
+"hints": [
+"I am a simple machine used to lift heavy objects.",
+"I have a rigid bar and a fulcrum.",
+"A seesaw is an example of me."
+],
+"ta_answer": "நெம்புகோல்",
+"ta_hints": [
+"நான் கனமான பொருட்களை தூக்குவதற்கு பயன்படுத்தப்படும் ஒரு எளிய இயந்திரம்.",
+"எனக்கு ஒரு கடினமான பட்டி மற்றும் ஒரு முட்டுப்புள்ளி உண்டு.",
+"ஒரு சீசா எனக்கு ஒரு உதாரணம்."
+],
+"options": [
+"Pulley",
+"Inclined plane",
+"Wheel and axle",
+"Lever"
+],
+"ta_options": [
+"கப்பி",
+"சாய்வு தளம்",
+"சக்கரம் மற்றும் அச்சு",
+"நெம்புகோல்"
+]
+},
     {
-        "class": "6",
-        "difficulty": 3,
-        "answer": "Cloud",
-        "hints": [
-            "I am made of tiny water droplets or ice crystals.",
-            "I float in the sky.",
-            "I can bring rain."
-        ],
-        "ta_answer": "மேகம்",
-        "ta_hints": [
-            "நான் சிறிய நீர் துளிகள் அல்லது பனி படிகங்களால் ஆனவன்.",
-            "நான் வானத்தில் மிதப்பேன்.",
-            "நான் மழையை கொண்டு வருவேன்."
-        ],
-        "options": [
-            "Wind",
-            "Cloud",
-            "Rainbow",
-            "Star"
-        ],
-        "ta_options": [
-            "காற்று",
-            "மேகம்",
-            "வானவில்",
-            "நட்சத்திரம்"
-        ]
-    },
+"class": "8",
+"difficulty": 1,
+"answer": "Atom",
+"hints": [
+"I am the smallest unit of an element.",
+"I am made of protons, neutrons, and electrons.",
+"Everything is made of me."
+],
+"ta_answer": "அணு",
+"ta_hints": [
+"நான் ஒரு தனிமத்தின் மிகச்சிறிய அலகு.",
+"நான் புரோட்டான், நியூட்ரான் மற்றும் எலக்ட்ரானால் ஆனவன்.",
+"எல்லாமே என்னால் ஆனது."
+],
+"options": [
+"Molecule",
+"Atom",
+"Cell",
+"Particle"
+],
+"ta_options": [
+"மூலக்கூறு",
+"அணு",
+"செல்",
+"துகள்"
+]
+},
+{
+"class": "8",
+"difficulty": 2,
+"answer": "Cell",
+"hints": [
+"I am the basic building block of all living things.",
+"I can be either prokaryotic or eukaryotic.",
+"You have trillions of me in your body."
+],
+"ta_answer": "செல்",
+"ta_hints": [
+"நான் அனைத்து உயிரினங்களின் அடிப்படை கட்டுமான அலகு.",
+"நான் புரோகாரியோடிக் அல்லது யூகாரியோடிக் ஆக இருக்கலாம்.",
+"உங்கள் உடலில் கோடிக்கணக்கான நான் இருக்கிறேன்."
+],
+"options": [
+"Organ",
+"Cell",
+"Tissue",
+"DNA"
+],
+"ta_options": [
+"உறுப்பு",
+"செல்",
+"திசு",
+"டிஎன்ஏ"
+]
+},
+{
+"class": "8",
+"difficulty": 3,
+"answer": "Gravity",
+"hints": [
+"I am a force that pulls everything towards the Earth's center.",
+"I keep you from floating into space.",
+"Isaac Newton famously described me."
+],
+"ta_answer": "புவியீர்ப்பு விசை",
+"ta_hints": [
+"நான் எல்லாவற்றையும் பூமியின் மையத்தை நோக்கி இழுக்கும் ஒரு சக்தி.",
+"நான் உங்களை விண்வெளியில் மிதக்கவிடாமல் தடுப்பேன்.",
+"ஐசக் நியூட்டன் என்னை பிரபலமாக விவரித்தார்."
+],
+"options": [
+"Friction",
+"Pressure",
+"Gravity",
+"Inertia"
+],
+"ta_options": [
+"உராய்வு",
+"அழுத்தம்",
+"புவியீர்ப்பு விசை",
+"மந்தம்"
+]
+},
+{
+"class": "8",
+"difficulty": 4,
+"answer": "Heart",
+"hints": [
+"I am a muscular organ that pumps blood throughout your body.",
+"I am about the size of a human fist.",
+"I have four chambers: two atria and two ventricles."
+],
+"ta_answer": "இதயம்",
+"ta_hints": [
+"நான் உங்கள் உடல் முழுவதும் இரத்தத்தை உந்தும் ஒரு தசை உறுப்பு.",
+"நான் ஒரு மனிதனின் கைமுஷ்டி அளவில் இருப்பேன்.",
+"எனக்கு நான்கு அறைகள் உள்ளன: இரண்டு ஏட்ரியா மற்றும் இரண்டு வென்ட்ரிக்கிள்கள்."
+],
+"options": [
+"Lungs",
+"Stomach",
+"Kidney",
+"Heart"
+],
+"ta_options": [
+"நுரையீரல்",
+"வயிறு",
+"சிறுநீரகம்",
+"இதயம்"
+]
+},
+{
+"class": "8",
+"difficulty": 5,
+"answer": "Chemical Reaction",
+"hints": [
+"I am a process that changes one set of chemicals into another.",
+"I can produce heat, light, or gas bubbles.",
+"Rusting is a slow example of me."
+],
+"ta_answer": "வேதியியல் எதிர்வினை",
+"ta_hints": [
+"நான் ஒரு தொகுதி இரசாயனங்களை மற்றொரு தொகுதியாக மாற்றும் ஒரு செயல்முறை.",
+"நான் வெப்பம், ஒளி அல்லது வாயு குமிழிகளை உருவாக்க முடியும்.",
+"துருப்பிடித்தல் எனக்கு ஒரு மெதுவான உதாரணம்."
+],
+"options": [
+"Physical Change",
+"Chemical Reaction",
+"Phase Change",
+"Dissolving"
+],
+"ta_options": [
+"இயற்பியல் மாற்றம்",
+"வேதியியல் எதிர்வினை",
+"கட்ட மாற்றம்",
+"கரைதல்"
+]
+},
+{
+"class": "8",
+"difficulty": 6,
+"answer": "Solar Energy",
+"hints": [
+"I am a form of energy from the sun.",
+"I can be converted into electricity.",
+"I am considered a clean and renewable source."
+],
+"ta_answer": "சூரிய ஆற்றல்",
+"ta_hints": [
+"நான் சூரியனிடமிருந்து வரும் ஒரு வகை ஆற்றல்.",
+"நான் மின்சாரமாக மாற்றப்படலாம்.",
+"நான் ஒரு தூய்மையான மற்றும் புதுப்பிக்கத்தக்க ஆதாரமாகக் கருதப்படுகிறேன்."
+],
+"options": [
+"Wind Energy",
+"Geothermal Energy",
+"Hydroelectric Energy",
+"Solar Energy"
+],
+"ta_options": [
+"காற்றாலை ஆற்றல்",
+"புவிவெப்ப ஆற்றல்",
+"நீர்மின்சக்தி",
+"சூரிய ஆற்றல்"
+]
+},
     {
-        "class": "7",
-        "difficulty": 1,
-        "answer": "Magnet",
-        "hints": [
-            "I have a north and a south pole.",
-            "I attract some metals, but not all.",
-            "I can be used to pick up paper clips."
-        ],
-        "ta_answer": "காந்தம்",
-        "ta_hints": [
-            "எனக்கு வட மற்றும் தென் துருவங்கள் உண்டு.",
-            "நான் சில உலோகங்களை ஈர்ப்பேன், அனைத்தையும் அல்ல.",
-            "காகிதக் கிளிப்புகளை எடுக்க நான் பயன்படுத்தப்படலாம்."
-        ],
-        "options": [
-            "Balloon",
-            "Magnet",
-            "Battery",
-            "Rubber band"
-        ],
-        "ta_options": [
-            "பலூன்",
-            "காந்தம்",
-            "பேட்டரி",
-            "ரப்பர் பேண்ட்"
-        ]
-    },
-    {
-        "class": "7",
-        "difficulty": 2,
-        "answer": "Skeleton",
-        "hints": [
-            "I am inside your body.",
-            "I am made of bones.",
-            "I give you shape and support."
-        ],
-        "ta_answer": "எலும்புக்கூடு",
-        "ta_hints": [
-            "நான் உங்கள் உடலுக்குள் இருப்பவன்.",
-            "நான் எலும்புகளால் ஆனவன்.",
-            "நான் உங்களுக்கு வடிவத்தையும் ஆதரவையும் கொடுப்பேன்."
-        ],
-        "options": [
-            "Muscles",
-            "Skin",
-            "Skeleton",
-            "Hair"
-        ],
-        "ta_options": [
-            "தசைகள்",
-            "தோல்",
-            "எலும்புக்கூடு",
-            "முடி"
-        ]
-    },
-    {
-        "class": "7",
-        "difficulty": 3,
-        "answer": "Fossil",
-        "hints": [
-            "I am the preserved remains of a long-dead organism.",
-            "I am often found in rocks.",
-            "I can tell you about life from the past."
-        ],
-        "ta_answer": "புதைபடிவம்",
-        "ta_hints": [
-            "நான் நீண்ட காலமாக இறந்த உயிரினத்தின் பாதுகாக்கப்பட்ட எச்சங்கள்.",
-            "நான் பெரும்பாலும் பாறைகளில் காணப்படுவேன்.",
-            "நான் கடந்த கால வாழ்க்கையைப் பற்றி உங்களுக்கு சொல்ல முடியும்."
-        ],
-        "options": [
-            "Gem",
-            "Fossil",
-            "Crystal",
-            "Stone"
-        ],
-        "ta_options": [
-            "ரத்தினம்",
-            "புதைபடிவம்",
-            "படிகம்",
-            "கல்"
-        ]
-    },
-    {
-        "class": "8",
-        "difficulty": 1,
-        "answer": "Atom",
-        "hints": [
-            "I am the smallest unit of an element.",
-            "I am made of protons, neutrons, and electrons.",
-            "Everything is made of me."
-        ],
-        "ta_answer": "அணு",
-        "ta_hints": [
-            "நான் ஒரு தனிமத்தின் மிகச்சிறிய அலகு.",
-            "நான் புரோட்டான், நியூட்ரான் மற்றும் எலக்ட்ரானால் ஆனவன்.",
-            "எல்லாமே என்னால் ஆனது."
-        ],
-        "options": [
-            "Molecule",
-            "Atom",
-            "Cell",
-            "Particle"
-        ],
-        "ta_options": [
-            "மூலக்கூறு",
-            "அணு",
-            "செல்",
-            "துகள்"
-        ]
-    },
-    {
-        "class": "8",
-        "difficulty": 2,
-        "answer": "Cell",
-        "hints": [
-            "I am the basic building block of all living things.",
-            "I can be either prokaryotic or eukaryotic.",
-            "You have trillions of me in your body."
-        ],
-        "ta_answer": "செல்",
-        "ta_hints": [
-            "நான் அனைத்து உயிரினங்களின் அடிப்படை கட்டுமான அலகு.",
-            "நான் புரோகாரியோடிக் அல்லது யூகாரியோடிக் ஆக இருக்கலாம்.",
-            "உங்கள் உடலில் கோடிக்கணக்கான நான் இருக்கிறேன்."
-        ],
-        "options": [
-            "Organ",
-            "Cell",
-            "Tissue",
-            "DNA"
-        ],
-        "ta_options": [
-            "உறுப்பு",
-            "செல்",
-            "திசு",
-            "டிஎன்ஏ"
-        ]
-    },
-    {
-        "class": "8",
-        "difficulty": 3,
-        "answer": "Gravity",
-        "hints": [
-            "I am a force that pulls everything towards the Earth's center.",
-            "I keep you from floating into space.",
-            "Isaac Newton famously described me."
-        ],
-        "ta_answer": "புவியீர்ப்பு விசை",
-        "ta_hints": [
-            "நான் எல்லாவற்றையும் பூமியின் மையத்தை நோக்கி இழுக்கும் ஒரு சக்தி.",
-            "நான் உங்களை விண்வெளியில் மிதக்கவிடாமல் தடுப்பேன்.",
-            "ஐசக் நியூட்டன் என்னை பிரபலமாக விவரித்தார்."
-        ],
-        "options": [
-            "Friction",
-            "Pressure",
-            "Gravity",
-            "Inertia"
-        ],
-        "ta_options": [
-            "உராய்வு",
-            "அழுத்தம்",
-            "புவியீர்ப்பு விசை",
-            "மந்தம்"
-        ]
-    },
-    {
-        "class": "9",
-        "difficulty": 1,
-        "answer": "Oxygen",
-        "hints": [
-            "I am a gas.",
-            "Animals need me to breathe.",
-            "Plants produce me."
-        ],
-        "ta_answer": "ஆக்ஸிஜன்",
-        "ta_hints": [
-            "நான் ஒரு வாயு.",
-            "விலங்குகளுக்கு சுவாசிக்க நான் தேவை.",
-            "தாவரங்கள் என்னை உற்பத்தி செய்கின்றன."
-        ],
-        "options": [
-            "Carbon Dioxide",
-            "Nitrogen",
-            "Oxygen",
-            "Hydrogen"
-        ],
-        "ta_options": [
-            "கார்பன் டை ஆக்சைடு",
-            "நைட்ரஜன்",
-            "ஆக்ஸிஜன்",
-            "ஹைட்ரஜன்"
-        ]
-    },
-    {
-        "class": "9",
-        "difficulty": 2,
-        "answer": "Digestion",
-        "hints": [
-            "I am a process in your body.",
-            "I break down food.",
-            "I turn it into energy."
-        ],
-        "ta_answer": "செரிமானம்",
-        "ta_hints": [
-            "நான் உங்கள் உடலில் ஒரு செயல்முறை.",
-            "நான் உணவை உடைப்பேன்.",
-            "நான் அதை ஆற்றலாக மாற்றுவேன்."
-        ],
-        "options": [
-            "Breathing",
-            "Digestion",
-            "Circulation",
-            "Respiration"
-        ],
-        "ta_options": [
-            "சுவாசம்",
-            "செரிமானம்",
-            "சுழற்சி",
-            "சுவாசம்"
-        ]
-    },
-    {
-        "class": "9",
-        "difficulty": 3,
-        "answer": "Magnetism",
-        "hints": [
-            "I am an invisible force.",
-            "I pull or push things made of iron.",
-            "I have two poles."
-        ],
-        "ta_answer": "காந்தவியல்",
-        "ta_hints": [
-            "நான் ஒரு கண்ணுக்கு தெரியாத சக்தி.",
-            "நான் இரும்பினால் செய்யப்பட்ட பொருட்களை இழுப்பேன் அல்லது தள்ளுவேன்.",
-            "எனக்கு இரண்டு துருவங்கள் உள்ளன."
-        ],
-        "options": [
-            "Electricity",
-            "Magnetism",
-            "Light",
-            "Heat"
-        ],
-        "ta_options": [
-            "மின்சாரம்",
-            "காந்தவியல்",
-            "ஒளி",
-            "வெப்பம்"
-        ]
-    },
+"class": "9",
+"difficulty": 1,
+"answer": "Oxygen",
+"hints": [
+"I am a gas.",
+"Animals need me to breathe.",
+"Plants produce me."
+],
+"ta_answer": "ஆக்ஸிஜன்",
+"ta_hints": [
+"நான் ஒரு வாயு.",
+"விலங்குகளுக்கு சுவாசிக்க நான் தேவை.",
+"தாவரங்கள் என்னை உற்பத்தி செய்கின்றன."
+],
+"options": [
+"Carbon Dioxide",
+"Nitrogen",
+"Oxygen",
+"Hydrogen"
+],
+"ta_options": [
+"கார்பன் டை ஆக்சைடு",
+"நைட்ரஜன்",
+"ஆக்ஸிஜன்",
+"ஹைட்ரஜன்"
+]
+},
+{
+"class": "9",
+"difficulty": 2,
+"answer": "Digestion",
+"hints": [
+"I am a process in your body.",
+"I break down food.",
+"I turn it into energy."
+],
+"ta_answer": "செரிமானம்",
+"ta_hints": [
+"நான் உங்கள் உடலில் ஒரு செயல்முறை.",
+"நான் உணவை உடைப்பேன்.",
+"நான் அதை ஆற்றலாக மாற்றுவேன்."
+],
+"options": [
+"Breathing",
+"Digestion",
+"Circulation",
+"Respiration"
+],
+"ta_options": [
+"சுவாசம்",
+"செரிமானம்",
+"சுழற்சி",
+"சுவாசம்"
+]
+},
+{
+"class": "9",
+"difficulty": 3,
+"answer": "Magnetism",
+"hints": [
+"I am an invisible force.",
+"I pull or push things made of iron.",
+"I have two poles."
+],
+"ta_answer": "காந்தவியல்",
+"ta_hints": [
+"நான் ஒரு கண்ணுக்கு தெரியாத சக்தி.",
+"நான் இரும்பினால் செய்யப்பட்ட பொருட்களை இழுப்பேன் அல்லது தள்ளுவேன்.",
+"எனக்கு இரண்டு துருவங்கள் உள்ளன."
+],
+"options": [
+"Electricity",
+"Magnetism",
+"Light",
+"Heat"
+],
+"ta_options": [
+"மின்சாரம்",
+"காந்தவியல்",
+"ஒளி",
+"வெப்பம்"
+]
+},
+{
+"class": "9",
+"difficulty": 4,
+"answer": "Friction",
+"hints": [
+"I am a force that opposes motion.",
+"I can create heat.",
+"You need me to walk without slipping."
+],
+"ta_answer": "உராய்வு",
+"ta_hints": [
+"நான் இயக்கத்தை எதிர்க்கும் ஒரு சக்தி.",
+"நான் வெப்பத்தை உருவாக்க முடியும்.",
+"வழுக்காமல் நடக்க நான் உங்களுக்கு தேவை."
+],
+"options": [
+"Gravity",
+"Friction",
+"Air Resistance",
+"Momentum"
+],
+"ta_options": [
+"புவியீர்ப்பு விசை",
+"உராய்வு",
+"காற்று எதிர்ப்பு",
+"உந்தம்"
+]
+},
+{
+"class": "9",
+"difficulty": 5,
+"answer": "Transpiration",
+"hints": [
+"I am part of the water cycle.",
+"I am how plants release water.",
+"I happen through small pores on leaves called stomata."
+],
+"ta_answer": "நீராவிப்போக்கு",
+"ta_hints": [
+"நான் நீர் சுழற்சியின் ஒரு பகுதி.",
+"தாவரங்கள் என்னை பயன்படுத்தி நீரை வெளியிடுகின்றன.",
+"இலைகளில் உள்ள சிறிய துளைகள் வழியாக நான் நிகழ்கிறேன்."
+],
+"options": [
+"Photosynthesis",
+"Respiration",
+"Transpiration",
+"Osmosis"
+],
+"ta_options": [
+"ஒளிச்சேர்க்கை",
+"சுவாசம்",
+"நீராவிப்போக்கு",
+"சவ்வூடுபரவல்"
+]
+},
+{
+"class": "9",
+"difficulty": 6,
+"answer": "Law of Conservation of Energy",
+"hints": [
+"I am a fundamental principle of physics.",
+"I state that energy cannot be created or destroyed.",
+"I mean that the total energy in a system remains constant."
+],
+"ta_answer": "ஆற்றல் அழிவின்மை விதி",
+"ta_hints": [
+"நான் இயற்பியலின் ஒரு அடிப்படை கொள்கை.",
+"நான் ஆற்றலை உருவாக்கவோ அழிக்கவோ முடியாது என்று கூறுகிறேன்.",
+"ஒரு அமைப்பின் மொத்த ஆற்றல் நிலையானதாக இருக்கும் என்று நான் அர்த்தப்படுத்துகிறேன்."
+],
+"options": [
+"Newton's Laws of Motion",
+"Law of Conservation of Mass",
+"Law of Conservation of Energy",
+"Law of Thermodynamics"
+],
+"ta_options": [
+"நியூட்டனின் இயக்க விதிகள்",
+"நிறை அழிவின்மை விதி",
+"ஆற்றல் அழிவின்மை விதி",
+"வெப்ப இயக்கவியல் விதி"
+]
+},
     {
         "class": "10",
         "difficulty": 1,
@@ -420,171 +756,172 @@
         ]
     },
     {
-        "class": "11",
-        "difficulty": 1,
-        "answer": "Protein",
-        "hints": [
-            "I am a large molecule.",
-            "I am made of amino acids.",
-            "I am essential for building and repairing body tissues."
-        ],
-        "ta_answer": "புரதம்",
-        "ta_hints": [
-            "நான் ஒரு பெரிய மூலக்கூறு.",
-            "நான் அமினோ அமிலங்களால் ஆனவன்.",
-            "நான் உடல் திசுக்களை உருவாக்கவும் சரிசெய்யவும் அத்தியாவசியமானவன்."
-        ],
-        "options": [
-            "Carbohydrate",
-            "Lipid",
-            "Protein",
-            "Nucleic acid"
-        ],
-        "ta_options": [
-            "கார்போஹைட்ரேட்",
-            "கொழுப்பு",
-            "புரதம்",
-            "நியூக்ளிக் அமிலம்"
-        ]
-    },
-    {
-        "class": "11",
-        "difficulty": 2,
-        "answer": "Light",
-        "hints": [
-            "I travel in waves.",
-            "I have no mass.",
-            "I can be broken into a rainbow."
-        ],
-        "ta_answer": "ஒளி",
-        "ta_hints": [
-            "நான் அலைகளில் பயணிப்பேன்.",
-            "எனக்கு நிறை இல்லை.",
-            "என்னை வானவில்லாக பிரிக்க முடியும்."
-        ],
-        "options": [
-            "Sound",
-            "Light",
-            "Heat",
-            "Magnetism"
-        ],
-        "ta_options": [
-            "ஒலி",
-            "ஒளி",
-            "வெப்பம்",
-            "காந்தவியல்"
-        ]
-    },
-    {
-        "class": "11",
-        "difficulty": 3,
-        "answer": "Acid",
-        "hints": [
-            "I taste sour.",
-            "My pH is below 7.",
-            "I can be found in a lemon."
-        ],
-        "ta_answer": "அமிலம்",
-        "ta_hints": [
-            "நான் புளிப்பு சுவை கொண்டவன்.",
-            "எனது pH 7 க்கும் குறைவாக உள்ளது.",
-            "நான் எலுமிச்சையில் காணப்படுவேன்."
-        ],
-        "options": [
-            "Base",
-            "Salt",
-            "Sugar",
-            "Acid"
-        ],
-        "ta_options": [
-            "காரத்தன்மை",
-            "உப்பு",
-            "சர்க்கரை",
-            "அமிலம்"
-        ]
-    },
-    {
-        "class": "12",
-        "difficulty": 1,
-        "answer": "Molecule",
-        "hints": [
-            "I am formed when two or more atoms join together.",
-            "I can be a simple gas like oxygen (O2).",
-            "I am the smallest particle of a substance that still retains its properties."
-        ],
-        "ta_answer": "மூலக்கூறு",
-        "ta_hints": [
-            "இரண்டு அல்லது அதற்கு மேற்பட்ட அணுக்கள் ஒன்று சேரும்போது நான் உருவாகிறேன்.",
-            "நான் ஆக்ஸிஜன் (O2) போன்ற ஒரு எளிய வாயுவாக இருக்கலாம்.",
-            "நான் ஒரு பொருளின் மிகச்சிறிய துகள், அது இன்னும் அதன் பண்புகளை தக்க வைத்துக் கொண்டுள்ளது."
-        ],
-        "options": [
-            "Proton",
-            "Molecule",
-            "Electron",
-            "Neutron"
-        ],
-        "ta_options": [
-            "புரோட்டான்",
-            "மூலக்கூறு",
-            "எலக்ட்ரான்",
-            "நியூட்ரான்"
-        ]
-    },
-    {
-        "class": "12",
-        "difficulty": 2,
-        "answer": "Virus",
-        "hints": [
-            "I am not a cell.",
-            "I need a host to reproduce.",
-            "I can make you sick."
-        ],
-        "ta_answer": "வைரஸ்",
-        "ta_hints": [
-            "நான் ஒரு செல் அல்ல.",
-            "நான் இனப்பெருக்கம் செய்ய ஒரு ஹோஸ்ட் தேவை.",
-            "நான் உங்களை நோய்வாய்ப்படுத்த முடியும்."
-        ],
-        "options": [
-            "Fungus",
-            "Bacterium",
-            "Virus",
-            "Parasite"
-        ],
-        "ta_options": [
-            "பூஞ்சை",
-            "பாக்டீரியா",
-            "வைரஸ்",
-            "ஒட்டுண்ணி"
-        ]
-    },
-    {
-        "class": "12",
-        "difficulty": 3,
-        "answer": "Catalyst",
-        "hints": [
-            "I speed up a chemical reaction.",
-            "I am not used up in the process.",
-            "Enzymes are an example of me."
-        ],
-        "ta_answer": "வினையூக்கி",
-        "ta_hints": [
-            "நான் ஒரு இரசாயன எதிர்வினையை விரைவுபடுத்துவேன்.",
-            "நான் செயல்பாட்டில் பயன்படுத்தப்படுவதில்லை.",
-            "நொதிகள் எனக்கு ஒரு எடுத்துக்காட்டு."
-        ],
-        "options": [
-            "Inhibitor",
-            "Catalyst",
-            "Reagent",
-            "Solution"
-        ],
-        "ta_options": [
-            "தடுப்பான்",
-            "வினையூக்கி",
-            "வினைபொருள்",
-            "கரைசல்"
-        ]
-    }
+"class": "10",
+"difficulty": 1,
+"answer": "DNA",
+"hints": [
+"I contain the genetic instructions for all living things.",
+"I look like a twisted ladder.",
+"My full name is Deoxyribonucleic acid."
+],
+"ta_answer": "டிஎன்ஏ",
+"ta_hints": [
+"நான் அனைத்து உயிரினங்களுக்கும் மரபணு வழிமுறைகளைக் கொண்டிருக்கிறேன்.",
+"நான் ஒரு முறுக்கப்பட்ட ஏணி போல் இருப்பேன்.",
+"எனது முழு பெயர் டிஆக்சிரைபோநியூக்ளிக் அமிலம்."
+],
+"options": [
+"RNA",
+"Cell",
+"Protein",
+"DNA"
+],
+"ta_options": [
+"ஆர்என்ஏ",
+"செல்",
+"புரதம்",
+"டிஎன்ஏ"
+]
+},
+{
+"class": "10",
+"difficulty": 2,
+"answer": "Volume",
+"hints": [
+"I measure how much space an object takes up.",
+"I can be found in a cube.",
+"I am measured in cubic units."
+],
+"ta_answer": "கனஅளவு",
+"ta_hints": [
+"ஒரு பொருள் எவ்வளவு இடத்தை எடுத்துக்கொள்கிறது என்பதை நான் அளவிடுகிறேன்.",
+"நான் ஒரு கனசதுரத்தில் காணப்படுவேன்.",
+"நான் கன அலகுகளில் அளவிடப்படுகிறேன்."
+],
+"options": [
+"Weight",
+"Area",
+"Volume",
+"Mass"
+],
+"ta_options": [
+"எடை",
+"பரப்பளவு",
+"கனஅளவு",
+"நிறை"
+]
+},
+{
+"class": "10",
+"difficulty": 3,
+"answer": "Density",
+"hints": [
+"I am a measure of how tightly packed matter is.",
+"My formula is mass divided by volume.",
+"An object's ability to float depends on me."
+],
+"ta_answer": "அடர்த்தி",
+"ta_hints": [
+"நான் ஒரு பொருளில் உள்ள திணிவு எவ்வளவு இறுக்கமாக நிரம்பியுள்ளது என்பதை அளவிடுகிறேன்.",
+"என் சூத்திரம் நிறை வகுத்தல் கனஅளவு.",
+"ஒரு பொருளின் மிதக்கும் திறன் என்னைப் பொறுத்தது."
+],
+"options": [
+"Pressure",
+"Density",
+"Velocity",
+"Temperature"
+],
+"ta_options": [
+"அழுத்தம்",
+"அடர்த்தி",
+"திசைவேகம்",
+"வெப்பநிலை"
+]
+},
+{
+"class": "10",
+"difficulty": 4,
+"answer": "Force",
+"hints": [
+"I can cause a change in an object's motion.",
+"I am measured in Newtons.",
+"I can be a push or a pull."
+],
+"ta_answer": "விசை",
+"ta_hints": [
+"நான் ஒரு பொருளின் இயக்கத்தில் மாற்றத்தை ஏற்படுத்த முடியும்.",
+"நான் நியூட்டன்களில் அளவிடப்படுகிறேன்.",
+"நான் ஒரு தள்ளுதல் அல்லது இழுத்தல் ஆக இருக்கலாம்."
+],
+"options": [
+"Power",
+"Energy",
+"Force",
+"Work"
+],
+"ta_options": [
+"ஆற்றல்",
+"சக்தி",
+"விசை",
+"வேலை"
+]
+},
+{
+"class": "10",
+"difficulty": 5,
+"answer": "Mitosis",
+"hints": [
+"I am a type of cell division.",
+"I result in two identical daughter cells.",
+"I am essential for growth and repair."
+],
+"ta_answer": "மைட்டாசிஸ்",
+"ta_hints": [
+"நான் ஒரு வகை செல் பிரிவு.",
+"நான் இரண்டு ஒரே மாதிரியான மகள் செல்களை உருவாக்குகிறேன்.",
+"நான் வளர்ச்சி மற்றும் பழுதுபார்க்க அத்தியாவசியமானவன்."
+],
+"options": [
+"Meiosis",
+"Photosynthesis",
+"Mitosis",
+"Respiration"
+],
+"ta_options": [
+"மயோசிஸ்",
+"ஒளிச்சேர்க்கை",
+"மைட்டாசிஸ்",
+"சுவாசம்"
+]
+},
+{
+"class": "10",
+"difficulty": 6,
+"answer": "Covalent bond",
+"hints": [
+"I am a type of chemical bond.",
+"I involve the sharing of electron pairs.",
+"I typically form between two nonmetals."
+],
+"ta_answer": "சகப்பிணைப்பு",
+"ta_hints": [
+"நான் ஒரு வகை வேதியியல் பிணைப்பு.",
+"நான் எலக்ட்ரான் ஜோடிகளைப் பகிர்ந்து கொள்வேன்.",
+"நான் பொதுவாக இரண்டு உலோகமல்லாதவற்றுக்கு இடையில் உருவாகிறேன்."
+],
+"options": [
+"Ionic bond",
+"Metallic bond",
+"Hydrogen bond",
+"Covalent bond"
+],
+"ta_options": [
+"அயனிப் பிணைப்பு",
+"உலோகப் பிணைப்பு",
+"ஹைட்ரஜன் பிணைப்பு",
+"சகப்பிணைப்பு"
+]
+}
+
 ]
