@@ -1,6 +1,7 @@
 [
   {
     "type": "antonym",
+    "level": "6",
     "pairs": [
       ["happy", "sad"],
       ["big", "small"],
@@ -12,6 +13,7 @@
   },
   {
     "type": "antonym",
+    "level": "7",
     "pairs": [
       ["ancient", "new"],
       ["shallow", "deep"],
@@ -23,6 +25,7 @@
   },
   {
     "type": "antonym",
+    "level": "8",
     "pairs": [
       ["optimistic", "pessimistic"],
       ["scarce", "plentiful"],
@@ -34,6 +37,7 @@
   },
   {
     "type": "antonym",
+    "level": "9",
     "pairs": [
       ["victory", "defeat"],
       ["accept", "reject"],
@@ -45,6 +49,7 @@
   },
   {
     "type": "antonym",
+    "level": "10",
     "pairs": [
       ["advance", "retreat"],
       ["success", "failure"],
@@ -56,6 +61,7 @@
   },
   {
     "type": "antonym",
+    "level": "11",
     "pairs": [
       ["helpful", "harmful"],
       ["honest", "dishonest"],
@@ -67,6 +73,7 @@
   },
   {
     "type": "antonym",
+    "level": "12",
     "pairs": [
       ["abstract", "real"],
       ["increase", "decrease"],
@@ -78,6 +85,7 @@
   },
   {
     "type": "synonym",
+    "level": "6",
     "pairs": [
       ["quick", "fast"],
       ["smart", "clever"],
@@ -89,6 +97,7 @@
   },
   {
     "type": "synonym",
+    "level": "7",
     "pairs": [
       ["tiny", "small"],
       ["rapid", "fast"],
@@ -100,6 +109,7 @@
   },
   {
     "type": "synonym",
+    "level": "8",
     "pairs": [
       ["big", "large"],
       ["happy", "glad"],
@@ -111,6 +121,7 @@
   },
   {
     "type": "synonym",
+    "level": "9",
     "pairs": [
       ["angry", "mad"],
       ["beautiful", "pretty"],
@@ -122,6 +133,7 @@
   },
   {
     "type": "synonym",
+    "level": "10",
     "pairs": [
       ["ancient", "old"],
       ["brilliant", "bright"],
@@ -133,6 +145,7 @@
   },
   {
     "type": "synonym",
+    "level": "11",
     "pairs": [
       ["help", "assist"],
       ["brave", "courageous"],
@@ -144,6 +157,7 @@
   },
   {
     "type": "synonym",
+    "level": "12",
     "pairs": [
       ["ambitious", "eager"],
       ["brilliant", "excellent"],

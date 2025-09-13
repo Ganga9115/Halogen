@@ -44,13 +44,13 @@ export default function Leaderboard() {
   const maxSchoolPoints = Math.max(...schoolLeaders.map((s) => Number(s.points || 0)), 1000);
 
   return (
-    
-    <div className="min-h-screen p-8 relative overflow-hidden w-[100vw] h-[100vh] flex items-center justify-center ">
-      <div className="max-w-3xl mx-auto relative z-10 w-[100vw] h-[80vh] flex items-center justify-center" >
+    <div className="min-h-screen p-8 relative overflow-hidden w-[100vw] h-[100vh] flex items-center justify-center">
+      <div className="max-w-3xl mx-auto relative z-10 w-[100vw] h-[80vh] flex items-center justify-center">
         <div
-          className="p-6 rounded-3xl bg-white/80 border border-slate-100 shadow-2xl w-[100%]"
+          className="p-6 rounded-3xl bg-white/80 border border-slate-100 shadow-2xl w-[100%] flex flex-col"
+          style={{ height: '80vh' }}
         >
-          <div className="flex items-start justify-between">
+          <div className="flex items-start justify-between flex-shrink-0">
             <div>
               <h2
                 className="text-3xl font-extrabold text-purple-700"
@@ -81,8 +81,9 @@ export default function Leaderboard() {
             </div>
           </div>
 
-          {/* Student Rankings */}
-          <div className="space-y-4 mt-4">
+          {/* Scrollable Container */}
+          <div className="space-y-4 mt-4 overflow-y-auto flex-grow">
+            {/* Student Rankings */}
             <div className="rounded-2xl p-4 bg-purple-50 border border-purple-100 shadow-sm">
               <h3 className="font-semibold text-purple-700 mb-2">Top Students</h3>
               <ol className="space-y-2">

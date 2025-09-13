@@ -11,7 +11,8 @@ import { saveResult } from "../utils/leaderboardStorage";
 const Match = () => {
   const { classId, subject, topic } = useParams();
   const navigate = useNavigate();
-
+const colorPalette = ['#E0A4AF', '#F2D0A9', '#A6C9C2', '#BEB6D9'];
+  const [colorIndex, setColorIndex] = useState(0); // New state for color tracking
   const [questions, setQuestions] = useState([]);
   const [currentQ, setCurrentQ] = useState(0);
   const [shuffledDefs, setShuffledDefs] = useState([]);
@@ -27,6 +28,7 @@ const Match = () => {
   const [showConfetti, setShowConfetti] = useState(false);
   const [showTimeOutModal, setShowTimeOutModal] = useState(false);
   const [hasSavedResult, setHasSavedResult] = useState(false);
+  const [pairedTermHistory, setPairedTermHistory] = useState([]);
 
   const shuffleArray = (arr) => [...arr].sort(() => Math.random() - 0.5);
   const pickRandom = (arr, n) =>
@@ -66,6 +68,7 @@ const Match = () => {
     setShowConfetti(false);
     setShowTimeOutModal(false);
     setHasSavedResult(false);
+    setPairedTermHistory([]); // Reset history on new game
   }, [classId, subject, topic]);
 
   useEffect(() => {
@@ -115,12 +118,47 @@ const Match = () => {
     setSelectedTerm(term);
   };
 
-  const handleDefinitionSelect = (definition) => {
+const handleDefinitionSelect = (definition) => {
     if (!selectedTerm || Object.values(userPairs).includes(definition) || hasChecked) return;
-    const newColor = `#${Math.floor(Math.random() * 0x1000000).toString(16).padStart(6, '0')}`;
+
+    // Get the next color from the palette
+    const newColor = colorPalette[colorIndex];
+
+    // Create the new pair and update the states
     const newPair = { [selectedTerm]: definition };
     setUserPairs((prev) => ({ ...prev, ...newPair }));
     setPairColors((prev) => ({ ...prev, [selectedTerm]: newColor }));
+
+    // Store the paired term for the undo functionality
+    setPairedTermHistory((prev) => [...prev, selectedTerm]);
+
+    // Clear the selected term
+    setSelectedTerm(null);
+
+    // Cycle to the next color in the palette
+    setColorIndex((prev) => (prev + 1) % colorPalette.length);
+};
+
+  const handleUndo = () => {
+    if (hasChecked || pairedTermHistory.length === 0) return;
+
+    // Get the most recent term from history
+    const lastPairedTerm = pairedTermHistory[pairedTermHistory.length - 1];
+
+    // Remove the pair from state
+    setUserPairs((prev) => {
+      const newPairs = { ...prev };
+      delete newPairs[lastPairedTerm];
+      return newPairs;
+    });
+    setPairColors((prev) => {
+      const newColors = { ...prev };
+      delete newColors[lastPairedTerm];
+      return newColors;
+    });
+
+    // Remove the last item from the history array
+    setPairedTermHistory((prev) => prev.slice(0, -1));
     setSelectedTerm(null);
   };
 
@@ -158,6 +196,7 @@ const Match = () => {
       setUserPairs({});
       setPairColors({});
       setSelectedTerm(null);
+      setPairedTermHistory([]); // Reset history for the next question
       setTimerRunning(true);
       setHasChecked(false);
     } else {
@@ -276,7 +315,7 @@ const Match = () => {
                       cursor:
                         pairColors[term] || hasChecked ? "not-allowed" : "pointer",
                     }}
-                    disabled={!!pairColors[term] && !hasChecked || hasChecked}
+                    disabled={!!pairColors[term] || hasChecked}
                   >
                     {term}
                   </button>
@@ -319,6 +358,17 @@ const Match = () => {
                 }`}
               >
                 Check Answers
+              </button>
+              <button
+                onClick={handleUndo}
+                disabled={pairedTermHistory.length === 0 || hasChecked}
+                className={`px-[5%] py-[2%] rounded-[2vh] text-white font-bold text-[2.5vh] transition ${
+                  pairedTermHistory.length === 0 || hasChecked
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-blue-500 hover:scale-105"
+                }`}
+              >
+                Undo
               </button>
               <button
                 onClick={handleNext}

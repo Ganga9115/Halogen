@@ -19,7 +19,7 @@ const CardflippingT = () => {
   const [isGameActive, setIsGameActive] = useState(true);
   const [gameMode, setGameMode] = useState('மொழியியல்');
   const [showAllCardsTemporarily, setShowAllCardsTemporarily] = useState(false);
-  const [timer, setTimer] = useState(90);
+  const [timer, setTimer] = useState(180); // Timer is now 3 minutes (180 seconds)
   const [showCelebration, setShowCelebration] = useState(false);
   const [stopCelebration, setStopCelebration] = useState(false);
   const [score, setScore] = useState(0);
@@ -48,15 +48,16 @@ const CardflippingT = () => {
     setMatchedCards([]);
     setMessage('');
     setIsGameActive(true);
-    setTimer(90);
+    setTimer(180); // Reset timer to 3 minutes
     setShowCelebration(false);
     setScore(0);
     setHasSavedResult(false); // Reset on new game
 
     setShowAllCardsTemporarily(true);
+    // Set the initial reveal duration to 15 seconds as requested
     setTimeout(() => {
       setShowAllCardsTemporarily(false);
-    }, 4000);
+    }, 15000); // 15 seconds
   }, [gameMode]);
 
   useEffect(() => {
@@ -86,18 +87,25 @@ const CardflippingT = () => {
 
   useEffect(() => {
     if (flippedCards.length === 2) {
-      const [firstCard, secondCard] = flippedCards;
-      const firstCardData = cards.find(card => card.id === firstCard);
-      const secondCardData = cards.find(card => card.id === secondCard);
+      const [firstCardId, secondCardId] = flippedCards;
+      const firstCardData = cards.find(card => card.id === firstCardId);
+      const secondCardData = cards.find(card => card.id === secondCardId);
 
       if (firstCardData.match === secondCardData.word) {
-        setMatchedCards(prev => [...prev, firstCard, secondCard]);
+        setMatchedCards(prev => [...prev, firstCardId, secondCardId]);
+        setCards(prevCards =>
+          prevCards.map(card =>
+            card.id === firstCardId || card.id === secondCardId
+              ? { ...card, isMatched: true }
+              : card
+          )
+        );
         setFlippedCards([]);
       } else {
         setTimeout(() => {
           setCards(prevCards =>
             prevCards.map(card =>
-              card.id === firstCard || card.id === secondCard
+              card.id === firstCardId || card.id === secondCardId
                 ? { ...card, isFlipped: false }
                 : card
             )
@@ -169,7 +177,12 @@ const CardflippingT = () => {
 
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '5vh', gap: '2vw' }}>
           <button
-            onClick={() => setGameMode('மொழியியல்')}
+            onClick={() => {
+              setGameMode('மொழியியல்');
+              // This is commented out to prevent a full re-initialization here,
+              // as the useEffect hook handles the change in gameMode.
+              // initializeGame();
+            }}
             style={{
               padding: '1vh 2vw',
               borderRadius: '9999px',
@@ -185,7 +198,10 @@ const CardflippingT = () => {
             மொழியியல்
           </button>
           <button
-            onClick={() => setGameMode('கவிதை_கவிஞர்')}
+            onClick={() => {
+              setGameMode('கவிதை_கவிஞர்');
+              // initializeGame();
+            }}
             style={{
               padding: '1vh 2vw',
               borderRadius: '9999px',
