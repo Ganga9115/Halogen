@@ -6,11 +6,13 @@ import Background from "../utils/FloatingBackground";
 import Logo from "../utils/logo";
 import BackButton from "../utils/backbutton";
 import Footer from "../utils/Footer";
+import { saveResult } from "../utils/leaderboardStorage"; // Import the saveResult function
+
 const GRID_SIZE = 8;
 const POINTS_PER_CORRECT = 10;
 const REQUIRED_TO_UNLOCK = 10;
 const QUESTIONS_PER_LEVEL = 3;
-const TIMER_DURATION = 180;
+const TIMER_DURATION = 120;
 
 const ALPHABET_EN = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const ALPHABET_TA = "அஆஇஈஉஊஎஏஐஒஓஔகஙசஞடணதநபமயரலவழளறனஜஷஸஹ";
@@ -40,7 +42,7 @@ const TRANSLATIONS = {
     time: "Time",
     timeUp: "OOPS...Time's up! ⏳",
     restartGame: "Restart Game",
-    timeoutMsg: "Time’s up! 🔔You can restart the game to try again.",
+    timeoutMsg: "Time's up! 🔔You can restart the game to try again.",
     congratsTitle: " 🏆 Congratulations! 🎉",
     congratsMsg: "You have completed all levels! Good job!",
     finalScore: "Your final score:",
@@ -216,6 +218,8 @@ export default function WordSearchGame() {
   const [initialLevels, setInitialLevels] = useState([]);
   const prevLanguageRef = useRef(language);
 
+  // Leaderboard state
+  const [hasSavedResult, setHasSavedResult] = useState(false);
   
   // Get questions based on selected grade and level
   const getQuestionsForLevel = (levelIndex, lang = language) => {
@@ -378,6 +382,24 @@ export default function WordSearchGame() {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+  };
+
+  // Function to save score to leaderboard
+  const saveScoreToLeaderboard = (finalScore) => {
+    if (!hasSavedResult) {
+      try {
+        const profile = JSON.parse(localStorage.getItem("player_profile") || "{}");
+        const name = profile.name || window.prompt("Enter your name") || "Anonymous";
+        const school = profile.school || window.prompt("Enter your school") || "Unknown School";
+        const className = profile.className || "";
+        
+        // Save the result with the game name "WordSearch"
+        saveResult({ name, school, className, score: finalScore, game: "WordSearch" });
+        setHasSavedResult(true);
+      } catch (err) {
+        console.error("Failed saving leaderboard result:", err);
+      }
+    }
   };
 
   function tryPlaceWord(gridToModify, wordArr, maxTries = 400) {
@@ -657,7 +679,8 @@ function handleNext() {
       setShowLevelCompleteModal(true);
       playLevelCompleteSound();
     } else if (levelIndex + 1 >= LEVELS.length) {
-      // All levels completed
+      // All levels completed - save score to leaderboard
+      saveScoreToLeaderboard(score);
       setShowFinalCompletionModal(true);
       setStatus("finished");
       playVictorySound();
@@ -751,6 +774,7 @@ function handleNext() {
     setTimeLeft(TIMER_DURATION);
     setTimerActive(true);
     setFoundAnswers([]);
+    setHasSavedResult(false);
     
     // Reset initial levels to trigger new question generation
     setInitialLevels([]);
@@ -760,12 +784,15 @@ function handleNext() {
     }
   }
 
-  
+  // Function to navigate to leaderboard
+  const goToLeaderBoard = () => {
+    navigate('/leaderboard');
+  };
 
 return (
   <Background>
     <Logo />
-   <div className="min-h-screen w-full flex flex-col items-center relative text-slate-900">
+   <div className="h-[95vh] w-full flex flex-col items-center relative text-slate-900">
 
         {/* Header & Level selector */}
         <div className="w-[90%] max-w-[80vw] flex flex-col sm:flex-row items-center justify-between mb-[3vh] gap-[1vh]">
@@ -998,7 +1025,7 @@ return (
             <p className="mb-4 text-[#2A60A0] text-xl font-semibold">{T.finalScore} <span className="font-mono">{score}</span></p>
             <div className="flex gap-3 justify-center">
               <button onClick={() => restartAll(false)} className="px-5 py-2 bg-[#2A60A0] text-white rounded-lg">{T.playAgain}</button>
-              <button onClick={() => restartAll(true)} className="px-5 py-2 bg-[#2A60A0] text-white rounded-lg">{T.leaderboard}</button>
+              <button onClick={goToLeaderBoard} className="px-5 py-2 bg-[#2A60A0] text-white rounded-lg">{T.leaderboard}</button>
             </div>
           </div>
         </div>
@@ -1012,7 +1039,7 @@ return (
             <p className="mb-4 text-xl text-[#2A60A0] font-semibold">{T.currentScore} <span className="font-mono">{score}</span></p>
             <div className="flex gap-3 justify-center">
               <button onClick={() => restartAll(false)} className="px-5 py-2 bg-indigo-600 text-white rounded-lg">{T.playAgain}</button>
-              <button onClick={() => restartAll(true)} className="px-5 py-2 bg-green-600 text-white rounded-lg">{T.leaderboard}</button>
+              <button onClick={goToLeaderBoard} className="px-5 py-2 bg-green-600 text-white rounded-lg">{T.leaderboard}</button>
             </div>
           </div>
         </div>
@@ -1026,6 +1053,4 @@ return (
     <LanguageToggle currentLanguage={language} onPress={handleLanguage}/>
   </Background>
 );
-
-
 }
