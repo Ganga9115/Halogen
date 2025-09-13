@@ -1,12 +1,15 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import LanguageToggle from "../utils/LanguageToggle";
 import riddles from "../../data/riddle.json";
 import TablaCelebration from '../utils/Celeb';
 import Background from '../utils/FloatingBackground';
-import Logo from '../utils/logo'
+import Logo from '../utils/logo';
 import BackButton from '../utils/backbutton';
 import Footer from '../utils/Footer';
-// Helper for translations (remains the same)
+import { saveResult } from "../utils/leaderboardStorage";
+
+// Helper for translations
 const translations = {
   en: {
     title: "Riddle Master",
@@ -33,7 +36,6 @@ const translations = {
     next: "அடுத்து 👉",
     correct: "சரி!",
     incorrect: "தவறு!",
-    tryAgain: "மீண்டும் முயற்சிக்கவும் ",
     quizComplete: "விடுகதை முடிந்தது!",
     yourScore: "உங்கள் மதிப்பெண்:",
     restart: "விளையாட்டை மீண்டும் தொடங்கு 🔄",
@@ -68,7 +70,7 @@ const KeyframeStyles = () => (
 const Riddle = ({ isDarkMode = false }) => {
   const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [revealedHints, setRevealedHints] = useState([true, false, false]); // Initial state for hints
+  const [revealedHints, setRevealedHints] = useState([true, false, false]);
   const [userSelection, setUserSelection] = useState(null);
   const [correctAnswer, setCorrectAnswer] = useState(false);
   const [isIncorrectPopupVisible, setIsIncorrectPopupVisible] = useState(false);
@@ -79,10 +81,16 @@ const Riddle = ({ isDarkMode = false }) => {
   const [currentLanguage, setCurrentLanguage] = useState("en");
   const [stopCelebration, setStopCelebration] = useState(false);
   const timerRef = useRef(null);
+  const [hasSavedResult, setHasSavedResult] = useState(false); // State to track if result is saved
 
   const [hintButtonHover, setHintButtonHover] = useState([false, false, false]);
   const [optionButtonHover, setOptionButtonHover] = useState({});
   const [submitHover, setSubmitHover] = useState(false);
+
+  const [hintsUsed, setHintsUsed] = useState(0);
+  const [totalHintsUsed, setTotalHintsUsed] = useState(0);
+
+  const navigate = useNavigate();
 
   const PRIMARY_BLUE = '#2A60A0';
   const SECONDARY_BLUE = '#7FB3E0';
@@ -92,8 +100,7 @@ const Riddle = ({ isDarkMode = false }) => {
 
   const getRandomQuestions = useCallback(() => {
     const shuffled = [...riddles].sort(() => 0.5 - Math.random());
-    // Ensure we pick exactly 6 questions
-    return shuffled.slice(0, 6); 
+    return shuffled.slice(0, 6);
   }, []);
 
   const startGame = useCallback(() => {
@@ -101,15 +108,17 @@ const Riddle = ({ isDarkMode = false }) => {
     const selectedQuestions = getRandomQuestions();
     setQuestions(selectedQuestions);
     setCurrentQuestionIndex(0);
-    // Reset hints for the first question, with 3 hints available
-    setRevealedHints([true, false, false]); 
+    setRevealedHints([true, false, false]);
     setUserSelection(null);
     setCorrectAnswer(false);
     setIsIncorrectPopupVisible(false);
     setScore(0);
-    setTimer(90); // Reset timer
+    setTimer(90);
     setGameOver(false);
     setShowHintMessage(false);
+    setHintsUsed(0);
+    setTotalHintsUsed(0);
+    setHasSavedResult(false); // Reset saving state on new game
 
     if (timerRef.current) clearInterval(timerRef.current);
     setTimeout(() => setStopCelebration(false), 50);
@@ -136,21 +145,21 @@ const Riddle = ({ isDarkMode = false }) => {
 
   const handleNextQuestion = useCallback(() => {
     const nextIndex = currentQuestionIndex + 1;
-    // Check if there are more questions to present
-    if (nextIndex < questions.length) { 
+    setTotalHintsUsed(prevTotal => prevTotal + hintsUsed);
+    if (nextIndex < questions.length) {
       setCurrentQuestionIndex(nextIndex);
-      // Reset hints for the new question
-      setRevealedHints([true, false, false]); 
+      setRevealedHints([true, false, false]);
       setUserSelection(null);
       setCorrectAnswer(false);
       setIsIncorrectPopupVisible(false);
+      setHintsUsed(0);
     } else {
       setGameOver(true);
       clearInterval(timerRef.current);
     }
-  }, [currentQuestionIndex, questions.length]);
+  }, [currentQuestionIndex, questions.length, hintsUsed]);
 
-  const handleNextFromPopup = handleNextQuestion; // Alias for clarity
+  const handleNextFromPopup = handleNextQuestion;
 
   const handleTryAgain = () => {
     setUserSelection(null);
@@ -158,15 +167,21 @@ const Riddle = ({ isDarkMode = false }) => {
   };
 
   const handleHintClick = (hintNumber) => {
-    // Only reveal hint if it's not already revealed, the answer isn't correct, and it's not the first hint (which is always revealed)
     if (hintNumber > 0 && !correctAnswer && !revealedHints[hintNumber]) {
       const newHints = [...revealedHints];
       newHints[hintNumber] = true;
       setRevealedHints(newHints);
       setShowHintMessage(true);
       setTimeout(() => setShowHintMessage(false), 1500);
+      setHintsUsed(prev => prev + 1);
     }
   };
+
+  const calculatePoints = useCallback(() => {
+    let points = 10;
+    points -= hintsUsed * 2;
+    return Math.max(0, points);
+  }, [hintsUsed]);
 
   const handleGuess = (e) => {
     e.preventDefault();
@@ -178,20 +193,49 @@ const Riddle = ({ isDarkMode = false }) => {
 
     if (userSelection === correctLanguageAnswer) {
       setCorrectAnswer(true);
-      // Award 10 points for each correct answer, up to a total of 60
-      setScore(prevScore => prevScore + 10); 
+      const points = calculatePoints();
+      setScore(prevScore => prevScore + points);
     } else {
       setIsIncorrectPopupVisible(true);
     }
   };
 
+  // **Shared Leaderboard Logic**
+// **Shared Leaderboard Logic**
+useEffect(() => {
+    if (gameOver && !hasSavedResult) {
+      // Remove this line to eliminate timer bonus points
+      // const finalScore = score + (timer > 0 ? Math.floor(timer / 10) : 0); 
+      const finalScore = score; // Keep the score as-is
+      
+      const playerProfile = JSON.parse(localStorage.getItem("player_profile") || "{}");
+      const name = playerProfile.name || window.prompt("Enter your name") || "Anonymous";
+      const school = playerProfile.school || window.prompt("Enter your school") || "Unknown School";
+      const className = playerProfile.className || "";
+
+      // Call the shared save function with the updated score
+      saveResult({
+        name,
+        school,
+        className,
+        score: finalScore, // Use the new, non-bonus score here
+        game: "Riddle",
+        hintsUsed: totalHintsUsed
+      });
+      
+      setHasSavedResult(true); // Mark result as saved
+    }
+}, [gameOver, score, timer, totalHintsUsed, hasSavedResult]);
+
+  const saveAndNavigateToLeaderboard = useCallback(() => {
+    // This function now just navigates, as the saving is handled by the useEffect
+    navigate('/leaderboard');
+  }, [navigate]);
+
   const renderStars = () => {
-    // Assuming each correct answer gives 10 points, we need to scale this for 60 max score.
-    // We can represent score out of 60 directly, or use stars to represent levels of achievement.
-    // For now, let's assume the stars represent the number of correct answers (max 6).
-    const maxStars = 6; 
-    const filledStars = score / 10; // Each correct answer is 10 points
-    return '⭐'.repeat(filledStars) + '☆'.repeat(maxStars - filledStars);
+    const maxScore = 60;
+    const filledStars = Math.floor((score / maxScore) * 6);
+    return '⭐'.repeat(filledStars) + '☆'.repeat(6 - filledStars);
   };
 
   const currentQuestion = useMemo(() => {
@@ -237,7 +281,7 @@ const Riddle = ({ isDarkMode = false }) => {
       justifyContent: 'space-between',
       width: '100%',
       fontWeight: '800',
-      fontSize : '2vh',
+      fontSize: '2vh',
       alignItems: 'flex-start',
       gap: '1vh',
     },
@@ -284,7 +328,7 @@ const Riddle = ({ isDarkMode = false }) => {
       padding: '0.75vh 1vh',
       borderRadius: '0.75vh',
       border: '2px solid',
-      fontSize : '2vh',
+      fontSize: '2vh',
       fontWeight: 'bold',
       transition: 'all 0.2s',
       cursor: isDisabled ? 'not-allowed' : 'pointer',
@@ -296,10 +340,10 @@ const Riddle = ({ isDarkMode = false }) => {
       borderColor: isSelected ? PRIMARY_BLUE : SECONDARY_BLUE,
     }),
     optionsGrid: {
-        display: 'grid',
-        gridTemplateColumns: 'repeat(2, 1fr)',
-        gap: '1vh',
-        width: '100%',
+      display: 'grid',
+      gridTemplateColumns: 'repeat(2, 1fr)',
+      gap: '1vh',
+      width: '100%',
     },
     submitButton: (isDisabled) => ({
       width: '100%',
@@ -343,8 +387,7 @@ const Riddle = ({ isDarkMode = false }) => {
         <h1 style={styles.title}>{translations[currentLanguage].title}</h1>
         <div style={styles.levelAndTimerContainer}>
           <div style={{ display: 'flex', gap: '3vh', flexWrap: 'wrap', justifyContent: 'center' }}>
-            {/* Render badges for all 6 levels */}
-            {[0, 1, 2, 3, 4, 5].map(level => ( 
+            {[0, 1, 2, 3, 4, 5].map(level => (
               <span key={level} style={styles.levelBadge(currentQuestionIndex === level)}>
                 {translations[currentLanguage].level} {level + 1} 🧠
               </span>
@@ -363,12 +406,11 @@ const Riddle = ({ isDarkMode = false }) => {
           )}
         </div>
         <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '1vh', marginBottom: '1.5vh', width: '100%' }}>
-          {/* Hint buttons for the current question (max 3 hints) */}
           {['Hint 1', 'Hint 2', 'Hint 3'].map((label, idx) => (
             <button
               key={idx}
               onClick={() => handleHintClick(idx)}
-              disabled={revealedHints[idx] || correctAnswer || idx === 0} // idx === 0 is always revealed
+              disabled={revealedHints[idx] || correctAnswer || idx === 0}
               style={styles.hintButton(idx, revealedHints[idx] || correctAnswer || idx === 0)}
               onMouseEnter={() => setHintButtonHover(prev => ({ ...prev, [idx]: true }))}
               onMouseLeave={() => setHintButtonHover(prev => ({ ...prev, [idx]: false }))}
@@ -427,7 +469,7 @@ const Riddle = ({ isDarkMode = false }) => {
             <p style={{ fontSize: '2vh', color: PRIMARY_BLUE }}>{translations[currentLanguage].tryAgain}</p>
             <div style={{ marginTop: '1.5vh', display: 'flex', justifyContent: 'center', gap: '1vh' }}>
               <button onClick={handleTryAgain} style={{ padding: '0.75vh 1.5vh', borderRadius: '0.75vh', fontWeight: 'bold', color: 'white', backgroundColor: SECONDARY_BLUE, border: 'none', fontSize: '1.5vh' }}>
-                {translations[currentLanguage].tryAgain.split(' ')[0]} 
+                {translations[currentLanguage].tryAgain.split(' ')[0]}
               </button>
               <button onClick={handleNextFromPopup} style={{ padding: '0.75vh 1.5vh', borderRadius: '0.75vh', fontWeight: 'bold', color: 'white', backgroundColor: PRIMARY_BLUE, border: 'none', fontSize: '1.5vh' }}>
                 {translations[currentLanguage].next}
@@ -441,21 +483,20 @@ const Riddle = ({ isDarkMode = false }) => {
           <div style={{ backgroundColor: CARD_BG_LIGHT, padding: '2vh', borderRadius: '1.5vh', boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)', textAlign: 'center', maxWidth: '24vw', width: '90%' }}>
             <div style={{ fontSize: '3.75vh', marginBottom: '1vh' }}>🏆</div>
             <h2 style={{ fontSize: '1.875vh', fontWeight: 'bold', marginBottom: '0.5vh', color: PRIMARY_BLUE }}>{translations[currentLanguage].quizComplete}</h2>
-            {/* Display score out of 60 */}
-            <p style={{ fontSize: '2.5vh', marginBottom: '1vh', color: PRIMARY_BLUE }}>{translations[currentLanguage].yourScore} {score}/60</p> 
+            <p style={{ fontSize: '2.5vh', marginBottom: '1vh', color: PRIMARY_BLUE }}>{translations[currentLanguage].yourScore} {score}/60</p>
             <div style={{ fontSize: '2.25vh', marginBottom: '1.5vh' }}>{renderStars()}</div>
             <div style={{ display: 'flex', justifyContent: 'center', gap: '1vh', flexDirection: 'row' }}>
               <button onClick={startGame} style={{ ...styles.submitButton(false), flex: '1 1 45%', minWidth: '10vw' }}>
                 {translations[currentLanguage].restart}
               </button>
-              <button onClick={() => window.location.href = '/leaderboard'} style={{ ...styles.submitButton(false), flex: '1 1 45%', minWidth: '10vw' }}>
+              <button onClick={saveAndNavigateToLeaderboard} style={{ ...styles.submitButton(false), flex: '1 1 45%', minWidth: '10vw' }}>
                 {translations[currentLanguage].leaderboard}
               </button>
             </div>
           </div>
         </div>
       )}
-      <Footer/>
+      <Footer />
       <BackButton />
       <LanguageToggle currentLanguage={currentLanguage} onPress={handleLanguageToggle} />
     </Background>
