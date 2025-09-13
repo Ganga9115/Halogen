@@ -19,8 +19,8 @@ const App = () => {
     <Background>
     <BrowserRouter>
     <Routes >
-      <Route path="/start" element={<Start />} />
-      <Route path="/"  element={<ChooseSorM />}/>
+      <Route path="/" element={<Start />} />
+      <Route path="/choose"  element={<ChooseSorM />}/>
       <Route path='/single' element={<Input />}/>
       <Route path="/subject" element={<SubjectSelection />} />
       <Route path="/xo" element={<XO />} />
