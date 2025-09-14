@@ -26,10 +26,32 @@ const SaveGirl2 = () => {
   const [score, setScore] = useState(0);
   const [showWrongPopup, setShowWrongPopup] = useState(false);
   const [hasSavedResult, setHasSavedResult] = useState(false); // ✅ New state
+    const [timeLeft, setTimeLeft] = useState(60);
+  const [timerColor, setTimerColor] = useState("#90EE90");
+    const [initialTime , setInitialTime]=useState(60)
+
+    useEffect(() => {
+            if (timeLeft > initialTime * 0.5) {
+              setTimerColor("#90EE90");
+            } else if (timeLeft > initialTime * 0.25) {
+              setTimerColor("orange");
+            } else {
+              setTimerColor("red");
+            }
+          }, [timeLeft, initialTime]);
 
   const handleLanguage = () => {
     setLang(lang === "en" ? "ta" : "en");
   };
+
+    useEffect(() => {
+    if (timeLeft <= 0) {
+      setGameOver(true);
+      return;
+    }
+    const timer = setInterval(() => setTimeLeft((t) => t - 1), 1000);
+    return () => clearInterval(timer);
+  }, [timeLeft]);
 
   const getRandomFiveIds = useCallback((arr) => {
     const ids = arr.map((q) => q.id);
@@ -145,6 +167,7 @@ const SaveGirl2 = () => {
           game: "SaveTheGirl",
         });
         setHasSavedResult(true);
+        setTimeLeft(60)
       } catch (err) {
         console.error("Failed saving leaderboard result:", err);
       }
@@ -171,6 +194,7 @@ const SaveGirl2 = () => {
       if (currentQ === questions.length - 1) {
         setWin(true);
         setGameOver(true);
+        setInitialTime(60)
       } else {
         setCurrentQ(currentQ + 1);
         setAnswer("");
@@ -188,7 +212,7 @@ const SaveGirl2 = () => {
     navigate("/leaderboard");
   };
 
-  const waterLevel = ((currentQ + 1) / (questions.length || 1)) * 100;
+  const waterLevel = ((60 - timeLeft) / 60) * 100;
 
   if (!questions.length) {
     return (
@@ -271,7 +295,7 @@ const SaveGirl2 = () => {
               <div
                 style={{
                   width: "100%",
-                  background: "linear-gradient(90deg,#BCA5D4,#EFE2FA)",
+                  background: "linear-gradient(135deg, #BACBFE, #C1DDE8)",
                   borderRadius: "20px",
                   padding: "2%",
                   boxShadow: "0px 4px 15px rgba(0,0,0,0.4)",
@@ -349,7 +373,7 @@ const SaveGirl2 = () => {
                   width: "77%",
                   height: "55%",
                   borderWidth: "6px",
-                  borderColor: "#BCA5D4",
+                  borderColor: "#BACBFE",
                   borderRadius: "20px",
                   overflow: "hidden",
                   backgroundColor: "rgba(255,255,255,0.1)",
@@ -383,7 +407,7 @@ const SaveGirl2 = () => {
               style={{
                 width: "100%",
                 height: "85%",
-                background: "linear-gradient(135deg, #ffffff, #EFE2FA)",
+                background: "linear-gradient(135deg, #ffffff, #CAE9F5)",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
@@ -394,7 +418,24 @@ const SaveGirl2 = () => {
               }}
             >
               {/* Timer Component */}
-              <TimerComponent initialTime={60} onTimeUp={() => setGameOver(true)} />
+              <div
+        style={{
+          width: "15vh",
+          height: "15vh",
+          borderRadius: "50%",
+          border: `6px solid ${timerColor}`,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontSize: "2.5vh",
+          fontWeight: "700",
+          color: "black",
+          boxShadow: `0 0 20px ${timerColor}`,
+          background: "rgba(0,0,0,0)",
+        }}
+      >
+        ⏳ {timeLeft}s
+      </div>
               {/* Question */}
               {questions[currentQ] && questions[currentQ][lang] ? (
                 <>
@@ -428,7 +469,7 @@ const SaveGirl2 = () => {
                             width: "90%",
                             height: "8vh",
                             background: isSelected
-                              ? "linear-gradient(135deg, #BCA5D4, #EFE2FA)"
+                              ? "linear-gradient(135deg, #BACBFE, #C1DDE8)"
                               : "#e5e7eb",
                             color: isSelected ? "white" : "black",
                             fontSize: "2.5vh",
@@ -459,7 +500,7 @@ const SaveGirl2 = () => {
                 className="mt-[5%]"
                 onClick={handleSubmit}
                 style={{
-                  background: "linear-gradient(90deg,#BCA5D4,#EFE2FA)",
+                 background: "linear-gradient(135deg, #BACBFE, #C1DDE8)",
                   color: "white",
                   padding: "2% 5%",
                   borderRadius: "20px",
@@ -488,13 +529,14 @@ const SaveGirl2 = () => {
                 </p>
                 <div className="flex justify-center gap-4 mt-[5%] relative z-50">
                   <button
-                    className="bg-gradient-to-r from-[#BCA5D4] to-[#EFE2FA] text-white px-[6%] py-[2%] rounded-[2vh] text-[2.5vh] font-bold"
+                    className="bg-gradient-to-r from-[#BACBFE] to-[#C1DDE8] text-white px-[6%] py-[2%] rounded-[2vh] text-[2.5vh] font-bold"
                     onClick={handlePlayAgain}
                   >
+                    
                     🔄 {lang === "en" ? "Play Again" : "மீண்டும் விளையாடவும்"}
                   </button>
                   <button
-                    className="bg-gradient-to-r from-[#BCA5D4] to-[#EFE2FA] text-white px-[6%] py-[2%] rounded-[2vh] text-[2.5vh] font-bold"
+                    className="bg-gradient-to-r from-[#BACBFE] to-[#C1DDE8] text-white px-[6%] py-[2%] rounded-[2vh] text-[2.5vh] font-bold"
                     onClick={handleViewLeaderboard}
                   >
                     🏆 {lang === "en" ? "Leaderboard" : "மதிப்பெண் பட்டியல்"}
@@ -513,13 +555,13 @@ const SaveGirl2 = () => {
                 </p>
                 <div className="flex justify-center gap-4 mt-[5%] relative z-50">
                   <button
-                    className="bg-gradient-to-r from-[#BCA5D4] to-[#EFE2FA] text-white px-[6%] py-[2%] rounded-[2vh] text-[2.5vh] font-bold"
+                    className="bg-gradient-to-r from-[#BACBFE] to-[#C1DDE8] text-white px-[6%] py-[2%] rounded-[2vh] text-[2.5vh] font-bold"
                     onClick={handlePlayAgain}
                   >
                     🔄 {lang === "en" ? "Play Again" : "மீண்டும் விளையாடவும்"}
                   </button>
                   <button
-                    className="bg-gradient-to-r from-[#BCA5D4] to-[#EFE2FA] text-white px-[6%] py-[2%] rounded-[2vh] text-[2.5vh] font-bold"
+                    className="bg-gradient-to-r from-[#BACBFE] to-[#C1DDE8] text-white px-[6%] py-[2%] rounded-[2vh] text-[2.5vh] font-bold"
                     onClick={handleViewLeaderboard}
                   >
                     🏆 {lang === "en" ? "Leaderboard" : "மதிப்பெண் பட்டியல்"}
@@ -531,8 +573,7 @@ const SaveGirl2 = () => {
         )}
       </div>
       <Footer />
-      <LanguageToggle currentLanguage={lang} onPress={handleLanguage} />
-      <BackButton />
+      <BottomNav onPress={handleLanguage} />
     </Background>
   );
 };

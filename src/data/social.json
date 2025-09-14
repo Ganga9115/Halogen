@@ -386,224 +386,166 @@
     }
   ]
 },
+
   "grade9": {
     "easy": [
       {
-        "q": {
-          "en": "Which is the smallest continent on Earth?",
-          "ta": "பூமியில் சிறிய கண்டம் எது?"
-        },
-        "a": { "en": "AUSTRAL", "ta": "ஆஸ்திரே" }
+        "id": 1,
+        "en": { "q": "Which is the smallest continent on Earth?", "a": "AUSTRAL" },
+        "ta": { "q": "பூமியில் சிறிய கண்டம் எது?", "a": "ஆஸ்திரே" }
       },
       {
-        "q": {
-          "en": "Which country is called the Land of Rising Sun?",
-          "ta": "உயரும் சூரியனின் நாடு என்று அழைக்கப்படும் நாடு எது?"
-        },
-        "a": { "en": "JAPAN", "ta": "ஜப்பான்" }
+        "id": 2,
+        "en": { "q": "Which country is called the Land of Rising Sun?", "a": "JAPAN" },
+        "ta": { "q": "உயரும் சூரியனின் நாடு என்று அழைக்கப்படும் நாடு எது?", "a": "ஜப்பான்" }
       },
       {
-        "q": {
-          "en": "Which gas do plants release during photosynthesis?",
-          "ta": "ஒளிச்சேர்க்கையின் போது தாவரங்கள் வெளியிடும் வாயு எது?"
-        },
-        "a": { "en": "OXYGEN", "ta": "ஆக்சிஜன்" }
+        "id": 3,
+        "en": { "q": "Which gas do plants release during photosynthesis?", "a": "OXYGEN" },
+        "ta": { "q": "ஒளிச்சேர்க்கையின் போது தாவரங்கள் வெளியிடும் வாயு எது?", "a": "ஆக்சிஜன்" }
       },
       {
-        "q": {
-          "en": "What is the capital of Tamil Nadu?",
-          "ta": "தமிழ்நாட்டின் தலைநகர் எது?"
-        },
-        "a": { "en": "CHENNAI", "ta": "சென்னை" }
+        "id": 4,
+        "en": { "q": "What is the capital of Tamil Nadu?", "a": "CHENNAI" },
+        "ta": { "q": "தமிழ்நாட்டின் தலைநகர் எது?", "a": "சென்னை" }
       },
       {
-        "q": {
-          "en": "Which instrument is used to measure temperature?",
-          "ta": "வெப்பநிலையை அளவிட எந்த கருவி பயன்படுத்தப்படுகிறது?"
-        },
-        "a": { "en": "THERMO", "ta": "வெப்பி" }
+        "id": 5,
+        "en": { "q": "Which instrument is used to measure temperature?", "a": "THERMO" },
+        "ta": { "q": "வெப்பநிலையை அளவிட எந்த கருவி பயன்படுத்தப்படுகிறது?", "a": "வெப்பி" }
       },
       {
-        "q": {
-          "en": "Which heavenly body is known as the Red Planet?",
-          "ta": "சிவப்பு கோள் என்று அழைக்கப்படும் விண்மீன் எது?"
-        },
-        "a": { "en": "MARS", "ta": "செவ்வாய்" }
+        "id": 6,
+        "en": { "q": "Which heavenly body is known as the Red Planet?", "a": "MARS" },
+        "ta": { "q": "சிவப்பு கோள் என்று அழைக்கப்படும் விண்மீன் எது?", "a": "செவ்வாய்" }
       },
       {
-        "q": {
-          "en": "Which natural satellite revolves around the Earth?",
-          "ta": "பூமியைச் சுற்றி வரும் இயற்கைக் கோள் எது?"
-        },
-        "a": { "en": "MOON", "ta": "சந்திரன்" }
+        "id": 7,
+        "en": { "q": "Which natural satellite revolves around the Earth?", "a": "MOON" },
+        "ta": { "q": "பூமியைச் சுற்றி வரும் இயற்கைக் கோள் எது?", "a": "சந்திரன்" }
       },
       {
-        "q": {
-          "en": "What is the national fruit of India?",
-          "ta": "இந்தியாவின் தேசிய பழம் எது?"
-        },
-        "a": { "en": "MANGO", "ta": "மாம்பழம்" }
+        "id": 8,
+        "en": { "q": "What is the national fruit of India?", "a": "MANGO" },
+        "ta": { "q": "இந்தியாவின் தேசிய பழம் எது?", "a": "மாம்பழம்" }
       },
       {
-        "q": {
-          "en": "Which season comes after summer in India?",
-          "ta": "இந்தியாவில் கோடைக்குப் பிறகு வரும் பருவம் எது?"
-        },
-        "a": { "en": "MONSOON", "ta": "மழைக்காலம்" }
+        "id": 9,
+        "en": { "q": "Which season comes after summer in India?", "a": "MONSOON" },
+        "ta": { "q": "இந்தியாவில் கோடைக்குப் பிறகு வரும் பருவம் எது?", "a": "மழைக்காலம்" }
       },
       {
-        "q": {
-          "en": "Which device is used to find directions?",
-          "ta": "திசைகளை அறிய எந்த கருவி பயன்படுத்தப்படுகிறது?"
-        },
-        "a": { "en": "COMPASS", "ta": "திசைகாட்டி" }
+        "id": 10,
+        "en": { "q": "Which device is used to find directions?", "a": "COMPASS" },
+        "ta": { "q": "திசைகளை அறிய எந்த கருவி பயன்படுத்தப்படுகிறது?", "a": "திசைகாட்டி" }
       }
     ],
     "medium": [
       {
-        "q": {
-          "en": "Which Greek city-state is called the birthplace of democracy?",
-          "ta": "ஜனநாயகத்தின் பிறப்பிடம் என அழைக்கப்படும் கிரேக்க நகர-நாடு எது?"
-        },
-        "a": { "en": "ATHENS", "ta": "அதென்ஸ்" }
+        "id": 1,
+        "en": { "q": "Which Greek city-state is called the birthplace of democracy?", "a": "ATHENS" },
+        "ta": { "q": "ஜனநாயகத்தின் பிறப்பிடம் என அழைக்கப்படும் கிரேக்க நகர-நாடு எது?", "a": "அதென்ஸ்" }
       },
       {
-        "q": {
-          "en": "Which ancient Indian text is known for statecraft and economics?",
-          "ta": "அரசியல் மற்றும் பொருளாதாரத்திற்குப் புகழ்பெற்ற இந்திய நூல் எது?"
-        },
-        "a": { "en": "ARTHASH", "ta": "அர்த்தசா" }
+        "id": 2,
+        "en": { "q": "Which ancient Indian text is known for statecraft and economics?", "a": "ARTHASH" },
+        "ta": { "q": "அரசியல் மற்றும் பொருளாதாரத்திற்குப் புகழ்பெற்ற இந்திய நூல் எது?", "a": "அர்த்தசா" }
       },
       {
-        "q": {
-          "en": "What is the currency of Russia?",
-          "ta": "ரஷ்யாவின் நாணயம் எது?"
-        },
-        "a": { "en": "ROUBLE", "ta": "ரூபிள்" }
+        "id": 3,
+        "en": { "q": "What is the currency of Russia?", "a": "ROUBLE" },
+        "ta": { "q": "ரஷ்யாவின் நாணயம் எது?", "a": "ரூபிள்" }
       },
       {
-        "q": {
-          "en": "Which dam is built across the Sutlej River in India?",
-          "ta": "இந்தியாவில் சுத்லெஜ் நதியில் கட்டப்பட்ட அணை எது?"
-        },
-        "a": { "en": "BHAAKRA", "ta": "பக்ரா" }
+        "id": 4,
+        "en": { "q": "Which dam is built across the Sutlej River in India?", "a": "BHAAKRA" },
+        "ta": { "q": "இந்தியாவில் சுத்லெஜ் நதியில் கட்டப்பட்ட அணை எது?", "a": "பக்ரா" }
       },
       {
-        "q": {
-          "en": "Which movement was led by Mahatma Gandhi in 1942?",
-          "ta": "1942 இல் மகாத்மா காந்தி வழிநடத்திய இயக்கம் எது?"
-        },
-        "a": { "en": "QUITIND", "ta": "விடுதலை" }
+        "id": 5,
+        "en": { "q": "Which movement was led by Mahatma Gandhi in 1942?", "a": "QUITIND" },
+        "ta": { "q": "1942 இல் மகாத்மா காந்தி வழிநடத்திய இயக்கம் எது?", "a": "விடுதலை" }
       },
       {
-        "q": {
-          "en": "Which planet is known for its rings?",
-          "ta": "மோதிரங்களுக்குப் புகழ்பெற்ற கோள் எது?"
-        },
-        "a": { "en": "SATURN", "ta": "சனி" }
+        "id": 6,
+        "en": { "q": "Which planet is known for its rings?", "a": "SATURN" },
+        "ta": { "q": "மோதிரங்களுக்குப் புகழ்பெற்ற கோள் எது?", "a": "சனி" }
       },
       {
-        "q": {
-          "en": "Which line divides India and Pakistan?",
-          "ta": "இந்தியாவையும் பாகிஸ்தானையும் பிரிக்கும் கோடு எது?"
-        },
-        "a": { "en": "RADCLI", "ta": "ராட்கிளி" }
+        "id": 7,
+        "en": { "q": "Which line divides India and Pakistan?", "a": "RADCLI" },
+        "ta": { "q": "இந்தியாவையும் பாகிஸ்தானையும் பிரிக்கும் கோடு எது?", "a": "ராட்கிளி" }
       },
       {
-        "q": {
-          "en": "Which movement promoted widow remarriage in India?",
-          "ta": "இந்தியாவில் விதவை மறுமணத்தை ஊக்குவித்த இயக்கம் எது?"
-        },
-        "a": { "en": "REFORM", "ta": "சீர்திருத்தம்" }
+        "id": 8,
+        "en": { "q": "Which movement promoted widow remarriage in India?", "a": "REFORM" },
+        "ta": { "q": "இந்தியாவில் விதவை மறுமணத்தை ஊக்குவித்த இயக்கம் எது?", "a": "சீர்திருத்தம்" }
       },
       {
-        "q": {
-          "en": "Which Indian city is called the Manchester of India?",
-          "ta": "இந்தியாவின் மான்செஸ்டர் என்று அழைக்கப்படும் நகரம் எது?"
-        },
-        "a": { "en": "AHMEDAB", "ta": "அகமதாபாத்" }
+        "id": 9,
+        "en": { "q": "Which Indian city is called the Manchester of India?", "a": "AHMEDAB" },
+        "ta": { "q": "இந்தியாவின் மான்செஸ்டர் என்று அழைக்கப்படும் நகரம் எது?", "a": "அகமதாபாத்" }
       },
       {
-        "q": {
-          "en": "Which revolution increased food grain production in India?",
-          "ta": "இந்தியாவில் தானிய உற்பத்தியை அதிகரித்த புரட்சி எது?"
-        },
-        "a": { "en": "GREEN", "ta": "பச்சை" }
+        "id": 10,
+        "en": { "q": "Which revolution increased food grain production in India?", "a": "GREEN" },
+        "ta": { "q": "இந்தியாவில் தானிய உற்பத்தியை அதிகரித்த புரட்சி எது?", "a": "பச்சை" }
       }
     ],
     "hard": [
       {
-        "q": {
-          "en": "Which 1806 revolt by Indian soldiers happened at a fort in Tamil Nadu?",
-          "ta": "1806 இல் இந்திய சிப்பாய்களால் தமிழ்நாட்டில் ஒரு கோட்டையில் நடந்த கிளர்ச்சி எது?"
-        },
-        "a": { "en": "VELLORE", "ta": "வேலூர்" }
+        "id": 1,
+        "en": { "q": "Which 1806 revolt by Indian soldiers happened at a fort in Tamil Nadu?", "a": "VELLORE" },
+        "ta": { "q": "1806 இல் இந்திய சிப்பாய்களால் தமிழ்நாட்டில் ஒரு கோட்டையில் நடந்த கிளர்ச்சி எது?", "a": "வேலூர்" }
       },
       {
-        "q": {
-          "en": "What is the process of rocks breaking down into soil?",
-          "ta": "பாறைகள் மண்ணாக சிதைந்து போகும் செயல்முறை என்ன?"
-        },
-        "a": { "en": "WEATHER", "ta": "சிதைவு" }
+        "id": 2,
+        "en": { "q": "What is the process of rocks breaking down into soil?", "a": "WEATHER" },
+        "ta": { "q": "பாறைகள் மண்ணாக சிதைந்து போகும் செயல்முறை என்ன?", "a": "சிதைவு" }
       },
       {
-        "q": {
-          "en": "Which principle means 'peaceful coexistence'?",
-          "ta": "'அமைதியான சகவாழ்வு' என்று பொருள்படும் கொள்கை எது?"
-        },
-        "a": { "en": "PANCHAL", "ta": "பஞ்சசீல்" }
+        "id": 3,
+        "en": { "q": "Which principle means 'peaceful coexistence'?", "a": "PANCHAL" },
+        "ta": { "q": "'அமைதியான சகவாழ்வு' என்று பொருள்படும் கொள்கை எது?", "a": "பஞ்சசீல்" }
       },
       {
-        "q": {
-          "en": "Which soil type is most suitable for growing cotton?",
-          "ta": "பருத்தி பயிரிடுவதற்கு மிகவும் பொருத்தமான மண் வகை எது?"
-        },
-        "a": { "en": "BLACKSO", "ta": "கருப்பு மண்" }
+        "id": 4,
+        "en": { "q": "Which soil type is most suitable for growing cotton?", "a": "BLACKSO" },
+        "ta": { "q": "பருத்தி பயிரிடுவதற்கு மிகவும் பொருத்தமான மண் வகை எது?", "a": "கருப்பு மண்" }
       },
       {
-        "q": {
-          "en": "Which paramilitary force guards India's borders?",
-          "ta": "இந்தியாவின் எல்லைகளைப் பாதுகாக்கும் துணை ராணுவப் படை எது?"
-        },
-        "a": { "en": "BORDER", "ta": "எல்லை" }
+        "id": 5,
+        "en": { "q": "Which paramilitary force guards India's borders?", "a": "BORDER" },
+        "ta": { "q": "இந்தியாவின் எல்லைகளைப் பாதுகாக்கும் துணை ராணுவப் படை எது?", "a": "எல்லை" }
       },
       {
-        "q": {
-          "en": "What is a sudden natural event that causes damage called?",
-          "ta": "பெரும் சேதத்தை ஏற்படுத்தும் திடீர் இயற்கை நிகழ்வின் பெயர் என்ன?"
-        },
-        "a": { "en": "DISASTR", "ta": "பேரழிவு" }
+        "id": 6,
+        "en": { "q": "What is a sudden natural event that causes damage called?", "a": "DISASTR" },
+        "ta": { "q": "பெரும் சேதத்தை ஏற்படுத்தும் திடீர் இயற்கை நிகழ்வின் பெயர் என்ன?", "a": "பேரழிவு" }
       },
       {
-        "q": {
-          "en": "What is the largest ocean in the world?",
-          "ta": "உலகின் மிகப்பெரிய பெருங்கடல் எது?"
-        },
-        "a": { "en": "PACIFIC", "ta": "பசிபிக்" }
+        "id": 7,
+        "en": { "q": "What is the largest ocean in the world?", "a": "PACIFIC" },
+        "ta": { "q": "உலகின் மிகப்பெரிய பெருங்கடல் எது?", "a": "பசிபிக்" }
       },
       {
-        "q": {
-          "en": "Which social system divided people by birth in India?",
-          "ta": "இந்தியாவில் பிறப்பின் அடிப்படையில் மக்களைப் பிரித்த சமூக அமைப்பு எது?"
-        },
-        "a": { "en": "CASTES", "ta": "ஜாதிகள்" }
+        "id": 8,
+        "en": { "q": "Which social system divided people by birth in India?", "a": "CASTES" },
+        "ta": { "q": "இந்தியாவில் பிறப்பின் அடிப்படையில் மக்களைப் பிரித்த சமூக அமைப்பு எது?", "a": "ஜாதிகள்" }
       },
       {
-        "q": {
-          "en": "Which city is the headquarters of the United Nations?",
-          "ta": "ஐ.நா. தலைமையகம் அமைந்துள்ள நகரம் எது?"
-        },
-        "a": { "en": "NEWYORK", "ta": "நியூயார்க்" }
+        "id": 9,
+        "en": { "q": "Which city is the headquarters of the United Nations?", "a": "NEWYORK" },
+        "ta": { "q": "ஐ.நா. தலைமையகம் அமைந்துள்ள நகரம் எது?", "a": "நியூயார்க்" }
       },
       {
-        "q": {
-          "en": "Which desert is the largest hot desert in the world?",
-          "ta": "உலகின் மிகப்பெரிய சூடான பாலைவனம் எது?"
-        },
-        "a": { "en": "SAHARA", "ta": "சஹாரா" }
+        "id": 10,
+        "en": { "q": "Which desert is the largest hot desert in the world?", "a": "SAHARA" },
+        "ta": { "q": "உலகின் மிகப்பெரிய சூடான பாலைவனம் எது?", "a": "சஹாரா" }
       }
     ]
   }
+
 
 ,
 "grade10": {

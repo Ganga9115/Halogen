@@ -6,9 +6,10 @@ import Background from "../utils/FloatingBackground";
 import Logo from "../utils/logo";
 import BackButton from "../utils/backbutton";
 import Footer from "../utils/Footer";
-import { saveResult } from "../utils/leaderboardStorage"; // Import the saveResult function
-
+import { saveResult } from "../utils/leaderboardStorage";
+import TimerComponent from "../utils/TimerComponent"; 
 import BottomNav from "../utils/BottomNav";
+
 const GRID_SIZE = 8;
 const POINTS_PER_CORRECT = 10;
 const REQUIRED_TO_UNLOCK = 10;
@@ -36,10 +37,10 @@ const TRANSLATIONS = {
     currentScore: "Your current score:",
     close: "Close",
     allComplete: "All Levels Completed 🎉",
-    finalMotivation: "You're roaring like a tiger! 🐯 Majestic and powerful!",
+   
     playAgain: "Play Again",
     notEnough:
-      "Not enough points to unlock next level. Get 20 points to unlock.",
+      "Not enough points to unlock next level. Get 10 points to unlock.",
     time: "Time",
     timeUp: "OOPS...Time's up! ⏳",
     restartGame: "Restart Game",
@@ -66,9 +67,8 @@ const TRANSLATIONS = {
     currentScore: "உங்கள் தற்போதைய மதிப்பெண்:",
     close: "மூடு",
     allComplete: "அனைத்து நிலைகளும் முடிந்துவிட்டன 🎉",
-    finalMotivation: "நீங்கள் புலி போல் கர்ஜிக்கிறீர்கள்! 🐯 வலிமையும் திறமையும்!",
     playAgain: "மீண்டும் விளையாடு",
-    notEnough: "அடுத்த நிலையை திறக்க போதுமான மதிப்பெண் இல்லை. 20 புள்ளிகள் தேவை.",
+    notEnough: "அடுத்த நிலையை திறக்க போதுமான மதிப்பெண் இல்லை. 10 புள்ளிகள் தேவை.",
     time: "நேரம்",
     timeUp: "ஐயோ... நேரம் முடிந்துவிட்டது! ⏳",
     restartGame: "விளையாட்டை மீண்டும் தொடங்கு",
@@ -187,10 +187,10 @@ function playLevelCompleteSound() {
   setTimeout(() => playTone({ freq: 880, dur: 0.2 }), 250);
 }
 function playVictorySound() {
-  playTone({ freq: 523.25, dur: 0.2 }); // C5
-  setTimeout(() => playTone({ freq: 659.25, dur: 0.2 }), 150); // E5
-  setTimeout(() => playTone({ freq: 783.99, dur: 0.2 }), 300); // G5
-  setTimeout(() => playTone({ freq: 1046.5, dur: 0.5 }), 500); // C6
+  playTone({ freq: 523.25, dur: 0.2 }); 
+  setTimeout(() => playTone({ freq: 659.25, dur: 0.2 }), 150); 
+  setTimeout(() => playTone({ freq: 783.99, dur: 0.2 }), 300); 
+  setTimeout(() => playTone({ freq: 1046.5, dur: 0.5 }), 500); 
 }
 
 export default function WordSearchGame() {
@@ -204,7 +204,7 @@ export default function WordSearchGame() {
     setLanguage((l) => (l === "en" ? "ta" : "en"))
   };
   
-  // State for timer
+  // Timer state
   const [timeLeft, setTimeLeft] = useState(TIMER_DURATION);
   const [timerActive, setTimerActive] = useState(true);
 
@@ -342,7 +342,7 @@ export default function WordSearchGame() {
   const [showFinalCompletionModal, setShowFinalCompletionModal] = useState(false);
   const [confettiRunning, setConfettiRunning] = useState(false);
 
-  // Dragging states
+// Dragging states
   const [isDragging, setIsDragging] = useState(false);
   const startPosRef = useRef(null); // Stores the starting cell of the drag
   const currentPathRef = useRef([]); // Stores the path of the current drag
@@ -363,26 +363,12 @@ export default function WordSearchGame() {
     [-1, -1],
   ], []);
 
-  // Timer effect
-  useEffect(() => {
-    if (!timerActive || timeLeft <= 0) {
-      if (timeLeft <= 0) {
-        setShowTimeoutModal(true);
-      }
-      return;
-    }
+  // Timer effect - removed the old timer implementation
 
-    const timer = setInterval(() => {
-      setTimeLeft(prevTime => prevTime - 1);
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [timerActive, timeLeft]);
-
-  const formatTime = (seconds) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+  // Function to handle time up from TimerComponent
+  const handleTimeUp = () => {
+    setShowTimeoutModal(true);
+    setTimerActive(false);
   };
 
   // Function to save score to leaderboard
@@ -507,7 +493,7 @@ export default function WordSearchGame() {
     return found ? found.color : "";
   }
 
-  // Dragging logic
+  // Improved dragging logic
   const handleMouseDown = (r, c) => {
     if (status !== "playing") return;
     setIsDragging(true);
@@ -516,67 +502,38 @@ export default function WordSearchGame() {
     setSelectedPositions([[r, c]]); // Immediately select the starting cell
   };
 
-const handleMouseEnter = (r, c) => {
-  if (!isDragging || status !== "playing") return;
+  const handleMouseEnter = (r, c) => {
+    if (!isDragging || status !== "playing") return;
 
-  const lastPos = currentPathRef.current[currentPathRef.current.length - 1];
-  if (posEq(lastPos, [r, c])) return; // Don't re-add the same cell
+    const lastPos = currentPathRef.current[currentPathRef.current.length - 1];
+    if (posEq(lastPos, [r, c])) return; // Don't re-add the same cell
 
-  // Check if the new cell is adjacent to the last selected cell in a straight line
-  const [lastR, lastC] = lastPos;
-  const dr = Math.abs(r - lastR);
-  const dc = Math.abs(c - lastC);
+    // Check if the new cell is adjacent to the last selected cell
+    const [lastR, lastC] = lastPos;
+    const dr = Math.abs(r - lastR);
+    const dc = Math.abs(c - lastC);
 
-  // Only allow straight or diagonal lines (dr <=1 and dc <=1, but not both 0)
-  if ((dr <= 1 && dc <= 1) && !(dr === 0 && dc === 0)) {
-    // Check if it maintains a consistent direction if path length > 1
-    if (currentPathRef.current.length > 1) {
-      const secondLastPos = currentPathRef.current[currentPathRef.current.length - 2];
-      
-      // Check if we're moving back to a previous position in the path (not just the immediate previous)
+    // Allow any adjacent cell (including diagonals)
+    if (dr <= 1 && dc <= 1 && !(dr === 0 && dc === 0)) {
+      // Check if we're moving back to a previous position
       const isMovingBack = currentPathRef.current.some(pos => posEq(pos, [r, c]));
       
       if (isMovingBack) {
         // Find the index of the position we're moving back to
         const backIndex = currentPathRef.current.findIndex(pos => posEq(pos, [r, c]));
         
-        // If we're moving back to a position in the path (not the immediate previous)
-        if (backIndex >= 0 && backIndex < currentPathRef.current.length - 1) {
-          // Remove all positions after the one we're moving back to
-          const newPath = currentPathRef.current.slice(0, backIndex + 1);
-          currentPathRef.current = newPath;
-          setSelectedPositions(newPath);
-          return;
-        }
+        // Remove all positions after the one we're moving back to
+        const newPath = currentPathRef.current.slice(0, backIndex + 1);
+        currentPathRef.current = newPath;
+        setSelectedPositions(newPath);
+        return;
       }
       
-      const prevDr = lastR - secondLastPos[0];
-      const prevDc = lastC - secondLastPos[1];
-      const currentDr = r - lastR;
-      const currentDc = c - lastC;
-
-      // Ensure direction is consistent or opposite if reversing
-      if (prevDr !== 0 && currentDr !== 0 && Math.sign(prevDr) !== Math.sign(currentDr)) {
-        return; // Not a consistent straight line
-      }
-      if (prevDc !== 0 && currentDc !== 0 && Math.sign(prevDc) !== Math.sign(currentDc)) {
-        return; // Not a consistent straight line
-      }
-      // For diagonal, ensure both dr and dc match sign
-      if (prevDr !== 0 && prevDc !== 0 && (Math.sign(prevDr) !== Math.sign(currentDr) || Math.sign(prevDc) !== Math.sign(currentDc))) {
-        return;
-      }
-      // Allow reversing direction to the immediate previous cell
-      if (posEq([r, c], secondLastPos)) {
-        currentPathRef.current.pop(); // Remove last cell if moving back
-        setSelectedPositions(currentPathRef.current);
-        return;
-      }
+      // Add the new cell to the path
+      currentPathRef.current = [...currentPathRef.current, [r, c]];
+      setSelectedPositions(currentPathRef.current);
     }
-    currentPathRef.current = [...currentPathRef.current, [r, c]];
-    setSelectedPositions(currentPathRef.current);
-  }
-};
+  };
 
   const handleMouseUp = () => {
     if (!isDragging) return;
@@ -594,6 +551,15 @@ const handleMouseEnter = (r, c) => {
       window.removeEventListener('touchend', handleMouseUp);
     };
   }, [isDragging]);
+
+  // Clean up dragging state when level changes
+  useEffect(() => {
+    return () => {
+      setIsDragging(false);
+      startPosRef.current = null;
+      currentPathRef.current = [];
+    };
+  }, [levelIndex]);
 
   function handleHint() {
     if (!currentObj) return;
@@ -655,7 +621,7 @@ const handleMouseEnter = (r, c) => {
 function handleNext() {
   const nextQ = qIndex + 1;
   setSelectedPositions([]);
-  currentPathRef.current = []; // Clear current drag path
+  currentPathRef.current = [];
   setHintsUsed(0);
   setStatus("playing");
   
@@ -663,7 +629,11 @@ function handleNext() {
     // Go to next question in current level
     setQIndex(nextQ);
   } else {
-    // Level completed
+    // Level completed - show completion modal
+    setShowLevelCompleteModal(true);
+    playLevelCompleteSound();
+    
+    // Check if we can unlock next level
     const canUnlock = score >= REQUIRED_TO_UNLOCK;
     
     if (canUnlock && levelIndex + 1 < LEVELS.length) {
@@ -671,35 +641,47 @@ function handleNext() {
       const newUnlocked = [...unlocked];
       newUnlocked[levelIndex + 1] = true;
       setUnlocked(newUnlocked);
-      
-      // Move to next level
-      setLevelIndex(levelIndex + 1);
-      setQIndex(0);
-      
-      // Show level completion modal
-      setShowLevelCompleteModal(true);
-      playLevelCompleteSound();
-    } else if (levelIndex + 1 >= LEVELS.length) {
-      // All levels completed - save score to leaderboard
-      saveScoreToLeaderboard(score);
-      setShowFinalCompletionModal(true);
-      setStatus("finished");
-      playVictorySound();
-      setConfettiRunning(true);
-      setTimeout(() => setConfettiRunning(false), 5000);
-    } else {
-      // Not enough points to unlock next level
-      setShowLevelCompleteModal(true);
     }
   }
 }
 
-
-  function chooseLevel(i) {
-    if (!unlocked[i]) return;
-    setLevelIndex(i);
-    setQIndex(0); // Reset question index when changing levels
+function handleLevelCompleteOk() {
+  setShowLevelCompleteModal(false);
+  
+  const canUnlock = score >= REQUIRED_TO_UNLOCK;
+  
+  if (canUnlock && levelIndex + 1 < LEVELS.length) {
+    // Move to next level
+    setLevelIndex(levelIndex + 1);
+    setQIndex(0);
+  } else if (levelIndex + 1 >= LEVELS.length) {
+    // All levels completed
+    saveScoreToLeaderboard(score);
+    setShowFinalCompletionModal(true);
+    setStatus("finished");
+    playVictorySound();
+    setConfettiRunning(true);
+    setTimeout(() => setConfettiRunning(false), 5000);
   }
+  // If not enough points, just close the modal and stay on current level
+}
+
+function chooseLevel(i) {
+  if (!unlocked[i]) return;
+  
+  // Reset all selection states before changing level
+  setSelectedPositions([]);
+  currentPathRef.current = [];
+  setHintsUsed(0);
+  setStatus("playing");
+  setFoundAnswers([]);
+  
+  setLevelIndex(i);
+  setQIndex(0); // Reset question index when changing levels
+  
+  // Rebuild the grid for the new level
+  buildLevelGrid();
+}
 
   function getCellClass(r, c) {
     const base = "w-14 h-14 sm:w-12 sm:h-12 md:w-14 md:h-14 flex items-center justify-center rounded-lg font-extrabold text-lg md:text-xl cursor-pointer border shadow select-none";
@@ -760,7 +742,6 @@ function handleNext() {
 
   // Update the restart function
   function restartAll(goToDashboard = false) {
-    // setIsLoading(true);
     setLevelIndex(0);
     setQIndex(0);
     setScore(0);
@@ -777,7 +758,7 @@ function handleNext() {
     setFoundAnswers([]);
     setHasSavedResult(false);
     
-    // Reset initial levels to trigger new question generation
+    // Force a complete rebuild by resetting initial levels
     setInitialLevels([]);
     
     if (goToDashboard) {
@@ -825,14 +806,17 @@ return (
         {/* Left side */}
         <div className="w-1/2 flex flex-col justify-center items-center">
           {/* Score & Timer */}
-<div className="flex flex-row items-center justify-center gap-[2vw] mb-[2vh]">
-  <div className="bg-[#7FB3E0] text-black text-[2vh] px-[3vw] py-[2vh] rounded-[1.5vh] shadow-lg font-bold">
-    {T.score}: {score}
-  </div>
-  <div className="bg-[#7FB3E0] text-black text-[2vh] px-[3vw] py-[2vh] rounded-[1.5vh] shadow-lg font-bold">
-    {T.time}: {formatTime(timeLeft)}
-  </div>
-</div>
+          <div className="flex flex-row items-center justify-center gap-[2vw] mb-[2vh]">
+            <div className="bg-[#7FB3E0] text-black text-[2vh] px-[3vw] py-[2vh] rounded-[1.5vh] shadow-lg font-bold">
+              {T.score}: {score}
+            </div>
+            
+            {/* Replace the timer with TimerComponent */}
+            <TimerComponent 
+              initialTime={timeLeft} 
+              onTimeUp={handleTimeUp}
+            />
+          </div>
 
 
           {/* Question card */}
@@ -928,17 +912,14 @@ return (
                   onTouchMove={(e) => {
                     e.preventDefault();
                     const touch = e.touches[0];
-                    const targetElement = document.elementFromPoint(
-                      touch.clientX,
-                      touch.clientY
-                    );
-                    if (
-                      targetElement &&
-                      targetElement.dataset.row &&
-                      targetElement.dataset.col
-                    ) {
-                      const targetR = parseInt(targetElement.dataset.row);
-                      const targetC = parseInt(targetElement.dataset.col);
+                    const elements = document.elementsFromPoint(touch.clientX, touch.clientY);
+                    
+                    // Find the grid cell element
+                    const cellElement = elements.find(el => el.dataset.row && el.dataset.col);
+                    
+                    if (cellElement) {
+                      const targetR = parseInt(cellElement.dataset.row);
+                      const targetC = parseInt(cellElement.dataset.col);
                       handleMouseEnter(targetR, targetC);
                     }
                   }}
@@ -948,6 +929,7 @@ return (
                     width: "8vh",
                     height: "8vh",
                     fontSize: "3vh",
+                    touchAction: "none", // Prevent browser from handling touch events
                   }}
                   data-row={r}
                   data-col={c}
@@ -961,98 +943,127 @@ return (
       </div>
 
       {/* language toggle bottom-right */}
-      
-
-      {/* ---- MODALS ---- */}
-      {showHintOverModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-          <div className="bg-[#DEEBF7] rounded-2xl p-6 w-[90%] max-w-md text-center shadow-2xl">
-            <h3 className="text-2xl text-[#2A60A0] font-bold mb-2">{T.hintsOver}</h3>
-            <p className="mb-4 text-[#2A60A0]">{T.hintsMsg}</p>
-            <button
-              onClick={() => setShowHintOverModal(false)}
-              className="px-5 py-2 bg-[#2A60A0] text-white rounded-lg font-bold"
-            >
-              {T.ok}
-            </button>
-          </div>
-        </div>
-      )}
-
-      {showTimeoutModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm">
-          <div className="bg-[#DEEBF7] p-6 rounded-2xl shadow-lg text-center text-xl font-bold ">
-            <h3 className="text-[#2A60A0] text-2xl font-bold mb-2">{T.timeUp}</h3>
-            <p className="mb-4 text-[#2A60A0]">{T.timeoutMsg}</p>
-            <div className="flex justify-center gap-3">
-              <button onClick={() => restartAll(false)} className="px-5 py-2 bg-[#2A60A0] text-white rounded-lg font-semibold">{T.restartGame}</button>
-              <button onClick={() => restartAll(true)} className="px-5 py-2 bg-[#2A60A0] text-white rounded-lg font-semibold">{T.leaderboard}</button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      
-{showLevelCompleteModal && (
-  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
-    <div className="bg-[#DEEBF7] rounded-2xl p-6 w-[92%] max-w-lg text-center shadow-2xl">
-      <h2 className="text-3xl text-[#2A60A0] font-bold mb-2">{T.levelComplete}</h2>
-      <p className="mb-4 text-[#2A60A0]">{T.currentScore} <span className="font-mono">{score}</span></p>
-      <p className="mb-4 text-sm text-[#2A60A0]">
-        {score >= REQUIRED_TO_UNLOCK && levelIndex + 1 < LEVELS.length 
-          ? "Next level unlocked!" 
-          : T.notEnough}
+ {/* ---- MODALS ---- */}
+{showHintOverModal && (
+  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div 
+      className="bg-white p-8 rounded-lg shadow-2xl text-center" 
+      style={{ borderRadius: '1.5vw', border: '4px solid #bca5d4' }}
+    >
+      <h3 className="text-[2vw] font-bold mb-4 text-[#2A60A0]">
+        {T.hintsOver}
+      </h3>
+      <p className="text-lg mb-6 text-[#2A60A0]">
+        {T.hintsMsg}
       </p>
-      <div className="flex gap-3 justify-center">
+      <button
+        onClick={() => setShowHintOverModal(false)}
+        className="px-6 py-3 rounded-lg text-white font-bold bg-[#7164b4] hover:bg-[#8f9fe4] transition"
+      >
+        {T.ok}
+      </button>
+    </div>
+  </div>
+)}
+
+
+    {showTimeoutModal && (
+  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div 
+      className="bg-white p-8 rounded-lg shadow-2xl text-center" 
+      style={{ borderRadius: '1.5vw', border: '4px solid #bca5d4' }}
+    >
+      <h3 className="text-[2vw] font-bold mb-4 text-[#2A60A0]">
+        {T.timeUp}
+      </h3>
+      <p className="text-lg mb-6 text-[#2A60A0]">
+        {T.timeoutMsg}
+      </p>
+      <div className="flex justify-center gap-4">
         <button 
-          onClick={() => { 
-            setShowLevelCompleteModal(false); 
-            // The level transition is already handled in handleNext
-          }} 
-          className="px-5 py-2 bg-[#2A60A0] text-white rounded-lg font-bold"
+          onClick={() => restartAll(false)} 
+          className="px-6 py-3 rounded-lg text-white font-bold bg-[#7164b4] hover:bg-[#8f9fe4] transition"
         >
-          {T.ok}
+          {T.restartGame}
+        </button>
+        <button 
+          onClick={() => restartAll(true)} 
+          className="px-6 py-3 rounded-lg text-white font-bold bg-[#8f9fe4] hover:bg-[#7164b4] transition"
+        >
+          {T.leaderboard}
         </button>
       </div>
     </div>
   </div>
 )}
+      
+{showLevelCompleteModal && (
+  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div 
+      className="bg-white p-8 rounded-lg shadow-2xl text-center" 
+      style={{ borderRadius: '1.5vw', border: '4px solid #bca5d4' }}
+    >
+      <h2 className="text-[2.5vw] font-bold mb-4 text-[#2A60A0]">
+        {T.levelComplete}
+      </h2>
+      <p className="text-xl mb-6 text-[#2A60A0]">
+        {T.currentScore} <span className="font-mono">{score}</span>
+      </p>
+     {/* <p className="mb-6 text-lg text-[#2A60A0]">
+        {score >= REQUIRED_TO_UNLOCK && levelIndex + 1 < LEVELS.length 
+          ? "Next level unlocked!" 
+          : T.notEnough}
+      </p> */} 
+      <div className="flex justify-center">
+        <button 
+  onClick={handleLevelCompleteOk} 
+  className="px-6 py-3 rounded-lg text-white font-bold bg-[#7164b4] hover:bg-[#8f9fe4] transition"
+>
+  {T.ok}
+</button>
+      </div>
+    </div>
+  </div>
+)}
 
-      {showFinalCompletionModal && (
-        <div className="fixed inset-0 z-60 flex items-center justify-center bg-black/70">
-          <div className="bg-[#DEEBF7] rounded-2xl p-6 w-[92%] max-w-md text-center shadow-2xl">
-            <h2 className="text-[#2A60A0] text-3xl font-bold mb-2">{T.congratsTitle}</h2>
-            <p className=" text-[#2A60A0] mb-4 text-lg">{T.congratsMsg}</p>
-            <p className="mb-4 text-[#2A60A0] text-xl font-semibold">{T.finalScore} <span className="font-mono">{score}</span></p>
-            <div className="flex gap-3 justify-center">
-              <button onClick={() => restartAll(false)} className="px-5 py-2 bg-[#2A60A0] text-white rounded-lg">{T.playAgain}</button>
-              <button onClick={goToLeaderBoard} className="px-5 py-2 bg-[#2A60A0] text-white rounded-lg">{T.leaderboard}</button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {showFinalModal && (
-        <div className="fixed inset-0 z-60 flex items-center justify-center bg-black/70">
-          <div className="bg-[#DEEBF7] rounded-2xl p-6 w-[92%] max-w-md text-center shadow-2xl">
-            <h2 className="text-3xl text-[#2A60A0] font-bold mb-2">{T.allComplete}</h2>
-            <p className="mb-4 text-[#2A60A0] text-lg">{T.finalMotivation}</p>
-            <p className="mb-4 text-xl text-[#2A60A0] font-semibold">{T.currentScore} <span className="font-mono">{score}</span></p>
-            <div className="flex gap-3 justify-center">
-              <button onClick={() => restartAll(false)} className="px-5 py-2 bg-indigo-600 text-white rounded-lg">{T.playAgain}</button>
-              <button onClick={goToLeaderBoard} className="px-5 py-2 bg-green-600 text-white rounded-lg">{T.leaderboard}</button>
-            </div>
-          </div>
-        </div>
-      )}
-
+     {showFinalCompletionModal && (
+  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div 
+      className="bg-white p-8 rounded-lg shadow-2xl text-center" 
+      style={{ borderRadius: '1.5vw', border: '4px solid #bca5d4' }}
+    >
+      <h2 className="text-[2.5vw] font-bold mb-4 text-[#2A60A0]">
+        {T.congratsTitle}
+      </h2>
+      <p className="text-xl mb-6 text-[#2A60A0]">
+        {T.congratsMsg}
+      </p>
+      <p className="text-xl mb-6 font-bold text-indigo-600">
+        {T.finalScore} <span className="font-mono">{score}</span>
+      </p>
+      <div className="flex justify-center gap-4">
+        <button
+          onClick={() => restartAll(false)}
+          className="px-6 py-3 rounded-lg text-white font-bold bg-[#7164b4] hover:bg-[#8f9fe4] transition"
+        >
+          {T.playAgain}
+        </button>
+        <button
+          onClick={goToLeaderBoard}
+          className="px-6 py-3 rounded-lg text-white font-bold bg-[#8f9fe4] hover:bg-[#7164b4] transition"
+        >
+          {T.leaderboard}
+        </button>
+      </div>
+    </div>
+  </div>
+)}
       {/* Confetti */}
       <Confetti running={confettiRunning} />
     </div>
-    <Footer />
-    {/* <BackButton />
-    <LanguageToggle currentLanguage={language} onPress={handleLanguage}/> */}
     <BottomNav onPress={handleLanguage} />
+    <Footer />
+    
   </Background>
 );
 }

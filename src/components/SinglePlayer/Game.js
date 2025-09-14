@@ -14,15 +14,15 @@ const Game = () => {
   return (
     <div className="relative min-h-screen pb-16">
       {/* 🎮 Game rendering */}
+      
+      {classId > 10 && <SaveGirl2 />}
       {subject === "tamil" && <CardflippingT />}
       {subject === "english" && <Cardflipping />}
-      {subject === "math" && <SaveTheGirl />}
+      {subject === "math" && classId <=10 && <SaveTheGirl />}
       {subject === "science" && <Riddle />}
       {subject === "social studies" && <WordSearchGame />}
-      {classId > 10 && <SaveGirl2 />}
 
-      {/* 📌 Bottom Navigation */}
-      <BottomNav />
+  
     </div>
   );
 };
