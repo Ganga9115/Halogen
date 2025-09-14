@@ -19,7 +19,7 @@ import BottomNav from "../utils/BottomNav";
 const subjectsForGrades6to10 = [
   { en: "Science", ta: "அறிவியல்", gif: scienceGif, color: "bg-[#BCA5D4]" },
   { en: "Math", ta: "கணிதம்", gif: mathGif, color: "bg-[#BCA5D4]" },
-  { en: "Social", ta: "சமூகஅறிவியல்", gif: socialGif, color: "bg-[#BCA5D4]" },
+  { en: "Social Studies", ta: "சமூக அறிவியல்", gif: socialGif, color: "bg-[#BCA5D4]" },
   { en: "Tamil", ta: "தமிழ்", gif: tamilGif, color: "bg-[#BCA5D4]" },
   { en: "English", ta: "ஆங்கிலம்", gif: englishGif, color: "bg-[#BCA5D4]" },
 ];
@@ -28,7 +28,7 @@ const subjectsForHigherGrades = [
   { en: "Physics", ta: "இயற்பியல்", gif: physicsGif, color: "bg-[#BCA5D4]" },
   { en: "Chemistry", ta: "வேதியியல்", gif: chemistryGif, color: "bg-[#BCA5D4]" },
   { en: "Biology", ta: "உயிரியல்", gif: biologyGif, color: "bg-[#BCA5D4]" },
-  { en: "Computer", ta: "கணினிஅறிவியல்", gif: csGif, color: "bg-[#BCA5D4]" },
+  { en: "Computer Science", ta: "கணினி அறிவியல்", gif: csGif, color: "bg-[#BCA5D4]" },
   { en: "Math", ta: "கணிதம்", gif: mathGif, color: "bg-[#BCA5D4]" },
 ];
 
