@@ -126,8 +126,8 @@ const currentInstructions = instructionsData[subject] || instructionsData.math;
   const getGameRoute = (subject) => {
     const gameRoutes = {
       social: "/game", // Word Search
-      tamil: "/lang/tamil", // Card Flip (using subject as language)
-      english: "/lang/english", // Card Flip (using subject as language)
+      tamil: "/cardflipt", // Card Flip (using subject as language)
+      english: "/cardflip", // Card Flip (using subject as language)
       math: "/game", // Save The Girl
       science: "/game", // Riddle Game
     };

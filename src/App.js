@@ -12,6 +12,8 @@ import ChooseLanguage from './components/SinglePlayer/ChooseLanguage';
 import Leaderboard from './components/SinglePlayer/leaderBoard';
 import AppBackground from './components/utils/AppBackground';
 import InstructionPage from './components/utils/InstructionPage';
+import CardflippingT from './components/Games/CardflippingT';
+import Cardflipping from './components/Games/Cardflipping';
 
 const App = () => {
   return (
@@ -32,8 +34,8 @@ const App = () => {
         <Route path="/single/:classId/:displayName/:schoolName/:subject/instructions" element={<InstructionPage />}/>
       
       {/* Add these routes for the card flip games */}
-      <Route path="/single/:classId/:displayName/:schoolName/:subject/lang/:lang" element={<TopicSelection />} />
-      <Route path="/single/:classId/:displayName/:schoolName/:subject/lang/:lang/:topic/ma" element={<Match />} />
+      <Route path="/single/:classId/:displayName/:schoolName/:subject/cardflipt"  element={<CardflippingT />}/>
+      <Route path="/single/:classId/:displayName/:schoolName/:subject/cardflip"  element={<Cardflipping />}/>
 
 
 
