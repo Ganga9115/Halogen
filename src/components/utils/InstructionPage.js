@@ -90,10 +90,11 @@ const InstructionPage = () => {
   const [lang, setLang] = useState("english");
   const navigate = useNavigate();
   const { classId, displayName, schoolName, subject } = useParams();
+  const subject1 = subject.split(" ")[0]; 
 
   // Get instructions for the current subject
   // Always fall back to Save The Girl (math) instructions
-const currentInstructions = instructionsData[subject] || instructionsData.math;
+const currentInstructions = instructionsData[subject1] || instructionsData.math;
 
   
   // Get game titles for different subjects
@@ -137,9 +138,9 @@ const currentInstructions = instructionsData[subject] || instructionsData.math;
   const handleBack = () => {
   navigate(-1); // takes you back to the previous page
 };
-
+  
   const handleStart = () => {
-    const gameRoute = getGameRoute(subject);
+    const gameRoute = getGameRoute(subject1);
     // Navigate to the appropriate game based on the subject
     navigate(`/single/${classId}/${displayName}/${schoolName}/${subject}${gameRoute}`);
   };
@@ -147,6 +148,8 @@ const currentInstructions = instructionsData[subject] || instructionsData.math;
   const toggleLanguage = () => {
     setLang(lang === "english" ? "tamil" : "english");
   };
+
+
 
   return (
     <div
@@ -175,7 +178,7 @@ const currentInstructions = instructionsData[subject] || instructionsData.math;
         }}
       >
         <h2 style={{ fontSize: "1.75rem", fontWeight: "700", marginBottom: "1rem", color: "#4f46e5" }}>
-          {gameTitles[lang][subject] || gameTitles[lang].social}
+          {gameTitles[lang][subject1] || gameTitles[lang].math}
         </h2>
 
         {/* Toggle button */}
