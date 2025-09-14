@@ -10,16 +10,15 @@ import Match from './components/SinglePlayer/Match';
 import MultiplayerInput from './components/MultiPlayer/MultiPlayerInput';
 import ChooseLanguage from './components/SinglePlayer/ChooseLanguage';
 import Leaderboard from './components/SinglePlayer/leaderBoard';
-import Start from './components/Start';
 import AppBackground from './components/utils/AppBackground';
+import InstructionPage from './components/utils/InstructionPage';
 
 const App = () => {
   return (
     <AppBackground>
     <BrowserRouter>
     <Routes >
-      <Route path="/" element={<Start />} />
-      <Route path="/choose"  element={<ChooseSorM />}/>
+      <Route path="/"  element={<ChooseSorM />}/>
       <Route path='/single' element={<Input />}/>
       <Route path="/subject" element={<SubjectSelection />} />
       <Route path="/xo" element={<XO />} />
@@ -30,6 +29,14 @@ const App = () => {
       <Route path="/single/:classId/:displayName/:schoolName/:subject/game" element={<Game />} />
       <Route path="/single/:classId/:displayName/:schoolName/:subject/lang/:lang" element={<TopicSelection />} />
       <Route path="/single/:classId/:displayName/:schoolName/:subject/lang/:lang/:topic/ma" element={<Match />} />
+        <Route path="/single/:classId/:displayName/:schoolName/:subject/instructions" element={<InstructionPage />}/>
+      
+      {/* Add these routes for the card flip games */}
+      <Route path="/single/:classId/:displayName/:schoolName/:subject/lang/:lang" element={<TopicSelection />} />
+      <Route path="/single/:classId/:displayName/:schoolName/:subject/lang/:lang/:topic/ma" element={<Match />} />
+
+
+
       <Route path="/leaderboard" element={<Leaderboard />} />
     </Routes >
     </BrowserRouter>

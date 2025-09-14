@@ -150,7 +150,7 @@ const SelectMode = () => {
           backText={t.surpriseBack}
           image={surprise}
           proceedText={t.proceed}
-          navigateTo="/game"
+         navigateTo="/instructions"
         />
 
         {/* Match Game */}
@@ -163,8 +163,8 @@ const SelectMode = () => {
         />
       </div>
       <Footer />
-      {/* <LanguageToggle currentLanguage={lang} onPress={handleLanguage} /> */}
-      <BottomNav onPress={handleLanguage}/>
+      <LanguageToggle currentLanguage={lang} onPress={handleLanguage} />
+      <BottomNav />
     </FloatingBackground>
   );
 };
