@@ -163,8 +163,8 @@ const SelectMode = () => {
         />
       </div>
       <Footer />
-      <LanguageToggle currentLanguage={lang} onPress={handleLanguage} />
-      <BottomNav />
+      
+      <BottomNav onPress={handleLanguage}/>
     </FloatingBackground>
   );
 };
