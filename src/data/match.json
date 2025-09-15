@@ -9918,41 +9918,7 @@
     "explanation": "Correlation coefficient r -1 முதல் 1 வரை இருக்கும்.",
     "language": "tamil"
   },
-  {
-    "class": 10,
-    "difficulty": "easy",
-    "subject": "english",
-    "topic": "Tenses",
-    "subtopic": "Present Tense",
-    "type": "match",
-    "question": "Match the tense to its example form.",
-    "matches": [
-      { "term": "Simple Present", "definition": "He plays" },
-      { "term": "Present Continuous", "definition": "He is playing" },
-      { "term": "Present Perfect", "definition": "He has played" },
-      { "term": "Present Perfect Continuous", "definition": "He has been playing" }
-    ],
-    "explanation": "These are four forms of present tense.",
-    "language": "english"
-  },
-  {
-    "class": 10,
-    "difficulty": "easy",
-    "subject": "english",
-    "topic": "Tenses",
-    "subtopic": "Past Tense",
-    "type": "match",
-    "question": "Match the tense to its correct form.",
-    "matches": [
-      { "term": "Simple Past", "definition": "He played" },
-      { "term": "Past Continuous", "definition": "He was playing" },
-      { "term": "Past Perfect", "definition": "He had played" },
-      { "term": "Past Perfect Continuous", "definition": "He had been playing" }
-    ],
-    "explanation": "These are four forms of past tense.",
-    "language": "english"
-  },
-  {
+{
     "class": 10,
     "difficulty": "easy",
     "subject": "english",
@@ -14997,8 +14963,9 @@
     ],
     "explanation": "திருக்குறள் அறம், பொருள், இன்பம் மூன்றையும் ஒருங்கே தருகிறது.",
     "language": "tamil"
-  },
-  {
+  }
+,
+{
     "class": 9,
     "difficulty": "easy",
     "subject": "science",
@@ -16855,12 +16822,13 @@
     "subtopic": "Conversion of solids",
     "type": "match",
     "question": "Match the solid conversion with the principle used.",
-    "matches": [
-      { "term": "Cube to Sphere", "definition": "Volume remains constant" },
-      { "term": "Cylinder to Cones", "definition": "Volume remains constant" },
-      { "term": "Cuboid to Cube", "definition": "Volume remains constant" },
-      { "term": "Sphere to Smaller Spheres", "definition": "Volume remains constant" }
-    ],
+"matches": [
+  { "term": "Cube to Cuboid", "definition": "Only shape changes, surface area may increase" },
+  { "term": "Cone to Cylinder", "definition": "Height remains same, base radius changes" },
+  { "term": "Sphere to Hemisphere", "definition": "Surface area increases after division" },
+  { "term": "Cylinder to Prism", "definition": "Base shape changes but height remains constant" }
+]
+,
     "explanation": "In conversion, total volume remains unchanged."
   },
   {
@@ -16992,12 +16960,13 @@
     "subtopic": "Division of polynomials",
     "type": "match",
     "question": "Match the division with its result.",
-    "matches": [
-      { "term": "(x² + 2x) ÷ x", "definition": "x + 2" },
-      { "term": "(x³ - 3x²) ÷ x²", "definition": "x - 3" },
-      { "term": "(2x² + 4x) ÷ 2x", "definition": "x + 2" },
-      { "term": "(6x³) ÷ (3x)", "definition": "2x²" }
-    ],
+   "matches": [
+  { "term": "(x² + 2x) ÷ x", "definition": "x + 2" },
+  { "term": "(x³ - 3x²) ÷ x²", "definition": "x - 3" },
+  { "term": "(2x² + 6x) ÷ 2x", "definition": "x + 3" },
+  { "term": "(6x³) ÷ (3x)", "definition": "2x²" }
+]
+,
     "explanation": "Division lowers the degree of the polynomial by the divisor’s degree."
   },
   {
@@ -17009,12 +16978,13 @@
     "subtopic": "Remainder theorem",
     "type": "match",
     "question": "Match the polynomial with the remainder when divided by (x - a).",
-    "matches": [
-      { "term": "f(x) = x² - 4, divide by (x - 2)", "definition": "0" },
-      { "term": "f(x) = x³ + 2, divide by (x - 1)", "definition": "3" },
-      { "term": "f(x) = x² + 3x + 2, divide by (x + 1)", "definition": "0" },
-      { "term": "f(x) = x² - x, divide by (x - 1)", "definition": "0" }
-    ],
+   "matches": [
+  { "term": "f(x) = x² - 5x + 6, divide by (x - 2)", "definition": "0" },
+  { "term": "f(x) = x³ + x + 1, divide by (x + 1)", "definition": "1" },
+  { "term": "f(x) = x² + 2x + 3, divide by (x - 1)", "definition": "4" },
+  { "term": "f(x) = x³ - 2x² + 3, divide by (x - 2)", "definition": "-1" }
+]
+,
     "explanation": "Remainder theorem: f(a) is the remainder when f(x) is divided by (x - a)."
   },
   {
@@ -20296,11 +20266,12 @@
     "question": "குறளை அதன் அதிகாரத்துடன் (அறம் / பொருள் / இன்பம்) பொருத்துக."
 ,
     "matches": [
-      { "term": "அகர முதல எழுத்தெல்லாம் ஆதி பகவன் முதற்றே உலகு", "definition": "அறம்" },
-      { "term": "செல்வத்துள் செல்வம் செவிச்செல்வம் அச்செல்வம் செல்வத்துள் எல்லாந் தலை", "definition": "பொருள்" },
-      { "term": "இன்புறவே இல்லாநல் இன்பம் இல்லாத வேறு இல்லை", "definition": "இன்பம்" },
-      { "term": "நாணாமை நாடாமை நாரின்மை யாதொன்றும் பேணாமை பேதை தொழில்", "definition": "அறம்" }
-    ],
+  { "term": "அகர முதல எழுத்தெல்லாம் ஆதி பகவன் முதற்றே உலகு", "definition": "அறம் – கடவுள் வாழ்த்து" },
+  { "term": "செல்வத்துள் செல்வம் செவிச்செல்வம் அச்செல்வம் செல்வத்துள் எல்லாந் தலை", "definition": "பொருள் – கல்வி" },
+  { "term": "இன்புறவே இல்லாநல் இன்பம் இல்லாத வேறு இல்லை", "definition": "இன்பம் – இல்லறம்" },
+  { "term": "நாணாமை நாடாமை நாரின்மை யாதொன்றும் பேணாமை பேதை தொழில்", "definition": "அறம் – ஒழுக்கம்" }
+],
+
     "explanation": "குறள் ஒவ்வொன்றும் அறம், பொருள் அல்லது இன்பம் பகுதிகளில் ஒன்றைச் சேர்ந்தது."
   },
   {
@@ -20397,12 +20368,13 @@
     "subtopic": "பிரிவு – பால்",
     "type": "match",
     "question": "குறளை அதன் பாலும் (அறம் / பொருள் / இன்பம்) பொருத்துக.",
-    "matches": [
-      { "term": "அகர முதல எழுத்தெல்லாம் ஆதி பகவன் முதற்றே உலகு", "definition": "Book I – அரம்" },
-      { "term": "செல்வத்துள் செல்வம் செவிச்செல்வம் அச்செல்வம் செல்வத்துள் எல்லாந் தலை", "definition": "Book II – பொருள்" },
-      { "term": "இன்புறவே இல்லாநல் இன்பம் இல்லாத வேறு இல்லை", "definition": "Book III – இன்பம்" },
-      { "term": "நாணாமை நாடாமை நாரின்மை யாதொன்றும் பேணாமை பேதை தொழில்", "definition": "Book I – அரம்" }
-    ],
+  "matches": [
+  { "term": "அகர முதல எழுத்தெல்லாம் ஆதி பகவன் முதற்றே உலகு", "definition": "Book I – அரம்" },
+  { "term": "செல்வத்துள் செல்வம் செவிச்செல்வம் அச்செல்வம் செல்வத்துள் எல்லாந் தலை", "definition": "Book II – பொருள்" },
+  { "term": "இன்புறவே இல்லாநல் இன்பம் இல்லாத வேறு இல்லை", "definition": "Book III – இன்பம்" },
+  { "term": "நாணாமை நாடாமை நாரின்மை யாதொன்றும் பேணாமை பேதை தொழில்", "definition": "Book II – பொருள் (நெறியியல்)" }
+]
+,
     "explanation": "Each Kural belongs to one of the three books; matching helps reinforce content classification."
   },
   {
@@ -20654,12 +20626,13 @@
     "subtopic": "சங்க இலக்கியங்கள்",
     "type": "match",
     "question": "சங்க இலக்கியப் பாடல்களை அவற்றின் கலைஞர்களுடன் பொருத்துக.",
-    "matches": [
-      { "term": "யாதும் ஊரே...", "definition": "கணியன் பூங்குன்றனார்" },
-      { "term": "புராணனுறு 192", "definition": "கணியன் பூங்குன்றனார்" },
-      { "term": "நெடுநல்வாடை", "definition": "நக்கீரர்" },
-      { "term": "குறுந்தொகை – 40", "definition": "சிம்புலா பெயணீரார்" }
-    ],
+   "matches": [
+  { "term": "யாதும் ஊரே...", "definition": "கணியன் பூங்குன்றனார்" },
+  { "term": "புராணனுறு 192", "definition": "மமூலனார்" },
+  { "term": "நெடுநல்வாடை", "definition": "நக்கீரர்" },
+  { "term": "குறுந்தொகை – 40", "definition": "சிம்புலா பெயணீரார்" }
+]
+,
     "explanation": "சங்கப் பாடல்கள் மற்றும் அவற்றின் எழுத்தாளர்களை பொருத்துவது."
   },
   {
@@ -20713,7 +20686,7 @@
     ],
     "explanation": "இலக்கிய வழிமுறைகளின் அடிப்படையில் பாடலையும் எழுத்தாளரையும் பொருத்தி அறிவு வலுப்படுத்த."
   },
-  
+
     {
     "class": 8,
     "difficulty": "easy",
@@ -33510,5 +33483,4 @@
   "explanation": "ஜனநாயகம் என்பது மக்கள் ஆட்சி.",
   "language": "tamil"
 }
-
 ]
