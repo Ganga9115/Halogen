@@ -16,7 +16,7 @@ export default function Footer() {
        
       }}
     >
-      <p style={{ fontSize: "3vh",fontWeight:"500" }}>Designed & Developed by @R.M.K Engineering College, Department of Information Technology</p>
+      <p style={{ fontSize: "3vh",fontWeight:"500" }}>Designed & Developed by @R.M.K Engineering College, Department of Information Technology @Copyright 2025</p>
     </footer>
   );
 }

@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-
 import surprise from "../../assets/surprise.png";
 import match from "../../assets/match.png";
-
 import FloatingBackground from "../utils/FloatingBackground"; // ✅ background
 import Logo from "../utils/logo"; // ✅ logo
-import LanguageToggle from "../utils/LanguageToggle";
 import Footer from "../utils/Footer";
 import BottomNav from "../utils/BottomNav";
 

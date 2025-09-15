@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { motion } from "motion/react";
 import { useNavigate, useParams } from "react-router-dom";
 import FloatingBackground from "../utils/FloatingBackground";
-import LanguageToggle from "../utils/LanguageToggle";
 import scienceGif from "../../assets/science.gif";
 import mathGif from "../../assets/math.gif";
 import socialGif from "../../assets/social.gif";

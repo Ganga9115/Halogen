@@ -77,7 +77,7 @@ const Riddle = ({ isDarkMode = false }) => {
   const [correctAnswer, setCorrectAnswer] = useState(false);
   const [isIncorrectPopupVisible, setIsIncorrectPopupVisible] = useState(false);
   const [score, setScore] = useState(0);
-  const [timer, setTimer] = useState(90);
+  const [timer, setTimer] = useState(180);
   const [gameOver, setGameOver] = useState(false);
   const [showHintMessage, setShowHintMessage] = useState(false);
   const [currentLanguage, setCurrentLanguage] = useState("en");

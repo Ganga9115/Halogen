@@ -26,9 +26,9 @@ const SaveGirl2 = () => {
   const [score, setScore] = useState(0);
   const [showWrongPopup, setShowWrongPopup] = useState(false);
   const [hasSavedResult, setHasSavedResult] = useState(false); // ✅ New state
-    const [timeLeft, setTimeLeft] = useState(60);
+    const [timeLeft, setTimeLeft] = useState(180);
   const [timerColor, setTimerColor] = useState("#90EE90");
-    const [initialTime , setInitialTime]=useState(60)
+    const [initialTime , setInitialTime]=useState(180)
 
     useEffect(() => {
             if (timeLeft > initialTime * 0.5) {
@@ -167,7 +167,7 @@ const SaveGirl2 = () => {
           game: "SaveTheGirl",
         });
         setHasSavedResult(true);
-        setTimeLeft(60)
+        setTimeLeft(180)
       } catch (err) {
         console.error("Failed saving leaderboard result:", err);
       }
@@ -212,7 +212,7 @@ const SaveGirl2 = () => {
     navigate("/leaderboard");
   };
 
-  const waterLevel = ((60 - timeLeft) / 60) * 100;
+  const waterLevel = ((180 - timeLeft) / 180) * 100;
 
   if (!questions.length) {
     return (

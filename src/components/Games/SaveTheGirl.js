@@ -23,9 +23,9 @@ const SaveTheGirl = () => {
   const [score, setScore] = useState(0);
   const [showWrongPopup, setShowWrongPopup] = useState(false);
   const [hasSavedResult, setHasSavedResult] = useState(false); // New state
-  const [timeLeft, setTimeLeft] = useState(60);
+  const [timeLeft, setTimeLeft] = useState(180);
   const [timerColor, setTimerColor] = useState("#90EE90");
-  const [initialTime , setInitialTime]=useState(60)
+  const [initialTime , setInitialTime]=useState(180)
 
     useEffect(() => {
         if (timeLeft > initialTime * 0.5) {
@@ -178,7 +178,7 @@ const SaveTheGirl = () => {
       if (currentQ === questions.length - 1) {
         setWin(true);
         setGameOver(true);
-        setTimeLeft(60)
+        setTimeLeft(180)
       } else {
         setCurrentQ(currentQ + 1);
         setAnswer("");
@@ -207,7 +207,7 @@ const SaveTheGirl = () => {
     navigate('/leaderboard');
   };
 
-  const waterLevel = ((60 - timeLeft) / 60) * 100;
+  const waterLevel = ((180 - timeLeft) / 180) * 100;
   if (!questions.length) {
     return (
       <div className="flex items-center justify-center h-screen">

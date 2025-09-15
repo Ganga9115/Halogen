@@ -1,8 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
-import bgImage from "../../assets/bg.jpg";
 import { useNavigate } from "react-router-dom";
 import Background from "../utils/FloatingBackground";
-
 import avatar1 from '../../assets/Avatar/avatar1.png';
 import avatar2 from '../../assets/Avatar/avatar2.png';
 import avatar3 from '../../assets/Avatar/avatar3.png';

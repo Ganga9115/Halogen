@@ -2,7 +2,6 @@ import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import topicsEngData from "../../data/topicseng.json";
 import topicsTamData from "../../data/topicstam.json";
-import bg from "../../assets/bg.jpg";
 import Background from "../utils/FloatingBackground";
 import Logo from "../utils/logo";
 import Footer from "../utils/Footer";

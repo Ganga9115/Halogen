@@ -30494,22 +30494,22 @@
     "language": "english"
   },
   {
-    "class": 6,
-    "difficulty": "easy",
-    "subject": "social studies",
-    "topic": "Resources",
-    "subtopic": "Types of resources",
-    "type": "match",
-    "question": "Match the resource with type.",
-    "matches": [
-      { "term": "Air", "definition": "Natural" },
-      { "term": "Roads", "definition": "Man-made" },
-      { "term": "Teacher", "definition": "Human" },
-      { "term": "Coal", "definition": "Natural" }
-    ],
-    "explanation": "Resources are natural, man-made, or human.",
-    "language": "english"
-  },
+  "class": 6,
+  "difficulty": "easy",
+  "subject": "social studies",
+  "topic": "Resources",
+  "subtopic": "Types of resources",
+  "type": "match",
+  "question": "Match the resource with its type.",
+  "matches": [
+    { "term": "Air", "definition": "Natural Resource" },
+    { "term": "Roads", "definition": "Man-made Resource" },
+    { "term": "Teacher", "definition": "Human Resource" },
+    { "term": "Money", "definition": "Economic Resource" }
+  ],
+  "explanation": "Resources can be classified as natural, man-made, human, and economic.",
+  "language": "english"
+},
  {
     "class": 6,
     "difficulty": "easy",

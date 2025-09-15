@@ -61,7 +61,7 @@ export default function Leaderboard() {
               <p className="text-sm text-slate-600 mb-4">Top students & schools — climb the ranks</p>
             </div>
 
-            <div className="flex gap-2">
+            {/* <div className="flex gap-2">
               <button
                 onClick={exportData}
                 className="px-3 py-1 rounded-md bg-indigo-600 text-white text-sm"
@@ -78,7 +78,7 @@ export default function Leaderboard() {
               >
                 Clear
               </button>
-            </div>
+            </div> */}
           </div>
 
           {/* Scrollable Container */}

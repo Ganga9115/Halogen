@@ -14,7 +14,7 @@ const GRID_SIZE = 8;
 const POINTS_PER_CORRECT = 10;
 const REQUIRED_TO_UNLOCK = 10;
 const QUESTIONS_PER_LEVEL = 3;
-const TIMER_DURATION = 120;
+const TIMER_DURATION = 180;
 
 const ALPHABET_EN = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const ALPHABET_TA = "அஆஇஈஉஊஎஏஐஒஓஔகஙசஞடணதநபமயரலவழளறனஜஷஸஹ";
