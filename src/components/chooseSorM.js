@@ -149,14 +149,14 @@ const ChooseSorM = () => {
         />
 
         {/* Multi Player → XO Game (zoomed image) */}
-        <FlipCard
+        {/* <FlipCard
           frontText={t.multiFront}
           backText={t.multiBack}
           image={multi}
           proceedText={t.proceed}
           navigateTo="/multiplayer-input"
           imageStyle={{ width: "35%", height: "35%" }}
-        />
+        /> */}
       </div>
       <Footer />
       {/* 🌐 Language Toggle */}

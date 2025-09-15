@@ -204,7 +204,7 @@ const Start = () => {
           src={haloGif}
           alt="Halo"
           style={{
-            width: '40vw',
+            width: '20vw',
             height: 'auto',
           }}
         />
