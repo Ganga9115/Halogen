@@ -14,13 +14,15 @@ import AppBackground from './components/utils/AppBackground';
 import InstructionPage from './components/utils/InstructionPage';
 import CardflippingT from './components/Games/CardflippingT';
 import Cardflipping from './components/Games/Cardflipping';
+import Start from './components/Start';
 
 const App = () => {
   return (
     <AppBackground>
     <BrowserRouter>
     <Routes >
-      <Route path="/"  element={<ChooseSorM />}/>
+      <Route path="/"  element={<Start/>}/>
+      <Route path="/choose"  element={<ChooseSorM />}/>
       <Route path='/single' element={<Input />}/>
       <Route path="/subject" element={<SubjectSelection />} />
       <Route path="/xo" element={<XO />} />
