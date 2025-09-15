@@ -7,6 +7,7 @@ import logo from '../../assets/logo123.png';
 import BackButton from '../utils/backbutton';
 import Footer from '../utils/Footer';
 import Logo from '../utils/logo';
+import BottomNav from '../utils/BottomNav';
 import { saveResult } from "../utils/leaderboardStorage";
 
 const CardflippingT = () => {
@@ -320,7 +321,7 @@ const CardflippingT = () => {
         <TablaCelebration show={showCelebration} stop={stopCelebration} />
       </div>
       <Footer />
-      <BackButton />
+      <BottomNav />
     </Background>
   );
 };

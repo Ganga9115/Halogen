@@ -3,7 +3,7 @@ export default function Footer() {
     <footer
       style={{
       
-        color: "green",
+        color: "#265380",
         position: "fixed",
         bottom: "0",
         left: "0",
