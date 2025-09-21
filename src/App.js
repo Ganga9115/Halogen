@@ -15,6 +15,7 @@ import InstructionPage from './components/utils/InstructionPage';
 import CardflippingT from './components/Games/CardflippingT';
 import Cardflipping from './components/Games/Cardflipping';
 import Start from './components/Start';
+import bgsound from './assets/bgsound.mp3';
 
 const App = () => {
   return (

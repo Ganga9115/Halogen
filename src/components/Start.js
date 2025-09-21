@@ -6,8 +6,17 @@ import tnLogo from '../assets/tn.png';
 import rmkLogo from '../assets/rmklogo.png';
 import haloGif from '../assets/halo.gif';
 import BottomNav from './utils/BottomNav';
+import bgsound from '../assets/bgsound.mp3';  
+import { useRef, useEffect } from "react";
 
 const Start = () => {
+   const audioRef = useRef(null);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = 0.2; // 0.0 = mute, 1.0 = full volume
+    }
+  }, []);
   const navigate = useNavigate();
   const [language, setLanguage] = useState("en"); // en = English, ta = Tamil
 
@@ -100,8 +109,8 @@ const Start = () => {
                 letterSpacing: '1px',
               }}>
                 {language === "en"
-              ? "R.M.K"
-              : "ஆர்.எம்.கே"}
+              ? "R.M.K."
+              : "ஆர்.எம்.கே."}
               </span>
               <span style={{
                 fontSize: '1vw',
@@ -119,7 +128,7 @@ const Start = () => {
                 textAlign: 'left',
                 lineHeight: 1.2,
               }}>
-                {language === "en" ? "An Autonomous Institution" : "சுயாட்சி நிறுவனம்"}
+                {language === "en" ? "(An Autonomous Institution)" : "(சுயாட்சி நிறுவனம்)"}
               </span>
             </div>
           </div>
@@ -152,7 +161,7 @@ const Start = () => {
             textAlign: 'center',
             textShadow: '0 0 5px #fff,  0 0 5px #00c3ff, 0 0 5px #00c3ff'
           }}>
-            {language === "en" ? "SCIENCE PARK THIRUVALLUR DISTRICT" : "அறிவியல் பூங்கா திருவள்ளூர் மாவட்டம்"}
+            {language === "en" ? "SCIENCE PARK-TIRUVALLUR DISTRICT" : "அறிவியல் பூங்கா-திருவள்ளூர் மாவட்டம்"}
           </span>
         </div>
 
@@ -219,8 +228,8 @@ const Start = () => {
       {language === "en" ? "Mentor:" : "ஆசிரியர்:"}{" "}
       <span style={{ fontWeight: 500 }}>
         {language === "en"
-          ? "Ms.M.Rekha M.E phd, Assistant Professor / IT - RMKEC"
-          : "திருமதி.ம.ரேகா M.E phd, உதவி பேராசிரியர் / தகவல் தொழில்நுட்பத் துறை – ஆர்.எம்.கே பொறியியல் கல்லூரி"}
+          ? "Ms.M.Rekha M.E (PhD), Assistant Professor / IT - RMKEC"
+          : "திருமதி.ம.ரேகா M.E (PhD), உதவி பேராசிரியர் / தகவல் தொழில்நுட்பத் துறை – ஆர்.எம்.கே பொறியியல் கல்லூரி"}
       </span>
     </p>
 
