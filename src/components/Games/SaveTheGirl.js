@@ -59,7 +59,7 @@ const SaveTheGirl = () => {
       const j = Math.floor(Math.random() * (i + 1));
       [ids[i], ids[j]] = [ids[j], ids[i]];
     }
-    return ids.slice(0, 6);
+    return ids.slice(0, 8);
   }, []);
 
   const initializeGame = useCallback(() => {
@@ -100,9 +100,10 @@ const SaveTheGirl = () => {
       setGameOver(false);
       setWin(false);
       setScore(0);
+      setTimeLeft(180)
       setHasSavedResult(false); // Reset this state
     }
-  }, [classId, subject, lang, getRandomFive]);
+  }, [classId, subject, getRandomFive]);
 
   useEffect(() => {
     initializeGame();
@@ -147,7 +148,7 @@ const SaveTheGirl = () => {
   // New useEffect to handle game over and score saving
   useEffect(() => {
     if (gameOver && !hasSavedResult) {
-      const finalScore = win ? 60 : 0;
+      const finalScore = win ? 80 : 0;
       setScore(finalScore);
 
       const profile = JSON.parse(localStorage.getItem("player_profile") || "{}");
@@ -158,7 +159,7 @@ const SaveTheGirl = () => {
       try {
         saveResult({ name, school, className, score: finalScore, game: "SaveTheGirl" });
         setHasSavedResult(true);
-        setTimeLeft(60)
+        setTimeLeft(180)
       } catch (err) {
         console.error("Failed saving leaderboard result:", err);
       }
@@ -178,7 +179,7 @@ const SaveTheGirl = () => {
       if (currentQ === questions.length - 1) {
         setWin(true);
         setGameOver(true);
-        setTimeLeft(180)
+        
       } else {
         setCurrentQ(currentQ + 1);
         setAnswer("");
@@ -343,7 +344,7 @@ const SaveTheGirl = () => {
                       transition={{ duration: 0.5 }}
                       style={{
                         height: "100%",
-                        background: "linear-gradient(90deg,#BCA5D4,#EFE2FA)",
+                        background:  "linear-gradient(90deg,#256DD3,#5AA5F4)",
                         borderRadius: "10px",
                       }}
                     />
