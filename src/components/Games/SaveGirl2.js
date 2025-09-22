@@ -59,7 +59,7 @@ const SaveGirl2 = () => {
       const j = Math.floor(Math.random() * (i + 1));
       [ids[i], ids[j]] = [ids[j], ids[i]];
     }
-    return ids.slice(0, 6);
+    return ids.slice(0, 8);
   }, []);
 
   // Load questions on classId or subject change (except lang)
@@ -102,9 +102,10 @@ const SaveGirl2 = () => {
       setGameOver(false);
       setWin(false);
       setScore(0);
+       setTimeLeft(180)
       setHasSavedResult(false); // ✅ Reset this state
     }
-  }, [classId, subject, lang, getRandomFiveIds]);
+  }, [classId, subject, getRandomFiveIds]);
 
   useEffect(() => {
     initializeGame();
@@ -146,7 +147,7 @@ const SaveGirl2 = () => {
   // ✅ New useEffect to handle game over and score saving
   useEffect(() => {
     if (gameOver && !hasSavedResult) {
-      const finalScore = win ? 60 : 0;
+      const finalScore = win ? 80 : 0;
       setScore(finalScore);
 
       const profile = JSON.parse(
@@ -167,7 +168,7 @@ const SaveGirl2 = () => {
           game: "SaveTheGirl",
         });
         setHasSavedResult(true);
-        setTimeLeft(180)
+       
       } catch (err) {
         console.error("Failed saving leaderboard result:", err);
       }
@@ -194,7 +195,7 @@ const SaveGirl2 = () => {
       if (currentQ === questions.length - 1) {
         setWin(true);
         setGameOver(true);
-        setInitialTime(60)
+        setInitialTime(180)
       } else {
         setCurrentQ(currentQ + 1);
         setAnswer("");
@@ -271,7 +272,7 @@ const SaveGirl2 = () => {
               <button
                 onClick={handleRetry}
                 style={{
-                  backgroundColor: "#BCA5D4",
+                  background:"linear-gradient(135deg, #BACBFE, #C1DDE8)",
                   color: "white",
                   border: "none",
                   borderRadius: "0.5rem",
@@ -347,7 +348,7 @@ const SaveGirl2 = () => {
                       style={{
                         height: "100%",
                         background:
-                          "linear-gradient(90deg,#BCA5D4,#EFE2FA)",
+                          "linear-gradient(90deg,#256DD3,#5AA5F4)",
                         borderRadius: "10px",
                       }}
                     />

@@ -100,9 +100,10 @@ const SaveTheGirl = () => {
       setGameOver(false);
       setWin(false);
       setScore(0);
+      setTimeLeft(180)
       setHasSavedResult(false); // Reset this state
     }
-  }, [classId, subject, lang, getRandomFive]);
+  }, [classId, subject, getRandomFive]);
 
   useEffect(() => {
     initializeGame();
@@ -178,7 +179,7 @@ const SaveTheGirl = () => {
       if (currentQ === questions.length - 1) {
         setWin(true);
         setGameOver(true);
-        setTimeLeft(180)
+        
       } else {
         setCurrentQ(currentQ + 1);
         setAnswer("");
@@ -343,7 +344,7 @@ const SaveTheGirl = () => {
                       transition={{ duration: 0.5 }}
                       style={{
                         height: "100%",
-                        background: "linear-gradient(90deg,#BCA5D4,#EFE2FA)",
+                        background:  "linear-gradient(90deg,#256DD3,#5AA5F4)",
                         borderRadius: "10px",
                       }}
                     />
