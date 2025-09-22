@@ -59,7 +59,7 @@ const SaveTheGirl = () => {
       const j = Math.floor(Math.random() * (i + 1));
       [ids[i], ids[j]] = [ids[j], ids[i]];
     }
-    return ids.slice(0, 6);
+    return ids.slice(0, 8);
   }, []);
 
   const initializeGame = useCallback(() => {
@@ -147,7 +147,7 @@ const SaveTheGirl = () => {
   // New useEffect to handle game over and score saving
   useEffect(() => {
     if (gameOver && !hasSavedResult) {
-      const finalScore = win ? 60 : 0;
+      const finalScore = win ? 80 : 0;
       setScore(finalScore);
 
       const profile = JSON.parse(localStorage.getItem("player_profile") || "{}");
@@ -158,7 +158,7 @@ const SaveTheGirl = () => {
       try {
         saveResult({ name, school, className, score: finalScore, game: "SaveTheGirl" });
         setHasSavedResult(true);
-        setTimeLeft(60)
+        setTimeLeft(180)
       } catch (err) {
         console.error("Failed saving leaderboard result:", err);
       }
