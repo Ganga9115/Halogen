@@ -13,7 +13,7 @@ import BottomNav from "../utils/BottomNav";
 const GRID_SIZE = 8;
 const POINTS_PER_CORRECT = 10;
 const REQUIRED_TO_UNLOCK = 10;
-const QUESTIONS_PER_LEVEL = 3;
+const QUESTIONS_PER_LEVEL = 4;
 const TIMER_DURATION = 180;
 
 const ALPHABET_EN = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
