@@ -18,7 +18,7 @@ export default function BottomNav({ onPress }) {
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.loop = true;
-      audioRef.current.volume = 0.6; // adjust if needed
+      audioRef.current.volume = 0.3; // adjust if needed
       if (isPlaying) {
         audioRef.current.play().catch(() => {});
       } else {
